@@ -6,7 +6,77 @@
 <title>PERFECT COMPUTER — Admin Panel</title>
 
 <style>
-*{
+.order-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  border:0;
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.whatsapp-btn{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.invoice-btn{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.shipping-btn{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.tracking-box{
+  margin-top:18px;
+  border:1px solid #e5eaf0;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.tracking-title{
+  padding:12px 14px;
+  background:#f8fafc;
+  font-weight:900;
+}
+
+.shipping-form{
+  padding:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.shipping-form .full-row{
+  grid-column:1/-1;
+}
+
+.shipping-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+@media(max-width:600px){
+
+  .shipping-form{
+    grid-template-columns:1fr;
+  }
+
+  .shipping-form .full-row{
+    grid-column:auto;
+  }
+
+}*{
   box-sizing:border-box;
   margin:0;
   padding:0;
