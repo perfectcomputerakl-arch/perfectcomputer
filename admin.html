@@ -1,382 +1,60 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PERFECT COMPUTER — Admin Orders</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PERFECT COMPUTER Admin</title>
+</head>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+<body style="font-family:Arial,sans-serif;background:#f3f6fa;margin:0;padding:40px">
+
+  <div style="max-width:700px;margin:auto;background:white;padding:30px;border-radius:15px;box-shadow:0 5px 25px #ccc">
+    
+    <h1>🔐 PERFECT COMPUTER</h1>
+    <h2>Admin Panel Test</h2>
+
+    <p style="color:green;font-size:18px">
+      ✅ ADMIN.HTML IS WORKING
+    </p>
+
+    <hr>
+
+    <label>Admin Token</label><br><br>
+
+    <input 
+      type="password"
+      id="token"
+      placeholder="Enter Admin Token"
+      style="width:100%;padding:14px;box-sizing:border-box"
+    >
+
+    <br><br>
+
+    <button
+      onclick="test()"
+      style="padding:14px 25px;background:#111;color:white;border:0;border-radius:8px;cursor:pointer"
+    >
+      LOGIN TEST
+    </button>
+
+    <p id="result"></p>
+
+  </div>
+
+<script>
+function test() {
+  const token = document.getElementById("token").value;
+
+  if (!token) {
+    document.getElementById("result").innerHTML =
+      "⚠️ Token enter karo";
+    return;
+  }
+
+  document.getElementById("result").innerHTML =
+    "🔄 Token received. Admin API test next step...";
 }
+</script>
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7fb;
-  color:#172033;
-}
-
-button,input,select{
-  font:inherit;
-}
-
-.login-wrap{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:linear-gradient(135deg,#071426,#12345b);
-}
-
-.login-box{
-  width:100%;
-  max-width:420px;
-  background:white;
-  padding:35px;
-  border-radius:20px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.logo{
-  font-size:26px;
-  font-weight:800;
-  color:#0b4da2;
-  margin-bottom:5px;
-}
-
-.subtitle{
-  color:#667085;
-  margin-bottom:25px;
-}
-
-label{
-  display:block;
-  font-weight:700;
-  margin:15px 0 7px;
-}
-
-input,select{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid #d7dce5;
-  border-radius:10px;
-  outline:none;
-  background:white;
-}
-
-input:focus,select:focus{
-  border-color:#1769e0;
-  box-shadow:0 0 0 3px rgba(23,105,224,.1);
-}
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:11px 16px;
-  cursor:pointer;
-  font-weight:700;
-}
-
-.btn-primary{
-  background:#1769e0;
-  color:white;
-}
-
-.btn-dark{
-  background:#172033;
-  color:white;
-}
-
-.btn-light{
-  background:#eaf0f7;
-  color:#172033;
-}
-
-.btn-danger{
-  background:#dc3545;
-  color:white;
-}
-
-.login-btn{
-  width:100%;
-  margin-top:22px;
-  padding:14px;
-  font-size:16px;
-}
-
-.error{
-  color:#dc3545;
-  margin-top:12px;
-  font-size:14px;
-}
-
-.hidden{
-  display:none!important;
-}
-
-
-/* DASHBOARD */
-
-.dashboard{
-  min-height:100vh;
-}
-
-.topbar{
-  background:#071426;
-  color:white;
-  padding:15px 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-.top-logo{
-  font-size:21px;
-  font-weight:800;
-}
-
-.top-logo span{
-  display:block;
-  font-size:11px;
-  font-weight:400;
-  color:#aebbd0;
-  margin-top:3px;
-}
-
-.top-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.container{
-  max-width:1500px;
-  margin:auto;
-  padding:25px;
-}
-
-.page-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.page-title h1{
-  font-size:28px;
-}
-
-.page-title p{
-  color:#667085;
-  margin-top:5px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.card{
-  background:white;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 4px 18px rgba(15,23,42,.06);
-  border:1px solid #e7ebf1;
-}
-
-.card-title{
-  color:#667085;
-  font-size:14px;
-  font-weight:600;
-}
-
-.card-number{
-  font-size:30px;
-  font-weight:800;
-  margin-top:8px;
-}
-
-
-/* TOOLBAR */
-
-.toolbar{
-  background:white;
-  padding:15px;
-  border-radius:15px;
-  border:1px solid #e7ebf1;
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.search{
-  flex:1;
-}
-
-.toolbar select{
-  width:190px;
-}
-
-
-/* TABLE */
-
-.table-box{
-  background:white;
-  border-radius:15px;
-  border:1px solid #e7ebf1;
-  overflow:hidden;
-}
-
-.table-scroll{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:1050px;
-}
-
-th,td{
-  padding:14px 12px;
-  border-bottom:1px solid #edf0f4;
-  text-align:left;
-  vertical-align:top;
-}
-
-th{
-  background:#f8fafc;
-  color:#667085;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-
-td{
-  font-size:14px;
-}
-
-.order-id{
-  font-weight:800;
-  color:#1769e0;
-}
-
-.customer{
-  font-weight:700;
-}
-
-.small{
-  color:#667085;
-  font-size:12px;
-  margin-top:4px;
-}
-
-.amount{
-  font-weight:800;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:800;
-  text-transform:uppercase;
-}
-
-.paid{
-  background:#d9f7e5;
-  color:#08763d;
-}
-
-.created{
-  background:#fff0c7;
-  color:#875b00;
-}
-
-.cod{
-  background:#e6efff;
-  color:#1556a8;
-}
-
-.cancelled{
-  background:#ffe0e3;
-  color:#a51d2a;
-}
-
-.status-select{
-  min-width:130px;
-  padding:8px;
-  font-size:12px;
-}
-
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:50;
-}
-
-.modal-box{
-  width:100%;
-  max-width:650px;
-  max-height:90vh;
-  overflow:auto;
-  background:white;
-  border-radius:18px;
-  padding:25px;
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.close{
-  border:0;
-  background:#edf1f5;
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:20px;
-}
-
-.detail-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.detail{
-  background:#f7f9fc;
-  padding:12px;
-  border-radius:10px;
-}
-
-.detail strong{
-  display:block;
-  font-size:11px;
-  color:#667085;
-  margin-bottom:
+</body>
+</html>
