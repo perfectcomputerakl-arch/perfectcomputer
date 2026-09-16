@@ -1205,12 +1205,37 @@ function drawTable(){
 
         <td>
 
-          <button
-            class="view-btn"
-            onclick="viewOrder(${index})"
-          >
-            👁 View
-          </button>
+         <div class="order-actions">
+
+  <button
+    class="action-btn whatsapp-btn"
+    onclick="whatsappCustomer(${index})"
+  >
+    📱 WhatsApp
+  </button>
+
+  <button
+    class="action-btn invoice-btn"
+    onclick="generateInvoice(${index})"
+  >
+    🧾 Invoice
+  </button>
+
+  <button
+    class="action-btn shipping-btn"
+    onclick="openShipping(${index})"
+  >
+    🚚 Shipping
+  </button>
+
+  <button
+    class="view-btn"
+    onclick="viewOrder(${index})"
+  >
+    👁 View
+  </button>
+
+</div>
 
         </td>
 
