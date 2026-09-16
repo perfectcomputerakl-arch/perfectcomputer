@@ -1,5 +1,12 @@
 name = "perfectcomputer"
+main = "src/index.js"
 compatibility_date = "2026-09-16"
 
 [assets]
 directory = "."
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "perfectcomputer-db"
+database_id = "043612f2-3afc-49b7-a68a-e4301abf739a"
