@@ -5,7 +5,27 @@
 <title>PERFECT COMPUTER — Smart Technology. Perfect Choice.</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}.top{background:#071b31;color:#fff;padding:7px 4%;display:flex;justify-content:space-between;font-size:12px}header{background:#fff;padding:13px 4%;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0001}.logo{font-size:23px;font-weight:800;white-space:nowrap}.logo span{color:#1976ed}.tag{font-size:10px;color:#777}.search{flex:1;display:flex;border:1px solid #ddd;border-radius:25px;overflow:hidden;max-width:650px}.search input{flex:1;border:0;padding:12px 16px;outline:0}.search button{border:0;background:#1976ed;color:white;padding:0 18px}.cartbtn,.primary{background:#1976ed;color:#fff;border:0;border-radius:9px;padding:11px 17px;font-weight:bold}.cartbtn{border-radius:22px;white-space:nowrap}nav{background:#061a2d;color:#fff;display:flex;gap:25px;padding:10px 4%;overflow:auto;font-size:13px}nav a{white-space:nowrap}.container{max-width:1250px;margin:auto;padding:20px 3%}.hero{background:linear-gradient(120deg,#09213c,#1f59a4);color:#fff;border-radius:24px;padding:42px 5%;margin-bottom:25px}.hero h1{font-size:40px;margin:0 0 10px}.hero p{font-size:17px}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.cat{background:#fff;padding:18px;border-radius:14px;box-shadow:0 3px 14px #0001;cursor:pointer}.cat b{display:block;margin-top:7px}h2{margin:22px 0 13px}.toolbar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}.toolbar select{padding:10px;border:1px solid #ddd;border-radius:9px;background:#fff}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 15px #0002;position:relative}.pic{height:125px;background:#edf4fb;display:flex;align-items:center;justify-content:center;font-size:55px}.info{padding:13px}.brand{font-size:11px;color:#1976ed}.card h3{font-size:15px;margin:7px 0}.price{font-size:17px;font-weight:800;margin:10px 0}.actions{display:flex;gap:7px}.actions button{flex:1;border:0;border-radius:8px;padding:9px;font-weight:bold}.add{background:#071b31;color:#fff}.buy{background:#1976ed;color:#fff}.heart{position:absolute;right:9px;top:9px;border:0;background:white;border-radius:50%;font-size:18px;cursor:pointer}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.feature{background:#fff;padding:20px;border-radius:14px}.wa{position:fixed;right:15px;bottom:18px;background:#18a957;color:#fff;padding:13px 18px;border-radius:28px;z-index:20;font-weight:bold}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;padding:30px 15px;overflow:auto}.box{max-width:720px;margin:30px auto;background:#fff;border-radius:18px;padding:22px}.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:18px}.detail{display:grid;grid-template-columns:1fr 1fr;gap:25px}.detailpic{background:#edf4fb;min-height:260px;display:flex;align-items:center;justify-content:center;font-size:100px;border-radius:15px}.cartrow{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eee;padding:14px 0;align-items:center}.qty button{width:30px;height:30px;border:1px solid #ddd;background:#fff}.checkout{width:100%;padding:13px;border:0;background:#1976ed;color:#fff;border-radius:9px;font-weight:bold;margin-top:15px}@media(max-width:800px){.top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}.search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.hero{padding:28px 6%}.hero h1{font-size:30px}.detail{grid-template-columns:1fr}.detailpic{min-height:190px;font-size:70px}}@media(max-width:430px){.products{gap:9px}.card h3{font-size:13px}.price{font-size:15px}.actions button{font-size:11px;padding:8px}.cat{padding:14px}}
-</style></head>
+</style>
+<style>
+.checkout-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.form-card,.summary-card{background:#f8fafc;border:1px solid #e5eaf1;border-radius:14px;padding:16px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-grid .full{grid-column:1/-1}
+.form-card label{display:block;font-size:12px;font-weight:700;margin:8px 0 5px}
+.form-card input,.form-card textarea,.form-card select{width:100%;padding:11px;border:1px solid #d8dee8;border-radius:9px;outline:0;background:#fff}
+.form-card textarea{min-height:80px;resize:vertical}
+.pay-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.pay-btn{padding:13px;border:1px solid #cfd7e3;border-radius:10px;background:#fff;font-weight:800;cursor:pointer}
+.pay-btn.active{border:2px solid #1976ed;background:#eef5ff}
+.small-note{font-size:11px;color:#697386;margin-top:8px;line-height:1.4}
+.summary-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #e5eaf1}
+.summary-total{font-size:19px;font-weight:900;padding-top:12px}
+.status-box{padding:13px;border-radius:10px;margin-top:12px;background:#eef5ff;color:#17365d;font-size:13px}
+@media(max-width:800px){.checkout-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
 <body>
 <div class="top"><span>🇮🇳 India-wide Delivery</span><span>🔒 Secure Payments</span><span>💬 WhatsApp: 7875867861</span></div>
 <header><div><div class="logo">PERFECT <span>COMPUTER</span></div><div class="tag">Smart Technology. Perfect Choice.</div></div><div class="search"><input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()"><button>🔍</button></div><button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button></header>
@@ -45,6 +65,161 @@ function details(id){let p=products.find(x=>x.id===id);document.getElementById("
 function openCart(){let g={};cart.forEach(id=>g[id]=(g[id]||0)+1);let total=0;document.getElementById("cartItems").innerHTML=Object.entries(g).map(([id,q])=>{let p=products.find(x=>x.id==id),sub=p.price*q;total+=sub;return `<div class="cartrow"><div><b>${p.name}</b><br><small>${money(p.price)} each</small></div><div class="qty"><button onclick="change(${id},-1)">−</button> ${q} <button onclick="change(${id},1)">+</button></div><b>${money(sub)}</b></div>`}).join("")||"<p>Your cart is empty.</p>";document.getElementById("cartTotal").innerHTML=`<h2>Total: ${money(total)}</h2>`;document.getElementById("cartModal").style.display="block"}
 function change(id,n){if(n>0)cart.push(Number(id));else{let i=cart.indexOf(Number(id));if(i>=0)cart.splice(i,1)}save();openCart()}
 function closeModal(id){document.getElementById(id).style.display="none"}
-function checkout(){if(!cart.length){alert("Cart is empty");return}alert("Next step: Address + Razorpay/COD checkout integration.")}
+
+let selectedPay="online";
+function selectPay(mode){
+  selectedPay=mode;
+  document.getElementById("payOnline").classList.toggle("active",mode==="online");
+  document.getElementById("payCOD").classList.toggle("active",mode==="cod");
+  document.getElementById("placeOrderBtn").textContent=mode==="online"?"Place Order & Pay":"Place COD Order";
+}
+function cartGroups(){
+  let g={}; cart.forEach(id=>g[id]=(g[id]||0)+1); return g;
+}
+function cartTotal(){
+  return Object.entries(cartGroups()).reduce((sum,[id,q])=>{
+    const p=products.find(x=>x.id==id); return sum+(p?p.price*q:0);
+  },0);
+}
+function openCheckout(){
+  if(!cart.length){alert("Cart is empty");return}
+  const g=cartGroups();
+  document.getElementById("checkoutSummary").innerHTML=Object.entries(g).map(([id,q])=>{
+    const p=products.find(x=>x.id==id);
+    return p?`<div class="summary-row"><span>${p.name} × ${q}</span><b>${money(p.price*q)}</b></div>`:"";
+  }).join("");
+  document.getElementById("checkoutGrandTotal").textContent="Total: "+money(cartTotal());
+  document.getElementById("checkoutStatus").innerHTML="";
+  document.getElementById("checkoutModal").style.display="block";
+  closeModal("cartModal");
+  selectPay(selectedPay);
+}
+function checkout(){openCheckout()}
+function getCustomer(){
+  return {
+    name:document.getElementById("coName").value.trim(),
+    mobile:document.getElementById("coMobile").value.trim(),
+    email:document.getElementById("coEmail").value.trim(),
+    address:document.getElementById("coAddress").value.trim(),
+    city:document.getElementById("coCity").value.trim(),
+    state:document.getElementById("coState").value.trim(),
+    pincode:document.getElementById("coPincode").value.trim()
+  };
+}
+function validateCustomer(c){
+  if(!c.name||!c.address||!c.city||!c.state||!/^\d{6}$/.test(c.pincode)||!/^\d{10}$/.test(c.mobile)){
+    alert("Please fill all required details correctly. Mobile must be 10 digits and pincode 6 digits.");
+    return false;
+  }
+  return true;
+}
+function setCheckoutStatus(msg){document.getElementById("checkoutStatus").innerHTML=`<div class="status-box">${msg}</div>`}
+async function placeOrder(){
+  const c=getCustomer();
+  if(!validateCustomer(c)||!cart.length)return;
+  const btn=document.getElementById("placeOrderBtn");
+  btn.disabled=true; btn.style.opacity=".6";
+  setCheckoutStatus("Creating your order…");
+  const items=Object.entries(cartGroups()).map(([id,q])=>{
+    const p=products.find(x=>x.id==id);
+    return {product_id:Number(id),name:p.name,price:p.price,quantity:q};
+  });
+  try{
+    const r=await fetch("/api/create-order",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({amount:cartTotal(),customer:c,items,payment_method:selectedPay})});
+    const data=await r.json();
+    if(!r.ok)throw new Error(data.error||"Could not create order");
+    if(selectedPay==="cod"){
+      localStorage.removeItem("pc_cart"); cart=[]; save();
+      document.getElementById("checkoutStatus").innerHTML=`<div class="status-box"><b>✅ COD Order Placed</b><br>Order ID: ${data.order_number}<br>We will contact you on ${c.mobile}.</div>`;
+      btn.textContent="Order Placed";
+      return;
+    }
+    const keyRes=await fetch("/api/config");
+    const cfg=await keyRes.json();
+    if(!cfg.key_id)throw new Error("Razorpay Key ID is not configured");
+    const options={
+      key:cfg.key_id,amount:data.amount,currency:"INR",name:"PERFECT COMPUTER",
+      description:"Retail technology order",order_id:data.razorpay_order_id,
+      prefill:{name:c.name,email:c.email,contact:c.mobile},
+      notes:{order_number:data.order_number},
+      theme:{color:"#1976ed"},
+      handler:async function(resp){
+        try{
+          setCheckoutStatus("Verifying payment…");
+          const vr=await fetch("/api/verify-payment",{method:"POST",headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({order_number:data.order_number,razorpay_order_id:resp.razorpay_order_id,
+              razorpay_payment_id:resp.razorpay_payment_id,razorpay_signature:resp.razorpay_signature})});
+          const vd=await vr.json();
+          if(!vr.ok)throw new Error(vd.error||"Payment verification failed");
+          localStorage.removeItem("pc_cart");cart=[];save();
+          setCheckoutStatus(`<b>✅ Payment Successful</b><br>Order ID: ${data.order_number}<br>Payment ID: ${resp.razorpay_payment_id}`);
+          btn.textContent="Order Placed";
+        }catch(e){setCheckoutStatus("⚠️ "+e.message)}
+      },
+      modal:{ondismiss:function(){setCheckoutStatus("Payment window closed. Your order is still pending payment.")}}
+    };
+    const rp=new Razorpay(options);
+    rp.open();
+  }catch(e){setCheckoutStatus("❌ "+e.message)}
+  finally{btn.disabled=false;btn.style.opacity="1"}
+}
+
 render();
-</script></body></html>
+</script>
+<div class="modal" id="checkoutModal">
+  <div class="box">
+    <button class="close" onclick="closeModal('checkoutModal')">×</button>
+    <h2>🔐 Secure Checkout</h2>
+    <div class="checkout-grid">
+      <div class="form-card">
+        <h3 style="margin-top:0">Customer Details</h3>
+        <div class="form-grid">
+          <div>
+            <label>Full Name *</label>
+            <input id="coName" autocomplete="name" placeholder="Your full name">
+          </div>
+          <div>
+            <label>Mobile *</label>
+            <input id="coMobile" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="10-digit mobile">
+          </div>
+          <div>
+            <label>Email</label>
+            <input id="coEmail" type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <div>
+            <label>Pincode *</label>
+            <input id="coPincode" inputmode="numeric" maxlength="6" placeholder="6-digit pincode">
+          </div>
+          <div class="full">
+            <label>Full Address *</label>
+            <textarea id="coAddress" autocomplete="street-address" placeholder="House/Shop, Street, Area"></textarea>
+          </div>
+          <div>
+            <label>City *</label>
+            <input id="coCity" autocomplete="address-level2" placeholder="City">
+          </div>
+          <div>
+            <label>State *</label>
+            <input id="coState" autocomplete="address-level1" value="Maharashtra" placeholder="State">
+          </div>
+        </div>
+        <h3>Payment Method</h3>
+        <div class="pay-options">
+          <button class="pay-btn active" id="payOnline" onclick="selectPay('online')">💳 Online Payment</button>
+          <button class="pay-btn" id="payCOD" onclick="selectPay('cod')">💵 Cash on Delivery</button>
+        </div>
+        <div class="small-note">Online payment is processed through Razorpay. Your Razorpay Secret Key is never placed in this page.</div>
+        <div id="checkoutStatus"></div>
+      </div>
+      <div class="summary-card">
+        <h3 style="margin-top:0">Order Summary</h3>
+        <div id="checkoutSummary"></div>
+        <div class="summary-total" id="checkoutGrandTotal"></div>
+        <button class="checkout" id="placeOrderBtn" onclick="placeOrder()">Place Order & Pay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body></html>
