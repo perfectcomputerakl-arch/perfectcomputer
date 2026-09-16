@@ -1,59 +1,1912 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PERFECT COMPUTER Admin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERFECT COMPUTER — Admin Panel</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:linear-gradient(135deg,#07111f,#102d50);
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:22px;
+  padding:35px;
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+
+.logo{
+  width:64px;
+  height:64px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#1264ff;
+  color:#fff;
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:20px;
+}
+
+.login-card h1{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.login-card p{
+  color:#6b7280;
+  margin-bottom:25px;
+}
+
+.form-label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.input{
+  width:100%;
+  padding:14px 15px;
+  border:1px solid #d7deea;
+  border-radius:11px;
+  outline:none;
+  background:#fff;
+}
+
+.input:focus{
+  border-color:#1264ff;
+  box-shadow:0 0 0 3px rgba(18,100,255,.1);
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:12px 17px;
+  font-weight:700;
+}
+
+.btn-primary{
+  background:#1264ff;
+  color:#fff;
+}
+
+.btn-dark{
+  background:#172033;
+  color:#fff;
+}
+
+.btn-light{
+  background:#eef2f7;
+  color:#172033;
+}
+
+.btn-danger{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.btn-success{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.full{
+  width:100%;
+}
+
+.error{
+  color:#dc2626;
+  font-size:14px;
+  margin-top:12px;
+}
+
+/* APP */
+#app{
+  min-height:100vh;
+}
+
+.topbar{
+  height:72px;
+  background:#07111f;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#1264ff;
+  font-weight:900;
+}
+
+.brand-title{
+  font-size:17px;
+  font-weight:900;
+}
+
+.brand-sub{
+  font-size:11px;
+  color:#9ca3af;
+}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+}
+
+/* CONTENT */
+.container{
+  max-width:1450px;
+  margin:auto;
+  padding:25px;
+}
+
+.page-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.page-head h2{
+  font-size:28px;
+}
+
+.page-head p{
+  color:#6b7280;
+  margin-top:5px;
+}
+
+.actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:#fff;
+  border:1px solid #e4e9f1;
+  border-radius:17px;
+  padding:20px;
+  box-shadow:0 4px 18px rgba(15,23,42,.04);
+}
+
+.stat-label{
+  color:#6b7280;
+  font-size:13px;
+  font-weight:700;
+}
+
+.stat-value{
+  font-size:28px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+/* TOOLBAR */
+.panel{
+  background:#fff;
+  border:1px solid #e4e9f1;
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 4px 18px rgba(15,23,42,.04);
+}
+
+.toolbar{
+  padding:17px;
+  border-bottom:1px solid #e8edf4;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.search{
+  flex:1;
+  min-width:220px;
+}
+
+.select{
+  min-width:170px;
+}
+
+/* TABLE */
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1050px;
+}
+
+th{
+  background:#f8fafc;
+  text-align:left;
+  padding:14px;
+  font-size:12px;
+  color:#64748b;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+
+td{
+  padding:15px 14px;
+  border-top:1px solid #edf1f5;
+  vertical-align:middle;
+  font-size:14px;
+}
+
+.order-no{
+  font-weight:900;
+  color:#1264ff;
+}
+
+.customer{
+  font-weight:800;
+}
+
+.muted{
+  color:#64748b;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.amount{
+  font-weight:900;
+}
+
+.badge{
+  display:inline-flex;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.badge-paid{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.badge-pending{
+  background:#fef3c7;
+  color:#a16207;
+}
+
+.badge-created{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.badge-failed{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.badge-cod{
+  background:#ede9fe;
+  color:#6d28d9;
+}
+
+.status-select{
+  padding:8px;
+  border:1px solid #dbe2ea;
+  border-radius:8px;
+  background:#fff;
+  font-size:12px;
+  font-weight:700;
+}
+
+.view-btn{
+  padding:8px 11px;
+  border:0;
+  background:#eef2ff;
+  color:#3730a3;
+  border-radius:8px;
+  font-weight:800;
+}
+
+/* EMPTY / LOADING */
+.center{
+  text-align:center;
+  padding:50px 20px;
+  color:#64748b;
+}
+
+.spinner{
+  width:30px;
+  height:30px;
+  border:3px solid #dbe4f0;
+  border-top-color:#1264ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 14px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(2,8,23,.65);
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-card{
+  width:100%;
+  max-width:850px;
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:20px;
+}
+
+.modal-head{
+  padding:20px;
+  border-bottom:1px solid #e5eaf0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.modal-head h3{
+  font-size:20px;
+}
+
+.close{
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:9px;
+  background:#eef2f7;
+  font-size:20px;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.detail{
+  border:1px solid #e5eaf0;
+  border-radius:12px;
+  padding:14px;
+}
+
+.detail-label{
+  color:#64748b;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+
+.detail-value{
+  font-weight:700;
+  word-break:break-word;
+}
+
+.items-box{
+  margin-top:18px;
+  border:1px solid #e5eaf0;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.items-title{
+  padding:12px 14px;
+  background:#f8fafc;
+  font-weight:900;
+}
+
+.item-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:13px 14px;
+  border-top:1px solid #edf1f5;
+}
+
+/* TOAST */
+#toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:200;
+  background:#172033;
+  color:#fff;
+  padding:13px 17px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  display:none;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .page-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+
+@media(max-width:600px){
+  .topbar{
+    padding:0 14px;
+  }
+
+  .brand-sub{
+    display:none;
+  }
+
+  .container{
+    padding:15px;
+  }
+
+  .page-head h2{
+    font-size:23px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .stat{
+    padding:15px;
+  }
+
+  .stat-value{
+    font-size:23px;
+  }
+
+  .detail-grid{
+    grid-template-columns:1fr;
+  }
+
+  .top-actions .btn{
+    padding:9px 10px;
+  }
+}
+</style>
 </head>
 
-<body style="font-family:Arial,sans-serif;background:#f3f6fa;margin:0;padding:40px">
+<body>
 
-  <div style="max-width:700px;margin:auto;background:white;padding:30px;border-radius:15px;box-shadow:0 5px 25px #ccc">
-    
-    <h1>🔐 PERFECT COMPUTER</h1>
-    <h2>Admin Panel Test</h2>
+<!-- LOGIN -->
+<section id="loginScreen">
 
-    <p style="color:green;font-size:18px">
-      ✅ ADMIN.HTML IS WORKING
-    </p>
+  <div class="login-card">
 
-    <hr>
+    <div class="logo">PC</div>
 
-    <label>Admin Token</label><br><br>
+    <h1>PERFECT COMPUTER</h1>
+    <p>Secure Admin Order Panel</p>
 
-    <input 
+    <label class="form-label">Admin Token</label>
+
+    <input
+      id="adminToken"
+      class="input"
       type="password"
-      id="token"
-      placeholder="Enter Admin Token"
-      style="width:100%;padding:14px;box-sizing:border-box"
+      placeholder="Enter your Admin Token"
+      autocomplete="off"
     >
 
     <br><br>
 
     <button
-      onclick="test()"
-      style="padding:14px 25px;background:#111;color:white;border:0;border-radius:8px;cursor:pointer"
+      id="loginBtn"
+      class="btn btn-primary full"
+      onclick="login()"
     >
-      LOGIN TEST
+      🔐 Login to Admin Panel
     </button>
 
-    <p id="result"></p>
+    <div id="loginError" class="error"></div>
 
   </div>
 
-<script>
-function test() {
-  const token = document.getElementById("token").value;
+</section>
 
-  if (!token) {
-    document.getElementById("result").innerHTML =
-      "⚠️ Token enter karo";
+
+<!-- APP -->
+<section id="app" class="hidden">
+
+  <header class="topbar">
+
+    <div class="brand">
+
+      <div class="brand-icon">PC</div>
+
+      <div>
+        <div class="brand-title">PERFECT COMPUTER</div>
+        <div class="brand-sub">Smart Technology. Perfect Choice.</div>
+      </div>
+
+    </div>
+
+    <div class="top-actions">
+
+      <button class="btn btn-light" onclick="loadOrders()">
+        🔄 Refresh
+      </button>
+
+      <button class="btn btn-light" onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <div class="page-head">
+
+      <div>
+        <h2>📦 Order Management</h2>
+        <p>Manage customer orders, payments and delivery status.</p>
+      </div>
+
+      <div class="actions">
+
+        <button class="btn btn-success" onclick="exportCSV()">
+          📥 Export CSV
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-label">TOTAL ORDERS</div>
+        <div id="totalOrders" class="stat-value">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">NEW ORDERS</div>
+        <div id="newOrders" class="stat-value">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">ONLINE PAID</div>
+        <div id="paidOrders" class="stat-value">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">COD PENDING</div>
+        <div id="codOrders" class="stat-value">0</div>
+      </div>
+
+    </div>
+
+
+    <!-- ORDERS -->
+    <div class="panel">
+
+      <div class="toolbar">
+
+        <input
+          id="search"
+          class="input search"
+          type="search"
+          placeholder="🔎 Search order, customer, mobile..."
+          oninput="renderOrders()"
+        >
+
+        <select
+          id="statusFilter"
+          class="input select"
+          onchange="renderOrders()"
+        >
+          <option value="">All Order Status</option>
+          <option value="new">New</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+
+        <select
+          id="paymentFilter"
+          class="input select"
+          onchange="renderOrders()"
+        >
+          <option value="">All Payments</option>
+          <option value="paid">Paid</option>
+          <option value="cod_pending">COD Pending</option>
+          <option value="created">Created</option>
+        </select>
+
+      </div>
+
+
+      <div id="tableArea">
+
+        <div class="center">
+          <div class="spinner"></div>
+          Loading orders...
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
+<!-- ORDER MODAL -->
+<div id="orderModal" class="modal hidden">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h3>📋 Order Details</h3>
+
+      <button class="close" onclick="closeModal()">×</button>
+
+    </div>
+
+    <div id="modalBody" class="modal-body"></div>
+
+  </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+let orders = [];
+let filteredOrders = [];
+
+const tokenKey = "perfectcomputer_admin_token";
+
+
+/* LOGIN */
+
+function login(){
+
+  const token =
+    document.getElementById("adminToken").value.trim();
+
+  const error =
+    document.getElementById("loginError");
+
+  error.textContent = "";
+
+  if(!token){
+
+    error.textContent = "Please enter Admin Token.";
+
     return;
   }
 
-  document.getElementById("result").innerHTML =
-    "🔄 Token received. Admin API test next step...";
+  sessionStorage.setItem(tokenKey, token);
+
+  showApp();
+
+  loadOrders();
 }
+
+
+/* SHOW APP */
+
+function showApp(){
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+  sessionStorage.removeItem(tokenKey);
+
+  orders = [];
+
+  document
+    .getElementById("app")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("adminToken").value = "";
+
+}
+
+
+/* API HEADERS */
+
+function authHeaders(){
+
+  return {
+    "Authorization":
+      "Bearer " +
+      sessionStorage.getItem(tokenKey),
+
+    "Content-Type":
+      "application/json"
+  };
+
+}
+
+
+/* LOAD ORDERS */
+
+async function loadOrders(){
+
+  const tableArea =
+    document.getElementById("tableArea");
+
+  tableArea.innerHTML = `
+    <div class="center">
+      <div class="spinner"></div>
+      Loading orders...
+    </div>
+  `;
+
+  try{
+
+    const response =
+      await fetch("/api/admin/orders",{
+        method:"GET",
+        headers:authHeaders(),
+        cache:"no-store"
+      });
+
+    if(response.status === 401){
+
+      sessionStorage.removeItem(tokenKey);
+
+      document
+        .getElementById("app")
+        .classList.add("hidden");
+
+      document
+        .getElementById("loginScreen")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("loginError")
+        .textContent =
+        "Invalid Admin Token.";
+
+      return;
+    }
+
+    const data = await response.json();
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "Could not load orders"
+      );
+
+    }
+
+    orders =
+      Array.isArray(data.orders)
+        ? data.orders
+        : [];
+
+    updateStats();
+
+    renderOrders();
+
+  }catch(error){
+
+    console.error(error);
+
+    tableArea.innerHTML = `
+      <div class="center">
+        <h3>⚠️ Could not load orders</h3>
+        <p>${escapeHtml(error.message)}</p>
+        <br>
+        <button class="btn btn-primary"
+                onclick="loadOrders()">
+          Try Again
+        </button>
+      </div>
+    `;
+
+  }
+
+}
+
+
+/* STATS */
+
+function updateStats(){
+
+  document.getElementById("totalOrders")
+    .textContent = orders.length;
+
+  document.getElementById("newOrders")
+    .textContent =
+      orders.filter(o =>
+        String(o.order_status).toLowerCase() === "new"
+      ).length;
+
+  document.getElementById("paidOrders")
+    .textContent =
+      orders.filter(o =>
+        String(o.payment_status).toLowerCase() === "paid"
+      ).length;
+
+  document.getElementById("codOrders")
+    .textContent =
+      orders.filter(o =>
+        String(o.payment_status).toLowerCase() === "cod_pending"
+      ).length;
+
+}
+
+
+/* FILTER + SEARCH */
+
+function renderOrders(){
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const status =
+    document
+      .getElementById("statusFilter")
+      .value;
+
+  const payment =
+    document
+      .getElementById("paymentFilter")
+      .value;
+
+
+  filteredOrders =
+    orders.filter(order => {
+
+      const text = [
+
+        order.order_number,
+        order.customer_name,
+        order.mobile,
+        order.email,
+        order.city,
+        order.state,
+        order.payment_status,
+        order.order_status
+
+      ]
+      .join(" ")
+      .toLowerCase();
+
+
+      const searchMatch =
+        !search || text.includes(search);
+
+      const statusMatch =
+        !status ||
+        String(order.order_status).toLowerCase() === status;
+
+      const paymentMatch =
+        !payment ||
+        String(order.payment_status).toLowerCase() === payment;
+
+
+      return (
+        searchMatch &&
+        statusMatch &&
+        paymentMatch
+      );
+
+    });
+
+
+  drawTable();
+
+}
+
+
+/* TABLE */
+
+function drawTable(){
+
+  const area =
+    document.getElementById("tableArea");
+
+
+  if(!filteredOrders.length){
+
+    area.innerHTML = `
+      <div class="center">
+        <h3>📭 No orders found</h3>
+        <p>Try changing your search or filters.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  let html = `
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Order</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Payment</th>
+            <th>Order Status</th>
+            <th>Date</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+  `;
+
+
+  filteredOrders.forEach((order,index)=>{
+
+    const itemCount =
+      getItemCount(order.items_json);
+
+    html += `
+
+      <tr>
+
+        <td>
+          <div class="order-no">
+            ${escapeHtml(order.order_number || "-")}
+          </div>
+
+          <div class="muted">
+            ID #${escapeHtml(order.id ?? "-")}
+          </div>
+        </td>
+
+
+        <td>
+
+          <div class="customer">
+            ${escapeHtml(order.customer_name || "-")}
+          </div>
+
+          <div class="muted">
+            ${escapeHtml(order.mobile || "")}
+          </div>
+
+        </td>
+
+
+        <td>
+          ${itemCount} item${itemCount === 1 ? "" : "s"}
+        </td>
+
+
+        <td>
+          <div class="amount">
+            ₹${formatMoney(
+              Number(order.amount_paise || 0) / 100
+            )}
+          </div>
+        </td>
+
+
+        <td>
+          ${paymentBadge(order.payment_status,order.payment_method)}
+        </td>
+
+
+        <td>
+
+          <select
+            class="status-select"
+            onchange="changeStatus(
+              '${escapeAttr(order.order_number)}',
+              this.value
+            )"
+          >
+
+            ${statusOptions(order.order_status)}
+
+          </select>
+
+        </td>
+
+
+        <td>
+          <div>
+            ${formatDate(order.created_at)}
+          </div>
+        </td>
+
+
+        <td>
+
+          <button
+            class="view-btn"
+            onclick="viewOrder(${index})"
+          >
+            👁 View
+          </button>
+
+        </td>
+
+      </tr>
+    `;
+
+  });
+
+
+  html += `
+        </tbody>
+      </table>
+
+    </div>
+  `;
+
+
+  area.innerHTML = html;
+
+}
+
+
+/* STATUS OPTIONS */
+
+function statusOptions(current){
+
+  const statuses = [
+    ["new","New"],
+    ["confirmed","Confirmed"],
+    ["shipped","Shipped"],
+    ["delivered","Delivered"],
+    ["cancelled","Cancelled"]
+  ];
+
+  return statuses.map(s=>`
+
+    <option
+      value="${s[0]}"
+      ${String(current).toLowerCase() === s[0] ? "selected" : ""}
+    >
+      ${s[1]}
+    </option>
+
+  `).join("");
+
+}
+
+
+/* CHANGE STATUS */
+
+async function changeStatus(orderNumber,status){
+
+  if(!orderNumber) return;
+
+  try{
+
+    const response =
+      await fetch("/api/admin/order-status",{
+
+        method:"POST",
+
+        headers:authHeaders(),
+
+        body:JSON.stringify({
+
+          order_number:orderNumber,
+
+          order_status:status
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if(response.status === 401){
+
+      logout();
+
+      document
+        .getElementById("loginError")
+        .textContent =
+        "Admin session expired.";
+
+      return;
+    }
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "Status update failed"
+      );
+
+    }
+
+
+    const order =
+      orders.find(o =>
+        o.order_number === orderNumber
+      );
+
+
+    if(order){
+
+      order.order_status = status;
+
+    }
+
+
+    updateStats();
+
+    renderOrders();
+
+    toast(
+      "✅ Order status updated to " +
+      status.toUpperCase()
+    );
+
+
+  }catch(error){
+
+    alert(
+      "Could not update order status:\n\n" +
+      error.message
+    );
+
+    loadOrders();
+
+  }
+
+}
+
+
+/* VIEW ORDER */
+
+function viewOrder(index){
+
+  const order =
+    filteredOrders[index];
+
+  if(!order) return;
+
+
+  let items = [];
+
+  try{
+
+    items =
+      typeof order.items_json === "string"
+        ? JSON.parse(order.items_json)
+        : (order.items_json || []);
+
+  }catch{
+
+    items = [];
+
+  }
+
+
+  let itemsHtml = "";
+
+
+  if(Array.isArray(items) && items.length){
+
+    itemsHtml =
+      items.map(item=>{
+
+        const name =
+          item.name ||
+          item.title ||
+          "Product";
+
+        const qty =
+          Number(item.quantity || item.qty || 1);
+
+        const price =
+          Number(item.price || 0);
+
+        return `
+
+          <div class="item-row">
+
+            <div>
+              <strong>
+                ${escapeHtml(name)}
+              </strong>
+
+              <div class="muted">
+                Qty: ${qty}
+              </div>
+            </div>
+
+            <strong>
+              ₹${formatMoney(price * qty)}
+            </strong>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+  }else{
+
+    itemsHtml = `
+      <div class="item-row">
+        No item details available.
+      </div>
+    `;
+
+  }
+
+
+  document.getElementById("modalBody").innerHTML = `
+
+    <div class="detail-grid">
+
+      ${detail("Order Number",order.order_number)}
+
+      ${detail(
+        "Order Date",
+        formatDate(order.created_at)
+      )}
+
+      ${detail(
+        "Customer",
+        order.customer_name
+      )}
+
+      ${detail(
+        "Mobile",
+        order.mobile
+      )}
+
+      ${detail(
+        "Email",
+        order.email || "-"
+      )}
+
+      ${detail(
+        "Amount",
+        "₹" +
+        formatMoney(
+          Number(order.amount_paise || 0) / 100
+        )
+      )}
+
+      ${detail(
+        "Payment Method",
+        order.payment_method
+      )}
+
+      ${detail(
+        "Payment Status",
+        order.payment_status
+      )}
+
+      ${detail(
+        "Order Status",
+        order.order_status
+      )}
+
+      ${detail(
+        "Razorpay Order ID",
+        order.razorpay_order_id || "-"
+      )}
+
+      ${detail(
+        "Razorpay Payment ID",
+        order.razorpay_payment_id || "-"
+      )}
+
+      ${detail(
+        "Pincode",
+        order.pincode
+      )}
+
+      ${detail(
+        "City",
+        order.city
+      )}
+
+      ${detail(
+        "State",
+        order.state
+      )}
+
+      ${detail(
+        "Address",
+        order.address
+      )}
+
+    </div>
+
+
+    <div class="items-box">
+
+      <div class="items-title">
+        🛒 Ordered Products
+      </div>
+
+      ${itemsHtml}
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById("orderModal")
+    .classList.remove("hidden");
+
+}
+
+
+/* DETAIL */
+
+function detail(label,value){
+
+  return `
+
+    <div class="detail">
+
+      <div class="detail-label">
+        ${escapeHtml(label)}
+      </div>
+
+      <div class="detail-value">
+        ${escapeHtml(
+          value === null ||
+          value === undefined ||
+          value === ""
+            ? "-"
+            : String(value)
+        )}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal(){
+
+  document
+    .getElementById("orderModal")
+    .classList.add("hidden");
+
+}
+
+
+/* PAYMENT BADGE */
+
+function paymentBadge(status,method){
+
+  const s =
+    String(status || "").toLowerCase();
+
+  if(s === "paid"){
+
+    return `<span class="badge badge-paid">
+      ✓ PAID
+    </span>`;
+
+  }
+
+  if(s === "cod_pending"){
+
+    return `<span class="badge badge-cod">
+      COD PENDING
+    </span>`;
+
+  }
+
+  if(s === "created"){
+
+    return `<span class="badge badge-created">
+      ONLINE CREATED
+    </span>`;
+
+  }
+
+  if(s === "failed"){
+
+    return `<span class="badge badge-failed">
+      FAILED
+    </span>`;
+
+  }
+
+  return `
+    <span class="badge badge-pending">
+      ${escapeHtml(method || status || "Pending")}
+    </span>
+  `;
+
+}
+
+
+/* ITEM COUNT */
+
+function getItemCount(raw){
+
+  try{
+
+    const items =
+      typeof raw === "string"
+        ? JSON.parse(raw)
+        : raw;
+
+    if(!Array.isArray(items)) return 0;
+
+    return items.reduce(
+      (sum,item)=>
+        sum +
+        Number(item.quantity || item.qty || 1),
+      0
+    );
+
+  }catch{
+
+    return 0;
+
+  }
+
+}
+
+
+/* CSV EXPORT */
+
+function exportCSV(){
+
+  if(!orders.length){
+
+    alert("There are no orders to export.");
+
+    return;
+  }
+
+
+  const rows = [
+
+    [
+      "Order Number",
+      "Date",
+      "Customer",
+      "Mobile",
+      "Email",
+      "Address",
+      "City",
+      "State",
+      "Pincode",
+      "Amount",
+      "Payment Method",
+      "Payment Status",
+      "Order Status",
+      "Razorpay Order ID",
+      "Razorpay Payment ID"
+    ]
+
+  ];
+
+
+  filteredOrders.forEach(order=>{
+
+    rows.push([
+
+      order.order_number || "",
+
+      order.created_at || "",
+
+      order.customer_name || "",
+
+      order.mobile || "",
+
+      order.email || "",
+
+      order.address || "",
+
+      order.city || "",
+
+      order.state || "",
+
+      order.pincode || "",
+
+      (
+        Number(order.amount_paise || 0) / 100
+      ).toFixed(2),
+
+      order.payment_method || "",
+
+      order.payment_status || "",
+
+      order.order_status || "",
+
+      order.razorpay_order_id || "",
+
+      order.razorpay_payment_id || ""
+
+    ]);
+
+  });
+
+
+  const csv =
+    rows
+      .map(row =>
+        row
+          .map(csvEscape)
+          .join(",")
+      )
+      .join("\r\n");
+
+
+  const blob =
+    new Blob(
+      ["\ufeff" + csv],
+      {type:"text/csv;charset=utf-8;"}
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download =
+    "perfect-computer-orders-" +
+    new Date()
+      .toISOString()
+      .slice(0,10) +
+    ".csv";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+
+  toast("📥 CSV exported successfully");
+
+}
+
+
+/* CSV ESCAPE */
+
+function csvEscape(value){
+
+  const text =
+    String(value ?? "");
+
+  if(
+    text.includes(",") ||
+    text.includes('"') ||
+    text.includes("\n")
+  ){
+
+    return '"' +
+      text.replace(/"/g,'""') +
+      '"';
+
+  }
+
+  return text;
+
+}
+
+
+/* FORMAT MONEY */
+
+function formatMoney(number){
+
+  return Number(number || 0)
+    .toLocaleString("en-IN",{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+
+}
+
+
+/* FORMAT DATE */
+
+function formatDate(value){
+
+  if(!value) return "-";
+
+  let date;
+
+  try{
+
+    let v = String(value);
+
+    if(
+      !v.includes("T") &&
+      !v.endsWith("Z")
+    ){
+
+      v = v.replace(" ","T") + "Z";
+
+    }
+
+    date = new Date(v);
+
+    if(isNaN(date.getTime())){
+
+      return String(value);
+
+    }
+
+  }catch{
+
+    return String(value);
+
+  }
+
+
+  return date.toLocaleString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+/* HTML ESCAPE */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ATTRIBUTE ESCAPE */
+
+function escapeAttr(value){
+
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,"&quot;");
+
+}
+
+
+/* TOAST */
+
+let toastTimer;
+
+function toast(message){
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent = message;
+
+  el.style.display = "block";
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      el.style.display = "none";
+    },3000);
+
+}
+
+
+/* ESC CLOSE MODAL */
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(event.key === "Escape"){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* CLICK OUTSIDE MODAL */
+
+document
+  .getElementById("orderModal")
+  .addEventListener(
+    "click",
+    event=>{
+
+      if(
+        event.target.id === "orderModal"
+      ){
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+
+/* ENTER LOGIN */
+
+document
+  .getElementById("adminToken")
+  .addEventListener(
+    "keydown",
+    event=>{
+
+      if(event.key === "Enter"){
+
+        login();
+
+      }
+
+    }
+  );
+
+
+/* AUTO LOGIN IF SESSION EXISTS */
+
+(function(){
+
+  const saved =
+    sessionStorage.getItem(tokenKey);
+
+  if(saved){
+
+    showApp();
+
+    loadOrders();
+
+  }
+
+})();
+
 </script>
 
 </body>
