@@ -118,24 +118,40 @@ async function adminOrders(request, env) {
     SELECT
       id,
       order_number,
+
       razorpay_order_id,
       razorpay_payment_id,
+
       customer_name,
       mobile,
       email,
+
       address,
       city,
       state,
       pincode,
+
       amount_paise,
+
       payment_method,
       payment_status,
       order_status,
+
       items_json,
+
+      courier_name,
+      tracking_number,
+      tracking_url,
+      shipped_at,
+      delivered_at,
+
       created_at,
       updated_at
+
     FROM orders
+
     ORDER BY id DESC
+
     LIMIT 500
   `).all();
 
@@ -144,7 +160,6 @@ async function adminOrders(request, env) {
     orders: result.results || []
   });
 }
-
 
 /* =========================================================
    ADMIN — UPDATE ORDER STATUS
@@ -168,13 +183,14 @@ async function adminOrderStatus(request, env) {
     }, 400);
   }
 
-  const orderNumberValue = String(
-    body.order_number || ""
-  ).trim();
+  const orderNumberValue =
+    String(body.order_number || "").trim();
 
-  const status = String(
-    body.order_status || ""
-  ).trim().toLowerCase();
+  const status =
+    String(body.order_status || "")
+      .trim()
+      .toLowerCase();
+
 
   const allowed = [
     "new",
@@ -184,36 +200,150 @@ async function adminOrderStatus(request, env) {
     "cancelled"
   ];
 
-  if (!orderNumberValue || !allowed.includes(status)) {
+
+  if (
+    !orderNumberValue ||
+    !allowed.includes(status)
+  ) {
     return json({
       error: "Invalid order number or status"
     }, 400);
   }
 
+
+  let extraSQL = "";
+  let binds = [status];
+
+
+  if (status === "shipped") {
+
+    extraSQL = `,
+      shipped_at = datetime('now')
+    `;
+
+  }
+
+
+  if (status === "delivered") {
+
+    extraSQL = `,
+      delivered_at = datetime('now')
+    `;
+
+  }
+
+
   const result = await env.DB.prepare(`
     UPDATE orders
-    SET order_status = ?,
-        updated_at = datetime('now')
+
+    SET
+      order_status = ?,
+      updated_at = datetime('now')
+      ${extraSQL}
+
     WHERE order_number = ?
+
   `).bind(
-    status,
+    ...binds,
     orderNumberValue
   ).run();
 
+
   if (!result.meta?.changes) {
+
     return json({
       error: "Order not found"
     }, 404);
+
   }
+
 
   return json({
     ok: true,
     order_number: orderNumberValue,
     order_status: status
   });
+
 }
+/* =========================================================
+   ADMIN — UPDATE SHIPPING / TRACKING
+   ========================================================= */
+
+async function adminShipping(request, env) {
+
+  if (!requireAdmin(request, env)) {
+    return json({
+      error: "Unauthorized"
+    }, 401);
+  }
+
+  let body;
+
+  try {
+    body = await request.json();
+  } catch {
+    return json({
+      error: "Invalid JSON"
+    }, 400);
+  }
+
+  const orderNumberValue =
+    String(body.order_number || "").trim();
+
+  const courierName =
+    String(body.courier_name || "").trim();
+
+  const trackingNumber =
+    String(body.tracking_number || "").trim();
+
+  const trackingUrl =
+    String(body.tracking_url || "").trim();
 
 
+  if (!orderNumberValue) {
+    return json({
+      error: "Order number required"
+    }, 400);
+  }
+
+
+  const result = await env.DB.prepare(`
+    UPDATE orders
+
+    SET
+      courier_name = ?,
+      tracking_number = ?,
+      tracking_url = ?,
+      updated_at = datetime('now')
+
+    WHERE order_number = ?
+
+  `).bind(
+    courierName,
+    trackingNumber,
+    trackingUrl,
+    orderNumberValue
+  ).run();
+
+
+  if (!result.meta?.changes) {
+
+    return json({
+      error: "Order not found"
+    }, 404);
+
+  }
+
+
+  return json({
+    ok: true,
+    order_number: orderNumberValue,
+    courier_name: courierName,
+    tracking_number: trackingNumber,
+    tracking_url: trackingUrl
+  });
+
+}
 /* =========================================================
    MAIN API HANDLER
    ========================================================= */
@@ -577,7 +707,12 @@ async function handleApi(request, env) {
   ) {
     return adminOrders(request, env);
   }
-
+if (
+  url.pathname === "/api/admin/shipping" &&
+  request.method === "POST"
+) {
+  return adminShipping(request, env);
+}
 
   if (
     url.pathname === "/api/admin/order-status" &&
