@@ -815,50 +815,6 @@ td{
 
 
 <script>
-
-let orders = [];
-let filteredOrders = [];
-
-const tokenKey = "perfectcomputer_admin_token";
-
-
-/* LOGIN */
-
-function login(){
-
-  const token =
-    document.getElementById("adminToken").value.trim();
-
-  const error =
-    document.getElementById("loginError");
-
-  error.textContent = "";
-
-  if(!token){
-
-    error.textContent = "Please enter Admin Token.";
-
-    return;
-  }
-
-  sessionStorage.setItem(tokenKey, token);
-
-  showApp();
-
-  loadOrders();
-}
-
-
-/* SHOW APP */
-
-function showApp(){
-
-  document
-    .getElementById("loginScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("app")
     .classList.remove("hidden");
 }
 
@@ -1207,37 +1163,61 @@ function drawTable(){
 
          <div class="order-actions">
 
+ <div class="full-row shipping-actions">
+
   <button
-    class="action-btn whatsapp-btn"
-    onclick="whatsappCustomer(${index})"
+    class="btn btn-primary"
+    onclick="saveShipping('${escapeAttr(
+      order.order_number
+    )}')"
   >
-    📱 WhatsApp
+    💾 Save Shipping
   </button>
 
   <button
-    class="action-btn invoice-btn"
-    onclick="generateInvoice(${index})"
+    class="btn btn-success"
+    onclick="saveShippingAndShip('${escapeAttr(
+      order.order_number
+    )}')"
   >
-    🧾 Invoice
+    🚚 Save & Mark Shipped
   </button>
 
-  <button
-    class="action-btn shipping-btn"
-    onclick="openShipping(${index})"
-  >
-    🚚 Shipping
-  </button>
+ <td>
 
-  <button
-    class="view-btn"
-    onclick="viewOrder(${index})"
-  >
-    👁 View
-  </button>
+  <div class="order-actions">
 
-</div>
+    <button
+      class="action-btn whatsapp-btn"
+      onclick="whatsappCustomer(${index})"
+    >
+      📱 WhatsApp
+    </button>
 
-        </td>
+    <button
+      class="action-btn invoice-btn"
+      onclick="generateInvoice(${index})"
+    >
+      🧾 Invoice
+    </button>
+
+    <button
+      class="action-btn shipping-btn"
+      onclick="openShipping(${index})"
+    >
+      🚚 Shipping
+    </button>
+
+    <button
+      class="view-btn"
+      onclick="viewOrder(${index})"
+    >
+      👁 View
+    </button>
+
+  </div>
+
+</td>
 
       </tr>
     `;
@@ -2207,26 +2187,36 @@ function openShipping(index){
 
         <div class="full-row shipping-actions">
 
-          <button
-            class="btn btn-primary"
-            onclick="saveShipping('${escapeAttr(
-              order.order_number
-            )}')"
-          >
-            💾 Save Shipping
-          </button>
+         <div class="full-row shipping-actions">
 
+  <button
+    class="btn btn-primary"
+    onclick="saveShipping('${escapeAttr(
+      order.order_number
+    )}')"
+  >
+    💾 Save Shipping
+  </button>
 
-          <button
-            class="btn btn-success"
-            onclick="saveShippingAndShip('${escapeAttr(
-              order.order_number
-            )}')"
-          >
-            🚚 Save & Mark Shipped
-          </button>
+  <button
+    class="btn btn-success"
+    onclick="saveShippingAndShip('${escapeAttr(
+      order.order_number
+    )}')"
+  >
+    🚚 Save & Mark Shipped
+  </button>
 
-        </div>
+  <button
+    class="btn btn-success"
+    onclick="saveShippingAndWhatsApp('${escapeAttr(
+      order.order_number
+    )}')"
+  >
+    📱 Save & WhatsApp Tracking
+  </button>
+
+</div>
 
       </div>
 
@@ -2860,6 +2850,138 @@ th{
 
   invoiceWindow.document.close();
 
+}async function saveShippingAndWhatsApp(orderNumber){
+
+  const courier =
+    document.getElementById("courierName").value.trim();
+
+  const tracking =
+    document.getElementById("trackingNumber").value.trim();
+
+  const trackingUrl =
+    document.getElementById("trackingUrl").value.trim();
+
+  if(!tracking){
+    alert("Please enter Tracking Number.");
+    return;
+  }
+
+  try{
+
+    const response = await fetch(
+      "/api/admin/shipping",
+      {
+        method:"POST",
+        headers:authHeaders(),
+        body:JSON.stringify({
+          order_number:orderNumber,
+          courier_name:courier,
+          tracking_number:tracking,
+          tracking_url:trackingUrl
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if(response.status === 401){
+      logout();
+      return;
+    }
+
+    if(!response.ok){
+      throw new Error(
+        data.error || "Could not save shipping"
+      );
+    }
+
+    const order = orders.find(
+      o => o.order_number === orderNumber
+    );
+
+    if(!order){
+      throw new Error("Order not found.");
+    }
+
+    order.courier_name = courier;
+    order.tracking_number = tracking;
+    order.tracking_url = trackingUrl;
+
+    let message =
+`Hello ${order.customer_name || "Customer"} 👋
+
+Your PERFECT COMPUTER order has been shipped! 📦🚚
+
+🧾 Order: ${order.order_number}
+
+💰 Amount: ₹${formatMoney(
+  Number(order.amount_paise || 0) / 100
+)}
+
+🚚 Courier: ${courier || "-"}
+📦 Tracking No: ${tracking}
+
+`;
+
+    if(trackingUrl){
+      message +=
+`🔗 Track Your Order:
+${trackingUrl}
+
+`;
+    }
+
+    message +=
+`Thank you for choosing PERFECT COMPUTER. 💻
+
+Smart Technology. Perfect Choice.`;
+
+    const mobile =
+      String(order.mobile || "").replace(/\D/g,"");
+
+    if(!mobile){
+      closeModal();
+      renderOrders();
+
+      toast(
+        "🚚 Shipping saved, but customer mobile is missing."
+      );
+
+      return;
+    }
+
+    let whatsappNumber = mobile;
+
+    if(whatsappNumber.length === 10){
+      whatsappNumber = "91" + whatsappNumber;
+    }
+
+    const whatsappUrl =
+      "https://wa.me/" +
+      whatsappNumber +
+      "?text=" +
+      encodeURIComponent(message);
+
+    closeModal();
+    renderOrders();
+
+    toast("✅ Shipping saved. Opening WhatsApp...");
+
+    setTimeout(() => {
+      window.open(
+        whatsappUrl,
+        "_blank"
+      );
+    }, 300);
+
+  }catch(error){
+
+    alert(
+      "Shipping save failed:\n\n" +
+      error.message
+    );
+
+  }
 }
 </script>
 
