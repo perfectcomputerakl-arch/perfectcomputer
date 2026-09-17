@@ -3731,25 +3731,17 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   PRODUCT FORM
-========================================================= */
+const productForm = $("productForm");
 
-$("productForm")
-  .addEventListener(
+if (productForm) {
+  productForm.addEventListener(
     "submit",
-    function(e){
-
+    function(e) {
       e.preventDefault();
-
       saveProduct();
-
     }
   );
-
-
-/* =========================================================
-   KEYBOARD / MODALS
+}
 ========================================================= */
 
 document.addEventListener(
