@@ -35,6 +35,7 @@ button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!impo
 <div class="panel"><div class="toolbar"><input id="search" class="input search" type="search" placeholder="🔎 Search order, customer, mobile..." oninput="renderOrders()"><select id="statusFilter" class="input select" onchange="renderOrders()"><option value="">All Order Status</option><option value="new">New</option><option value="confirmed">Confirmed</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select><select id="paymentFilter" class="input select" onchange="renderOrders()"><option value="">All Payments</option><option value="paid">Paid</option><option value="cod_pending">COD Pending</option><option value="created">Created</option></select></div><div id="tableArea"><div class="center"><div class="spinner"></div>Loading orders...</div></div></div></main></section>
 <div id="orderModal" class="modal hidden"><div class="modal-card"><div class="modal-head"><h3>📋 Order Details</h3><button class="close" onclick="closeModal()">×</button></div><div id="modalBody" class="modal-body"></div></div></div><div id="toast"></div>
 <script>
+
 const tokenKey="perfectcomputer_admin_token";let orders=[],filteredOrders=[],toastTimer;
 function showApp(){loginScreen.classList.add("hidden");app.classList.remove("hidden")}
 function login(){const t=adminToken.value.trim();loginError.textContent="";if(!t){loginError.textContent="Please enter Admin Token.";return}sessionStorage.setItem(tokenKey,t);showApp();loadOrders()}
@@ -43,7 +44,7 @@ function authHeaders(){return{"Authorization":"Bearer "+sessionStorage.getItem(t
 async function loadOrders(){tableArea.innerHTML='<div class="center"><div class="spinner"></div>Loading orders...</div>';try{const r=await fetch("/api/admin/orders",{headers:authHeaders(),cache:"no-store"});if(r.status===401){logout();loginError.textContent="Invalid Admin Token.";return}const d=await r.json();if(!r.ok)throw Error(d.error||"Could not load orders");orders=Array.isArray(d.orders)?d.orders:[];updateStats();renderOrders()}catch(e){tableArea.innerHTML='<div class="center"><h3>⚠️ Could not load orders</h3><p>'+escapeHtml(e.message)+'</p><br><button class="btn btn-primary" onclick="loadOrders()">Try Again</button></div>'}}
 function updateStats(){totalOrders.textContent=orders.length;newOrders.textContent=orders.filter(o=>String(o.order_status).toLowerCase()==="new").length;paidOrders.textContent=orders.filter(o=>String(o.payment_status).toLowerCase()==="paid").length;codOrders.textContent=orders.filter(o=>String(o.payment_status).toLowerCase()==="cod_pending").length}
 function renderOrders(){const s=search.value.trim().toLowerCase(),st=statusFilter.value,p=paymentFilter.value;filteredOrders=orders.filter(o=>{const txt=[o.order_number,o.customer_name,o.mobile,o.email,o.city,o.state,o.payment_status,o.order_status].join(" ").toLowerCase();return(!s||txt.includes(s))&&(!st||String(o.order_status).toLowerCase()===st)&&(!p||String(o.payment_status).toLowerCase()===p)});drawTable()}
-function drawTable(){if(!filteredOrders.length){tableArea.innerHTML='<div class="center"><h3>📭 No orders found</h3><p>Try changing your search or filters.</p></div>';return}let h='<div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Order Status</th><th>Date</th><th>Action</th></tr></thead><tbody>';filteredOrders.forEach((o,i)=>{const n=getItemCount(o.items_json);h+='<tr><td><div class="order-no">'+escapeHtml(o.order_number||"-")+'</div><div class="muted">ID #'+escapeHtml(o.id??"-")+'</div></td><td><div class="customer">'+escapeHtml(o.customer_name||"-")+'</div><div class="muted">'+escapeHtml(o.mobile||"")+'</div></td><td>'+n+' item'+(n===1?"":"s")+'</td><td><div class="amount">₹'+formatMoney(Number(o.amount_paise||0)/100)+'</div></td><td>'+paymentBadge(o.payment_status,o.payment_method)+'</td><td><select class="status-select" onchange="changeStatus('+JSON.stringify(o.order_number||"")+',this.value)">'+statusOptions(o.order_status)+'</select></td><td>'+formatDate(o.created_at)+'</td><td><div class="order-actions"><button class="action-btn whatsapp-btn" onclick="whatsappCustomer('+i+')">📱 WhatsApp</button><button class="action-btn invoice-btn" onclick="generateInvoice('+i+')">🧾 Invoice</button><button class="action-btn shipping-btn" onclick="openShipping('+i+')">🚚 Shipping</button><button class="view-btn" onclick="viewOrder('+i+')">👁 View</button></div></td></tr>'});tableArea.innerHTML=h+"</tbody></table></div>"}
+function drawTable(){if(!filteredOrders.length){tableArea.innerHTML='<div class="center"><h3>📭 No orders found</h3><p>Try changing your search or filters.</p></div>';return}let h='<div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Order Status</th><th>Date</th><th>Action</th></tr></thead><tbody>';filteredOrders.forEach((o,i)=>{const n=getItemCount(o.items_json);h+='<tr><td><div class="order-no">'+escapeHtml(o.order_number||"-")+'</div><div class="muted">ID #'+escapeHtml(o.id??"-")+'</div></td><td><div class="customer">'+escapeHtml(o.customer_name||"-")+'</div><div class="muted">'+escapeHtml(o.mobile||"")+'</div></td><td>'+n+' item'+(n===1?"":"s")+'</td><td><div class="amount">₹'+formatMoney(Number(o.amount_paise||0)/100)+'</div></td><td>'+paymentBadge(o.payment_status,o.payment_method)+'</td><td><select class="status-select" onchange="changeStatus('+JSON.stringify(o.order_number||"")+',this.value)">'+statusOptions(o.order_status)+'</select></td><td>'+formatDate(o.created_at)+'</td><td><div class="order-actions"><button class="action-btn whatsapp-btn" data-action="whatsapp" data-index="'+i+'">📱 WhatsApp</button><button class="action-btn invoice-btn" data-action="invoice" data-index="'+i+'">🧾 Invoice</button><button class="action-btn shipping-btn" data-action="shipping" data-index="'+i+'">🚚 Shipping</button><button class="view-btn" data-action="view" data-index="'+i+'">👁 View</button></div></td></tr>'});tableArea.innerHTML=h+"</tbody></table></div>"}
 function statusOptions(c){return[["new","New"],["confirmed","Confirmed"],["shipped","Shipped"],["delivered","Delivered"],["cancelled","Cancelled"]].map(s=>'<option value="'+s[0]+'" '+(String(c).toLowerCase()===s[0]?"selected":"")+'>'+s[1]+"</option>").join("")}
 async function changeStatus(num,status){try{const r=await fetch("/api/admin/order-status",{method:"POST",headers:authHeaders(),body:JSON.stringify({order_number:num,order_status:status})});const d=await r.json();if(r.status===401){logout();return}if(!r.ok)throw Error(d.error||"Status update failed");const o=orders.find(x=>x.order_number===num);if(o)o.order_status=status;updateStats();renderOrders();toast("✅ Order status updated to "+status.toUpperCase())}catch(e){alert("Could not update order status:\\n\\n"+e.message);loadOrders()}}
 function parseItems(x){try{return typeof x==="string"?JSON.parse(x):(x||[])}catch{return[]}}
@@ -60,28 +61,246 @@ function csvEscape(v){const s=String(v??"");return s.includes(",")||s.includes('
 function exportCSV(){if(!orders.length){alert("There are no orders to export.");return}const rows=[["Order Number","Date","Customer","Mobile","Email","Address","City","State","Pincode","Amount","Payment Method","Payment Status","Order Status","Razorpay Order ID","Razorpay Payment ID","Courier","Tracking Number","Tracking URL"]];filteredOrders.forEach(o=>rows.push([o.order_number||"",o.created_at||"",o.customer_name||"",o.mobile||"",o.email||"",o.address||"",o.city||"",o.state||"",o.pincode||"",(Number(o.amount_paise||0)/100).toFixed(2),o.payment_method||"",o.payment_status||"",o.order_status||"",o.razorpay_order_id||"",o.razorpay_payment_id||"",o.courier_name||"",o.tracking_number||"",o.tracking_url||""]));const csv=rows.map(r=>r.map(csvEscape).join(",")).join("\\r\\n"),b=new Blob(["\\ufeff"+csv],{type:"text/csv;charset=utf-8;"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="perfect-computer-orders-"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);toast("📥 CSV exported successfully")}
 
 /* SHIPPING */
-function openShipping(i){const o=filteredOrders[i];if(!o)return;modalBody.innerHTML='<h3 style="margin-bottom:15px;">🚚 Shipping / Tracking</h3><div class="detail-grid">'+detail("Order Number",o.order_number)+detail("Customer",o.customer_name)+detail("Mobile",o.mobile)+detail("Current Status",o.order_status)+'</div><div class="tracking-box"><div class="tracking-title">🚚 Courier Information</div><div class="shipping-form"><div><label class="form-label">Courier Name</label><input id="courierName" class="input" placeholder="Delhivery / DTDC / Blue Dart" value="'+escapeHtml(o.courier_name||"")+'"></div><div><label class="form-label">Tracking Number</label><input id="trackingNumber" class="input" placeholder="Enter tracking number" value="'+escapeHtml(o.tracking_number||"")+'"></div><div class="full-row"><label class="form-label">Tracking URL</label><input id="trackingUrl" class="input" type="url" placeholder="https://..." value="'+escapeHtml(o.tracking_url||"")+'"></div><div class="full-row shipping-actions"><button class="btn btn-primary" onclick="saveShipping('+JSON.stringify(o.order_number||"")+')">💾 Save Shipping</button><button class="btn btn-success" onclick="saveShippingAndShip('+JSON.stringify(o.order_number||"")+')">🚚 Save & Mark Shipped</button><button class="btn btn-success" onclick="saveShippingAndWhatsApp('+JSON.stringify(o.order_number||"")+')">📱 Save & WhatsApp Tracking</button></div></div></div>';orderModal.classList.remove("hidden")}
-async function shippingPayload(num){return{order_number:num,courier_name:courierName.value.trim(),tracking_number:trackingNumber.value.trim(),tracking_url:trackingUrl.value.trim()}}
-async function saveShipping(num){try{const p=await shippingPayload(num),r=await fetch("/api/admin/shipping",{method:"POST",headers:authHeaders(),body:JSON.stringify(p)}),d=await r.json();if(r.status===401){logout();return false}if(!r.ok)throw Error(d.error||"Could not save shipping");const o=orders.find(x=>x.order_number===num);if(o)Object.assign(o,{courier_name:p.courier_name,tracking_number:p.tracking_number,tracking_url:p.tracking_url});toast("🚚 Shipping information saved");closeModal();renderOrders();return true}catch(e){alert("Shipping save failed:\\n\\n"+e.message);return false}}
-async function saveShippingAndShip(num){if(await saveShipping(num))await changeStatus(num,"shipped")}
-async function saveShippingAndWhatsApp(num){try{const p=await shippingPayload(num);if(!p.tracking_number){alert("Please enter Tracking Number.");return}const r=await fetch("/api/admin/shipping",{method:"POST",headers:authHeaders(),body:JSON.stringify(p)}),d=await r.json();if(r.status===401){logout();return}if(!r.ok)throw Error(d.error||"Could not save shipping");const o=orders.find(x=>x.order_number===num);if(!o)throw Error("Order not found.");Object.assign(o,{courier_name:p.courier_name,tracking_number:p.tracking_number,tracking_url:p.tracking_url});const phone=String(o.mobile||"").replace(/\D/g,"");if(!phone){closeModal();renderOrders();toast("🚚 Shipping saved, but customer mobile is missing.");return}const n=phone.length===10?"91"+phone:norm(phone);function norm(x){return x}const hello="\u{1F44B}",truck="\u{1F69A}",box="\u{1F4E6}",money="\u{1F4B0}",searchIcon="\u{1F50E}",link="\u{1F517}",thanks="\u{1F64F}";let msg=`${hello} Hello ${o.customer_name||"Customer"}!
+function openShipping(i){
+  const o=filteredOrders[i];
+  if(!o)return;
+
+  modalBody.innerHTML =
+    '<h3 style="margin-bottom:15px;">🚚 Shipping / Tracking</h3>'+
+    '<div class="detail-grid">'+
+      detail("Order Number",o.order_number)+
+      detail("Customer",o.customer_name)+
+      detail("Mobile",o.mobile)+
+      detail("Current Status",o.order_status)+
+    '</div>'+
+    '<div class="tracking-box">'+
+      '<div class="tracking-title">🚚 Courier Information</div>'+
+      '<div class="shipping-form">'+
+        '<div><label class="form-label">Courier Name</label>'+
+        '<input id="courierName" class="input" placeholder="Delhivery / DTDC / Blue Dart" value="'+escapeHtml(o.courier_name||"")+'"></div>'+
+        '<div><label class="form-label">Tracking Number</label>'+
+        '<input id="trackingNumber" class="input" placeholder="Enter tracking number" value="'+escapeHtml(o.tracking_number||"")+'"></div>'+
+        '<div class="full-row"><label class="form-label">Tracking URL</label>'+
+        '<input id="trackingUrl" class="input" type="url" placeholder="https://..." value="'+escapeHtml(o.tracking_url||"")+'"></div>'+
+        '<div class="full-row shipping-actions">'+
+          '<button id="saveShippingBtn" class="btn btn-primary">💾 Save Shipping</button>'+
+          '<button id="shipOrderBtn" class="btn btn-success">🚚 Save & Mark Shipped</button>'+
+          '<button id="shipWhatsAppBtn" class="btn btn-success">📱 Save & WhatsApp Tracking</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  orderModal.classList.remove("hidden");
+
+  document.getElementById("saveShippingBtn").addEventListener("click",()=>saveShipping(o.order_number));
+  document.getElementById("shipOrderBtn").addEventListener("click",()=>saveShippingAndShip(o.order_number));
+  document.getElementById("shipWhatsAppBtn").addEventListener("click",()=>saveShippingAndWhatsApp(o.order_number));
+}
+
+function shippingPayload(orderNumber){
+  return {
+    order_number: orderNumber,
+    courier_name: (document.getElementById("courierName")?.value||"").trim(),
+    tracking_number: (document.getElementById("trackingNumber")?.value||"").trim(),
+    tracking_url: (document.getElementById("trackingUrl")?.value||"").trim()
+  };
+}
+
+async function postShipping(payload){
+  const response=await fetch("/api/admin/shipping",{
+    method:"POST",
+    headers:authHeaders(),
+    body:JSON.stringify(payload)
+  });
+
+  let data={};
+  try{data=await response.json();}catch{}
+
+  if(response.status===401){
+    logout();
+    throw new Error("Admin session expired. Please login again.");
+  }
+  if(!response.ok){
+    throw new Error(data.error||data.message||("Shipping API returned HTTP "+response.status));
+  }
+  return data;
+}
+
+function updateLocalShipping(orderNumber,payload){
+  const o=orders.find(x=>x.order_number===orderNumber);
+  if(o){
+    o.courier_name=payload.courier_name;
+    o.tracking_number=payload.tracking_number;
+    o.tracking_url=payload.tracking_url;
+  }
+}
+
+async function saveShipping(orderNumber){
+  const btn=document.getElementById("saveShippingBtn");
+  const payload=shippingPayload(orderNumber);
+
+  if(btn){btn.disabled=true;btn.textContent="Saving...";}
+
+  try{
+    await postShipping(payload);
+    updateLocalShipping(orderNumber,payload);
+    closeModal();
+    renderOrders();
+    toast("✅ Shipping information saved successfully");
+    return true;
+  }catch(error){
+    if(btn){btn.disabled=false;btn.textContent="💾 Save Shipping";}
+    alert("Shipping save failed:\n\n"+error.message);
+    return false;
+  }
+}
+
+async function saveShippingAndShip(orderNumber){
+  const btn=document.getElementById("shipOrderBtn");
+  const payload=shippingPayload(orderNumber);
+
+  if(btn){btn.disabled=true;btn.textContent="Saving & Shipping...";}
+
+  try{
+    await postShipping(payload);
+    updateLocalShipping(orderNumber,payload);
+
+    const response=await fetch("/api/admin/order-status",{
+      method:"POST",
+      headers:authHeaders(),
+      body:JSON.stringify({
+        order_number:orderNumber,
+        order_status:"shipped"
+      })
+    });
+
+    let data={};
+    try{data=await response.json();}catch{}
+
+    if(response.status===401){
+      logout();
+      throw new Error("Admin session expired. Please login again.");
+    }
+    if(!response.ok){
+      throw new Error(data.error||data.message||("Status API returned HTTP "+response.status));
+    }
+
+    const o=orders.find(x=>x.order_number===orderNumber);
+    if(o)o.order_status="shipped";
+
+    closeModal();
+    updateStats();
+    renderOrders();
+    toast("🚚 Order saved and marked SHIPPED");
+    return true;
+  }catch(error){
+    if(btn){btn.disabled=false;btn.textContent="🚚 Save & Mark Shipped";}
+    alert("Could not mark order as shipped:\n\n"+error.message);
+    return false;
+  }
+}
+
+function buildShippingWhatsAppUrl(order,payload){
+  const phone=String(order.mobile||"").replace(/\D/g,"");
+  if(!phone)throw new Error("Customer mobile number is missing.");
+
+  const whatsappNumber=phone.length===10?"91"+phone:phone;
+  const hello="\u{1F44B}";
+  const truck="\u{1F69A}";
+  const box="\u{1F4E6}";
+  const money="\u{1F4B0}";
+  const searchIcon="\u{1F50E}";
+  const link="\u{1F517}";
+  const thanks="\u{1F64F}";
+
+  let message=
+`${hello} Hello ${order.customer_name||"Customer"}!
 
 ${truck} Your PERFECT COMPUTER order has been shipped!
 
-${box} Order: ${o.order_number||"-"}
-${money} Amount: ₹${formatMoney(Number(o.amount_paise||0)/100)}
-${truck} Courier: ${p.courier_name||"-"}
-${searchIcon} Tracking No: ${p.tracking_number}`;if(p.tracking_url)msg+=`
+${box} Order: ${order.order_number||"-"}
+${money} Amount: ₹${formatMoney(Number(order.amount_paise||0)/100)}
+${truck} Courier: ${payload.courier_name||"-"}
+${searchIcon} Tracking No: ${payload.tracking_number}`;
+
+  if(payload.tracking_url){
+    message+=`
 
 ${link} Track Your Order:
-${p.tracking_url}`;msg+=`
+${payload.tracking_url}`;
+  }
+
+  message+=`
 
 ${thanks} Thank you for choosing PERFECT COMPUTER.
 
-💻 Smart Technology. Perfect Choice.`;const url="https://wa.me/"+n+"?text="+encodeURIComponent(msg);closeModal();renderOrders();toast("✅ Shipping saved. Opening WhatsApp...");setTimeout(()=>window.open(url,"_blank"),300)}catch(e){alert("Shipping save failed:\\n\\n"+e.message)}}
+💻 Smart Technology. Perfect Choice.`;
+
+  return "https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message);
+}
+
+async function saveShippingAndWhatsApp(orderNumber){
+  // Open the window immediately from the user click so Chrome/Edge popup blocking
+  // does not prevent WhatsApp from opening after the API request finishes.
+  const popup=window.open("about:blank","_blank");
+
+  const btn=document.getElementById("shipWhatsAppBtn");
+  const payload=shippingPayload(orderNumber);
+
+  if(!payload.tracking_number){
+    if(popup)popup.close();
+    alert("Please enter Tracking Number.");
+    return;
+  }
+
+  if(btn){btn.disabled=true;btn.textContent="Saving...";}
+
+  try{
+    await postShipping(payload);
+
+    const order=orders.find(x=>x.order_number===orderNumber);
+    if(!order)throw new Error("Order not found.");
+
+    updateLocalShipping(orderNumber,payload);
+
+    const whatsappUrl=buildShippingWhatsAppUrl(order,payload);
+
+    closeModal();
+    renderOrders();
+    toast("✅ Shipping saved. Opening WhatsApp...");
+
+    if(popup){
+      popup.location.href=whatsappUrl;
+    }else{
+      window.location.href=whatsappUrl;
+    }
+  }catch(error){
+    if(popup)popup.close();
+    if(btn){btn.disabled=false;btn.textContent="📱 Save & WhatsApp Tracking";}
+    alert("Shipping / WhatsApp failed:\n\n"+error.message);
+  }
+}
 
 /* GENERAL WHATSAPP */
-function whatsappCustomer(i){const o=filteredOrders[i];if(!o)return;const phone=String(o.mobile||"").replace(/\D/g,"");if(!phone){alert("Customer mobile number not available.");return}const n=phone.length===10?"91"+phone:phone;const h="\u{1F44B}",box="\u{1F4E6}",money="\u{1F4B0}",truck="\u{1F69A}",thanks="\u{1F64F}";let msg=`${h} Hello ${o.customer_name||"Customer"}!
+function whatsappCustomer(i){
+  const o=filteredOrders[i];
+  if(!o)return;
+
+  const phone=String(o.mobile||"").replace(/\D/g,"");
+  if(!phone){
+    alert("Customer mobile number not available.");
+    return;
+  }
+
+  const whatsappNumber=phone.length===10?"91"+phone:phone;
+  const hello="\u{1F44B}";
+  const box="\u{1F4E6}";
+  const money="\u{1F4B0}";
+  const truck="\u{1F69A}";
+  const thanks="\u{1F64F}";
+
+  let message=
+`${hello} Hello ${o.customer_name||"Customer"}!
 
 Thank you for ordering from PERFECT COMPUTER.
 
@@ -89,23 +308,54 @@ ${box} Order: ${o.order_number||"-"}
 ${money} Amount: ₹${formatMoney(Number(o.amount_paise||0)/100)}
 
 ${truck} Status: ${String(o.order_status||"new").toUpperCase()}
-Payment: ${o.payment_method==="cod"?"Cash on Delivery":String(o.payment_status||"").toUpperCase()}`;if(o.tracking_number)msg+=`
+Payment: ${o.payment_method==="cod"?"Cash on Delivery":String(o.payment_status||"").toUpperCase()}`;
+
+  if(o.tracking_number){
+    message+=`
 
 ${truck} Shipping Details
 Courier: ${o.courier_name||"-"}
-Tracking No: ${o.tracking_number}${o.tracking_url?`
+Tracking No: ${o.tracking_number}`;
+    if(o.tracking_url){
+      message+=`
 
 🔗 Track Your Order:
-${o.tracking_url}`:""}`;msg+=`
+${o.tracking_url}`;
+    }
+  }
+
+  message+=`
 
 ${thanks} Thank you for choosing PERFECT COMPUTER.
 
-💻 Smart Technology. Perfect Choice.`;window.open("https://wa.me/"+n+"?text="+encodeURIComponent(msg),"_blank")}
+💻 Smart Technology. Perfect Choice.`;
+
+  const url="https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message);
+
+  // Directly triggered by the button click.
+  window.open(url,"_blank");
+}
 
 /* INVOICE */
 function generateInvoice(i){const o=filteredOrders[i];if(!o)return;const items=parseItems(o.items_json),rows=Array.isArray(items)?items.map((x,j)=>{const q=Number(x.quantity||x.qty||1),p=Number(x.price||0);return`<tr><td>${j+1}</td><td>${escapeHtml(x.name||x.title||"Product")}</td><td>${q}</td><td>₹${formatMoney(p)}</td><td>₹${formatMoney(p*q)}</td></tr>`}).join(""):"";const w=window.open("","_blank","width=900,height=700");if(!w){alert("Please allow pop-ups for invoice.");return}w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Invoice ${escapeHtml(o.order_number)}</title><style>body{font-family:Arial;margin:0;padding:30px;color:#172033}.invoice{max-width:850px;margin:auto}.header{display:flex;justify-content:space-between;border-bottom:2px solid #172033;padding-bottom:20px}.shop h1{margin:0}.shop p{margin:5px 0;color:#555}.invoice-title{text-align:right}.info{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:25px 0}.box{border:1px solid #ddd;padding:15px;border-radius:8px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:10px;text-align:left}th{background:#f5f5f5}.total{margin-top:20px;text-align:right;font-size:22px;font-weight:bold}.footer{margin-top:35px;border-top:1px solid #ddd;padding-top:15px;text-align:center;color:#666}.print{text-align:center;margin:20px}.print button{padding:10px 20px;border:0;background:#1264ff;color:#fff;border-radius:7px}@media print{.print{display:none}body{padding:0}}</style></head><body><div class="invoice"><div class="print"><button onclick="window.print()">🖨 Print Invoice</button></div><div class="header"><div class="shop"><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><p>Near Saifullah Chowk, Shadab Nagar, Akola, Maharashtra</p><p>Phone: 7875867861</p></div><div class="invoice-title"><h2>ORDER INVOICE</h2><p>Invoice: ${escapeHtml(o.order_number||"-")}</p><p>Date: ${formatDate(o.created_at)}</p></div></div><div class="info"><div class="box"><h4>BILL TO</h4><strong>${escapeHtml(o.customer_name||"-")}</strong><br>${escapeHtml(o.mobile||"-")}<br>${escapeHtml(o.email||"")}<br><br>${escapeHtml(o.address||"-")}<br>${escapeHtml(o.city||"")}, ${escapeHtml(o.state||"")}<br>PIN: ${escapeHtml(o.pincode||"-")}</div><div class="box"><h4>PAYMENT</h4>Method: ${escapeHtml(o.payment_method||"-")}<br>Status: ${escapeHtml(o.payment_status||"-")}<br><br>Order Status: ${escapeHtml(o.order_status||"-")}${o.tracking_number?"<br><br>Courier: "+escapeHtml(o.courier_name||"-")+"<br>Tracking: "+escapeHtml(o.tracking_number):""}</div></div><table><thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Grand Total: ₹${formatMoney(Number(o.amount_paise||0)/100)}</div><div class="footer">Thank you for choosing <strong>PERFECT COMPUTER</strong>.<br>Smart Technology. Perfect Choice.</div></div></body></html>`);w.document.close()}
 
+
+/* BUTTON EVENT DELEGATION */
+document.addEventListener("click",function(event){
+  const btn=event.target.closest("[data-action]");
+  if(!btn)return;
+
+  const action=btn.getAttribute("data-action");
+  const index=Number(btn.getAttribute("data-index"));
+
+  if(action==="whatsapp")whatsappCustomer(index);
+  else if(action==="invoice")generateInvoice(index);
+  else if(action==="shipping")openShipping(index);
+  else if(action==="view")viewOrder(index);
+});
+
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});orderModal.addEventListener("click",e=>{if(e.target.id==="orderModal")closeModal()});adminToken.addEventListener("keydown",e=>{if(e.key==="Enter")login()});(()=>{if(sessionStorage.getItem(tokenKey)){showApp();loadOrders()}})();
+
 </script>
 </body>
 </html>
