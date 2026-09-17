@@ -206,13 +206,13 @@ function buildShippingWhatsAppUrl(order,payload){
   if(!phone)throw new Error("Customer mobile number is missing.");
 
   const whatsappNumber=phone.length===10?"91"+phone:phone;
-  const hello="\u{1F44B}";
-  const truck="\u{1F69A}";
-  const box="\u{1F4E6}";
-  const money="\u{1F4B0}";
-  const searchIcon="\u{1F50E}";
-  const link="\u{1F517}";
-  const thanks="\u{1F64F}";
+  const hello="[HELLO]";
+  const truck="[SHIPPED]";
+  const box="[ORDER]";
+  const money="[AMOUNT]";
+  const searchIcon="[TRACKING]";
+  const link="[TRACK LINK]";
+  const thanks="[THANK YOU]";
 
   let message=
 `${hello} Hello ${order.customer_name||"Customer"}!
@@ -235,7 +235,7 @@ ${payload.tracking_url}`;
 
 ${thanks} Thank you for choosing PERFECT COMPUTER.
 
-💻 Smart Technology. Perfect Choice.`;
+Smart Technology. Perfect Choice.`;
 
   return "https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message);
 }
@@ -294,11 +294,11 @@ function whatsappCustomer(i){
   }
 
   const whatsappNumber=phone.length===10?"91"+phone:phone;
-  const hello="\u{1F44B}";
-  const box="\u{1F4E6}";
-  const money="\u{1F4B0}";
-  const truck="\u{1F69A}";
-  const thanks="\u{1F64F}";
+  const hello="[HELLO]";
+  const box="[ORDER]";
+  const money="[AMOUNT]";
+  const truck="[SHIPPED]";
+  const thanks="[THANK YOU]";
 
   let message=
 `${hello} Hello ${o.customer_name||"Customer"}!
@@ -329,7 +329,7 @@ ${o.tracking_url}`;
 
 ${thanks} Thank you for choosing PERFECT COMPUTER.
 
-💻 Smart Technology. Perfect Choice.`;
+Smart Technology. Perfect Choice.`;
 
   const url="https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message);
 
