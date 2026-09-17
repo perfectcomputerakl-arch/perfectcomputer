@@ -585,6 +585,271 @@ async function adminShipping(
 }
 
 
+
+/* =========================================================
+   PRODUCT MANAGEMENT
+   Additive only — does not modify existing orders.
+   ========================================================= */
+
+function productAdminData(body = {}) {
+  const name = String(body.name || "").trim();
+  const brand = String(body.brand || "").trim();
+  const category = String(body.category || "").trim();
+  const sku = String(body.sku || "").trim();
+  const description = String(body.description || "").trim();
+  const imageUrl = String(body.image_url || "").trim();
+  const status = String(body.status || "active").trim().toLowerCase();
+
+  const price = Number(body.price);
+  const mrp = Number(body.mrp);
+  const stockQty = Number(body.stock_qty);
+
+  if (!name || !category) {
+    throw new Error("Product name and category are required");
+  }
+
+  if (!Number.isFinite(price) || price < 0) {
+    throw new Error("Invalid selling price");
+  }
+
+  if (!Number.isFinite(mrp) || mrp < 0) {
+    throw new Error("Invalid MRP");
+  }
+
+  if (!Number.isInteger(stockQty) || stockQty < 0) {
+    throw new Error("Invalid stock quantity");
+  }
+
+  if (!["active", "inactive"].includes(status)) {
+    throw new Error("Invalid product status");
+  }
+
+  if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
+    throw new Error("Image URL must start with http:// or https://");
+  }
+
+  return {
+    name,
+    brand,
+    category,
+    sku,
+    description,
+    image_url: imageUrl,
+    price_paise: Math.round(price * 100),
+    mrp_paise: Math.round(mrp * 100),
+    stock_qty: stockQty,
+    status
+  };
+}
+
+async function adminProducts(request, env) {
+  if (!requireAdmin(request, env)) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
+  const result = await env.DB.prepare(`
+    SELECT
+      id,
+      name,
+      brand,
+      category,
+      sku,
+      description,
+      image_url,
+      price_paise,
+      mrp_paise,
+      stock_qty,
+      status,
+      created_at,
+      updated_at
+    FROM products
+    ORDER BY id DESC
+    LIMIT 1000
+  `).all();
+
+  return json({
+    ok: true,
+    products: result.results || []
+  });
+}
+
+async function createProduct(request, env) {
+  if (!requireAdmin(request, env)) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "Invalid JSON" }, 400);
+  }
+
+  let p;
+  try {
+    p = productAdminData(body);
+  } catch (e) {
+    return json({ error: e.message }, 400);
+  }
+
+  const result = await env.DB.prepare(`
+    INSERT INTO products (
+      name,
+      brand,
+      category,
+      sku,
+      description,
+      image_url,
+      price_paise,
+      mrp_paise,
+      stock_qty,
+      status,
+      created_at,
+      updated_at
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+  `).bind(
+    p.name,
+    p.brand,
+    p.category,
+    p.sku,
+    p.description,
+    p.image_url,
+    p.price_paise,
+    p.mrp_paise,
+    p.stock_qty,
+    p.status
+  ).run();
+
+  return json({
+    ok: true,
+    product_id: result.meta?.last_row_id || null
+  }, 201);
+}
+
+async function updateProduct(request, env) {
+  if (!requireAdmin(request, env)) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "Invalid JSON" }, 400);
+  }
+
+  const id = Number(body.id);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return json({ error: "Valid product id required" }, 400);
+  }
+
+  let p;
+  try {
+    p = productAdminData(body);
+  } catch (e) {
+    return json({ error: e.message }, 400);
+  }
+
+  const result = await env.DB.prepare(`
+    UPDATE products
+    SET
+      name = ?,
+      brand = ?,
+      category = ?,
+      sku = ?,
+      description = ?,
+      image_url = ?,
+      price_paise = ?,
+      mrp_paise = ?,
+      stock_qty = ?,
+      status = ?,
+      updated_at = datetime('now')
+    WHERE id = ?
+  `).bind(
+    p.name,
+    p.brand,
+    p.category,
+    p.sku,
+    p.description,
+    p.image_url,
+    p.price_paise,
+    p.mrp_paise,
+    p.stock_qty,
+    p.status,
+    id
+  ).run();
+
+  if (!result.meta?.changes) {
+    return json({ error: "Product not found" }, 404);
+  }
+
+  return json({
+    ok: true,
+    product_id: id
+  });
+}
+
+async function deleteProduct(request, env) {
+  if (!requireAdmin(request, env)) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "Invalid JSON" }, 400);
+  }
+
+  const id = Number(body.id);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return json({ error: "Valid product id required" }, 400);
+  }
+
+  const result = await env.DB.prepare(`
+    DELETE FROM products
+    WHERE id = ?
+  `).bind(id).run();
+
+  if (!result.meta?.changes) {
+    return json({ error: "Product not found" }, 404);
+  }
+
+  return json({
+    ok: true,
+    product_id: id
+  });
+}
+
+async function publicProducts(request, env) {
+  const result = await env.DB.prepare(`
+    SELECT
+      id,
+      name,
+      brand,
+      category,
+      sku,
+      description,
+      image_url,
+      price_paise,
+      mrp_paise,
+      stock_qty,
+      status
+    FROM products
+    WHERE status = 'active'
+    ORDER BY id DESC
+    LIMIT 1000
+  `).all();
+
+  return json({
+    ok: true,
+    products: result.results || []
+  });
+}
+
 /* =========================================================
    MAIN API HANDLER
    ========================================================= */
@@ -1208,6 +1473,52 @@ async function handleApi(
       ok: true
     });
 
+  }
+
+
+
+  /* =========================================================
+     PRODUCTS — PUBLIC LIST
+     ========================================================= */
+
+  if (
+    url.pathname === "/api/products" &&
+    request.method === "GET"
+  ) {
+    return publicProducts(request, env);
+  }
+
+
+  /* =========================================================
+     ADMIN — PRODUCTS
+     ========================================================= */
+
+  if (
+    url.pathname === "/api/admin/products" &&
+    request.method === "GET"
+  ) {
+    return adminProducts(request, env);
+  }
+
+  if (
+    url.pathname === "/api/admin/products" &&
+    request.method === "POST"
+  ) {
+    return createProduct(request, env);
+  }
+
+  if (
+    url.pathname === "/api/admin/products" &&
+    request.method === "PUT"
+  ) {
+    return updateProduct(request, env);
+  }
+
+  if (
+    url.pathname === "/api/admin/products" &&
+    request.method === "DELETE"
+  ) {
+    return deleteProduct(request, env);
   }
 
 
