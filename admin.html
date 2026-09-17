@@ -594,23 +594,21 @@ function whatsappCustomer(index){
   if(!order) return;
 
   let message =
-`Hello ${order.customer_name || "Customer"} 👋
+`👋 Hello ${order.customer_name || "Customer"}!
 
-Thank you for ordering from PERFECT COMPUTER. 💻
+Thank you for ordering from PERFECT COMPUTER.
 
 🧾 Order: ${order.order_number || "-"}
 💰 Amount: ₹${formatMoney(Number(order.amount_paise || 0) / 100)}
-
 📦 Status: ${String(order.order_status || "new").toUpperCase()}
-
 💳 Payment: ${
   order.payment_method === "cod"
     ? "Cash on Delivery"
     : String(order.payment_status || "").toUpperCase()
 }
 
-Thank you for choosing PERFECT COMPUTER.
-Smart Technology. Perfect Choice.`;
+🙏 Thank you for choosing PERFECT COMPUTER.
+💻 Smart Technology. Perfect Choice.`;
 
   if(order.tracking_number){
     message +=
@@ -622,7 +620,7 @@ Tracking No: ${order.tracking_number}`;
 
     if(order.tracking_url){
       message += `
-Tracking Link: ${order.tracking_url}`;
+🔗 Tracking Link: ${order.tracking_url}`;
     }
   }
 
@@ -841,15 +839,14 @@ async function saveShippingAndWhatsApp(orderNumber){
     order.tracking_url = trackingUrl;
 
     let message =
-`Hello ${order.customer_name || "Customer"} 👋
+`👋 Hello ${order.customer_name || "Customer"}!
 
-Your PERFECT COMPUTER order has been shipped! 📦🚚
+🎉 Your PERFECT COMPUTER order has been shipped!
 
-🧾 Order: ${order.order_number}
+📦 Order: ${order.order_number}
 💰 Amount: ₹${formatMoney(Number(order.amount_paise || 0) / 100)}
-
 🚚 Courier: ${courier || "-"}
-📦 Tracking No: ${tracking}
+🔢 Tracking No: ${tracking}
 `;
 
     if(trackingUrl){
