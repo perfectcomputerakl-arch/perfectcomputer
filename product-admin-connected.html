@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PERFECT COMPUTER — Product Manager</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#111827;color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:20px;font-weight:800}.sub{font-size:12px;color:#cbd5e1;margin-top:4px}
+main{max-width:1200px;margin:24px auto;padding:0 16px}
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 4px 16px #00000008}
+h2{margin:0 0 6px}.muted{color:#667085;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.full{grid-column:1/-1}label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d0d5dd;border-radius:9px;font-size:14px}
+textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
+.primary{background:#111827;color:#fff}.light{background:#eef2f6}.danger{background:#fee2e2;color:#991b1b}
+.actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}.toolbar>*{max-width:320px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:12px 10px;border-bottom:1px solid #eaecf0;text-align:left;font-size:14px}
+th{background:#f8fafc;font-size:12px;text-transform:uppercase;color:#667085}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}.in{background:#dcfce7;color:#166534}.out{background:#fee2e2;color:#991b1b}
+.price{font-weight:800}.mrp{text-decoration:line-through;color:#98a2b3;font-weight:400;margin-left:6px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.full{grid-column:auto}header{padding:15px}}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="brand">PERFECT COMPUTER</div><div class="sub">Product & Stock Management</div></div>
+  <a href="/admin" style="color:#fff;text-decoration:none">Order Admin →</a>
+</header>
+
+<main>
+<section class="panel">
+  <h2>Product Manager</h2>
+  <div class="muted">Add and manage products, pricing and stock. This page is ready for the Product API.</div>
+  <div class="grid" style="margin-top:18px">
+    <div><label>Product Name *</label><input id="name" placeholder="e.g. Lenovo 512GB NVMe SSD"></div>
+    <div><label>Brand</label><input id="brand" placeholder="Lenovo / HP / Dell / EVM"></div>
+    <div><label>Category *</label>
+      <select id="category">
+        <option value="Laptops">Laptops</option><option value="Desktop">Desktop</option>
+        <option value="Gaming">Gaming</option><option value="PC Components">PC Components</option>
+        <option value="Monitors">Monitors</option><option value="Printers">Printers</option>
+        <option value="CCTV">CCTV</option><option value="Storage">Storage</option>
+        <option value="Accessories">Accessories</option>
+      </select>
+    </div>
+    <div><label>SKU</label><input id="sku" placeholder="PC-SSD-512-001"></div>
+    <div><label>Selling Price (₹) *</label><input id="price" type="number" min="0" step="0.01" placeholder="2499"></div>
+    <div><label>MRP (₹)</label><input id="mrp" type="number" min="0" step="0.01" placeholder="3999"></div>
+    <div><label>Stock Quantity *</label><input id="stock" type="number" min="0" step="1" placeholder="10"></div>
+    <div><label>Image URL</label><input id="image" placeholder="https://..."></div>
+    <div><label>Status</label><select id="status"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+    <div class="full"><label>Description</label><textarea id="description" placeholder="Product details..."></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="primary" onclick="addProduct()">Add Product</button>
+    <button class="light" onclick="clearForm()">Clear</button>
+  </div>
+  <p id="msg" class="muted"></p>
+</section>
+
+<section class="panel">
+  <div class="toolbar">
+    <input id="search" placeholder="Search product, brand or SKU..." oninput="filterTable()">
+    <select id="filter" onchange="filterTable()"><option value="">All Categories</option>
+      <option>Laptops</option><option>Desktop</option><option>Gaming</option><option>PC Components</option>
+      <option>Monitors</option><option>Printers</option><option>CCTV</option><option>Storage</option><option>Accessories</option>
+    </select>
+  </div>
+  <div class="table-wrap"><table><thead><tr>
+    <th>Product</th><th>Brand</th><th>Category</th><th>SKU</th><th>Price</th><th>Stock</th><th>Status / Actions</th>
+  </tr></thead><tbody id="rows"><tr><td colspan="8" class="muted">Product API will populate this table after backend integration.</td></tr></tbody></table></div>
+</section>
+</main>
+
+<script>
+const tokenKey="perfectcomputer_admin_token";
+let products=[];
+let editingId=null;
+
+function authHeaders(){
+  return {
+    "Authorization":"Bearer "+(sessionStorage.getItem(tokenKey)||""),
+    "Content-Type":"application/json"
+  };
+}
+function money(v){
+  return "₹"+Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+function setMsg(text,error=false){
+  const el=document.getElementById("msg");
+  el.textContent=text;
+  el.style.color=error?"#b42318":"#667085";
+}
+function clearForm(){
+  editingId=null;
+  ["name","brand","sku","price","mrp","stock","image","description"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("category").value="";
+  document.getElementById("status").value="active";
+  document.querySelector(".primary").textContent="Add Product";
+  setMsg("");
+}
+function formData(){
+  return {
+    name:document.getElementById("name").value.trim(),
+    brand:document.getElementById("brand").value.trim(),
+    category:document.getElementById("category").value,
+    sku:document.getElementById("sku").value.trim(),
+    price:Number(document.getElementById("price").value),
+    mrp:Number(document.getElementById("mrp").value||0),
+    stock_qty:Number(document.getElementById("stock").value),
+    image_url:document.getElementById("image").value.trim(),
+    description:document.getElementById("description").value.trim(),
+    status:document.getElementById("status").value
+  };
+}
+async function loadProducts(){
+  const rows=document.getElementById("rows");
+  rows.innerHTML='<tr><td colspan="8" class="muted">Loading products...</td></tr>';
+  try{
+    const r=await fetch("/api/admin/products",{headers:authHeaders(),cache:"no-store"});
+    if(r.status===401) throw new Error("Unauthorized — please open /admin and log in first.");
+    const d=await r.json();
+    if(!r.ok) throw new Error(d.error||"Could not load products");
+    products=Array.isArray(d.products)?d.products:[];
+    render();
+  }catch(e){
+    rows.innerHTML='<tr><td colspan="8" class="muted">'+esc(e.message)+'</td></tr>';
+    setMsg(e.message,true);
+  }
+}
+function render(){
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  const cat=document.getElementById("filter").value;
+  const list=products.filter(p=>{
+    const txt=[p.name,p.brand,p.sku,p.category].join(" ").toLowerCase();
+    return (!q||txt.includes(q))&&(!cat||p.category===cat);
+  });
+  const rows=document.getElementById("rows");
+  if(!list.length){
+    rows.innerHTML='<tr><td colspan="8" class="muted">No products found.</td></tr>';
+    return;
+  }
+  rows.innerHTML=list.map(p=>{
+    const stock=Number(p.stock_qty||0);
+    const status=String(p.status||"inactive");
+    return `<tr>
+      <td><strong>${esc(p.name)}</strong></td>
+      <td>${esc(p.brand)}</td>
+      <td>${esc(p.category)}</td>
+      <td>${esc(p.sku)}</td>
+      <td><span class="price">${money((Number(p.price_paise)||0)/100)}</span>
+        ${Number(p.mrp_paise)>0?`<span class="mrp">${money(Number(p.mrp_paise)/100)}</span>`:""}</td>
+      <td><span class="badge ${stock>0?"in":"out"}">${stock}</span></td>
+      <td>${esc(status)}<br><button class="light" onclick="editProduct(${Number(p.id)})">Edit</button>
+        <button class="danger" onclick="deleteProduct(${Number(p.id)})">Delete</button></td>
+    </tr>`;
+  }).join("");
+}
+function editProduct(id){
+  const p=products.find(x=>Number(x.id)===Number(id));
+  if(!p)return;
+  editingId=p.id;
+  document.getElementById("name").value=p.name||"";
+  document.getElementById("brand").value=p.brand||"";
+  document.getElementById("category").value=p.category||"";
+  document.getElementById("sku").value=p.sku||"";
+  document.getElementById("price").value=((Number(p.price_paise)||0)/100).toFixed(2);
+  document.getElementById("mrp").value=((Number(p.mrp_paise)||0)/100).toFixed(2);
+  document.getElementById("stock").value=Number(p.stock_qty||0);
+  document.getElementById("image").value=p.image_url||"";
+  document.getElementById("description").value=p.description||"";
+  document.getElementById("status").value=p.status||"active";
+  document.querySelector(".primary").textContent="Update Product";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+async function addProduct(){
+  const p=formData();
+  if(!p.name||!p.category||!Number.isFinite(p.price)||p.price<0||!Number.isFinite(p.mrp)||p.mrp<0||!Number.isInteger(p.stock_qty)||p.stock_qty<0){
+    setMsg("Please enter Product Name, Category, valid Price/MRP and Stock.",true);return;
+  }
+  setMsg(editingId?"Updating product...":"Adding product...");
+  try{
+    const method=editingId?"PUT":"POST";
+    if(editingId)p.id=editingId;
+    const r=await fetch("/api/admin/products",{method,headers:authHeaders(),body:JSON.stringify(p)});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||"Request failed");
+    setMsg(editingId?"Product updated successfully.":"Product added successfully.");
+    clearForm();
+    await loadProducts();
+  }catch(e){setMsg(e.message,true);}
+}
+async function deleteProduct(id){
+  const p=products.find(x=>Number(x.id)===Number(id));
+  if(!p)return;
+  if(!confirm('Delete "'+p.name+'"? This cannot be undone.'))return;
+  try{
+    const r=await fetch("/api/admin/products",{method:"DELETE",headers:authHeaders(),body:JSON.stringify({id})});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||"Delete failed");
+    setMsg("Product deleted.");
+    await loadProducts();
+  }catch(e){setMsg(e.message,true);}
+}
+function filterTable(){render();}
+loadProducts();
+</script>
+</body>
+</html>
