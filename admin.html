@@ -46,7 +46,7 @@ function updateStats(){totalOrders.textContent=orders.length;newOrders.textConte
 function renderOrders(){const s=search.value.trim().toLowerCase(),st=statusFilter.value,p=paymentFilter.value;filteredOrders=orders.filter(o=>{const txt=[o.order_number,o.customer_name,o.mobile,o.email,o.city,o.state,o.payment_status,o.order_status].join(" ").toLowerCase();return(!s||txt.includes(s))&&(!st||String(o.order_status).toLowerCase()===st)&&(!p||String(o.payment_status).toLowerCase()===p)});drawTable()}
 function drawTable(){if(!filteredOrders.length){tableArea.innerHTML='<div class="center"><h3>📭 No orders found</h3><p>Try changing your search or filters.</p></div>';return}let h='<div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Order Status</th><th>Date</th><th>Action</th></tr></thead><tbody>';filteredOrders.forEach((o,i)=>{const n=getItemCount(o.items_json);h+='<tr><td><div class="order-no">'+escapeHtml(o.order_number||"-")+'</div><div class="muted">ID #'+escapeHtml(o.id??"-")+'</div></td><td><div class="customer">'+escapeHtml(o.customer_name||"-")+'</div><div class="muted">'+escapeHtml(o.mobile||"")+'</div></td><td>'+n+' item'+(n===1?"":"s")+'</td><td><div class="amount">₹'+formatMoney(Number(o.amount_paise||0)/100)+'</div></td><td>'+paymentBadge(o.payment_status,o.payment_method)+'</td><td><select class="status-select" onchange="changeStatus('+JSON.stringify(o.order_number||"")+',this.value)">'+statusOptions(o.order_status)+'</select></td><td>'+formatDate(o.created_at)+'</td><td><div class="order-actions"><button class="action-btn whatsapp-btn" data-action="whatsapp" data-index="'+i+'">📱 WhatsApp</button><button class="action-btn invoice-btn" data-action="invoice" data-index="'+i+'">🧾 Invoice</button><button class="action-btn shipping-btn" data-action="shipping" data-index="'+i+'">🚚 Shipping</button><button class="view-btn" data-action="view" data-index="'+i+'">👁 View</button></div></td></tr>'});tableArea.innerHTML=h+"</tbody></table></div>"}
 function statusOptions(c){return[["new","New"],["confirmed","Confirmed"],["shipped","Shipped"],["delivered","Delivered"],["cancelled","Cancelled"]].map(s=>'<option value="'+s[0]+'" '+(String(c).toLowerCase()===s[0]?"selected":"")+'>'+s[1]+"</option>").join("")}
-async function changeStatus(num,status){try{const r=await fetch("/api/admin/order-status",{method:"POST",headers:authHeaders(),body:JSON.stringify({order_number:num,order_status:status})});const d=await r.json();if(r.status===401){logout();return}if(!r.ok)throw Error(d.error||"Status update failed");const o=orders.find(x=>x.order_number===num);if(o)o.order_status=status;updateStats();renderOrders();toast("✅ Order status updated to "+status.toUpperCase())}catch(e){alert("Could not update order status:\\n\\n"+e.message);loadOrders()}}
+async function changeStatus(num,status){try{const r=await fetch("/api/admin/order-status",{method:"POST",headers:authHeaders(),body:JSON.stringify({order_number:num,order_status:status})});const d=await r.json();if(r.status===401){logout();return}if(!r.ok)throw Error(d.error||"Status update failed");const o=orders.find(x=>x.order_number===num);if(o)o.order_status=status;updateStats();renderOrders();showToast("✅ Order status updated to "+status.toUpperCase())}catch(e){alert("Could not update order status:\\n\\n"+e.message);loadOrders()}}
 function parseItems(x){try{return typeof x==="string"?JSON.parse(x):(x||[])}catch{return[]}}
 function detail(l,v){return'<div class="detail"><div class="detail-label">'+escapeHtml(l)+'</div><div class="detail-value">'+escapeHtml(v==null||v===""?"-":String(v))+"</div></div>"}
 function viewOrder(i){const o=filteredOrders[i];if(!o)return;const items=parseItems(o.items_json);let ih=Array.isArray(items)&&items.length?items.map((x,j)=>{const q=Number(x.quantity||x.qty||1),p=Number(x.price||0);return'<div class="item-row"><div><strong>'+escapeHtml(x.name||x.title||"Product")+'</strong><div class="muted">Qty: '+q+'</div></div><strong>₹'+formatMoney(p*q)+"</strong></div>"}).join(""):'<div class="item-row">No item details available.</div>';modalBody.innerHTML='<div class="detail-grid">'+detail("Order Number",o.order_number)+detail("Order Date",formatDate(o.created_at))+detail("Customer",o.customer_name)+detail("Mobile",o.mobile)+detail("Email",o.email||"-")+detail("Amount","₹"+formatMoney(Number(o.amount_paise||0)/100))+detail("Payment Method",o.payment_method)+detail("Payment Status",o.payment_status)+detail("Order Status",o.order_status)+detail("Razorpay Order ID",o.razorpay_order_id||"-")+detail("Razorpay Payment ID",o.razorpay_payment_id||"-")+detail("Pincode",o.pincode)+detail("City",o.city)+detail("State",o.state)+detail("Address",o.address)+'</div><div class="items-box"><div class="items-title">🛒 Ordered Products</div>'+ih+"</div>";orderModal.classList.remove("hidden")}
@@ -56,9 +56,9 @@ function getItemCount(x){const a=parseItems(x);return Array.isArray(a)?a.reduce(
 function formatMoney(n){return Number(n||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function formatDate(v){if(!v)return"-";try{let x=String(v);if(!x.includes("T")&&!x.endsWith("Z"))x=x.replace(" ","T")+"Z";const d=new Date(x);if(isNaN(d))return String(v);return d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch{return String(v)}}
 function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function toast(m){toast.textContent=m;toast.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.style.display="none",3000)}
+function showToast(m){const toastEl=document.getElementById("toast");if(!toastEl)return;toastEl.textContent=m;toastEl.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.style.display="none",3000)}
 function csvEscape(v){const s=String(v??"");return s.includes(",")||s.includes('"')||s.includes("\\n")?'"'+s.replace(/"/g,'""')+'"':s}
-function exportCSV(){if(!orders.length){alert("There are no orders to export.");return}const rows=[["Order Number","Date","Customer","Mobile","Email","Address","City","State","Pincode","Amount","Payment Method","Payment Status","Order Status","Razorpay Order ID","Razorpay Payment ID","Courier","Tracking Number","Tracking URL"]];filteredOrders.forEach(o=>rows.push([o.order_number||"",o.created_at||"",o.customer_name||"",o.mobile||"",o.email||"",o.address||"",o.city||"",o.state||"",o.pincode||"",(Number(o.amount_paise||0)/100).toFixed(2),o.payment_method||"",o.payment_status||"",o.order_status||"",o.razorpay_order_id||"",o.razorpay_payment_id||"",o.courier_name||"",o.tracking_number||"",o.tracking_url||""]));const csv=rows.map(r=>r.map(csvEscape).join(",")).join("\\r\\n"),b=new Blob(["\\ufeff"+csv],{type:"text/csv;charset=utf-8;"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="perfect-computer-orders-"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);toast("📥 CSV exported successfully")}
+function exportCSV(){if(!orders.length){alert("There are no orders to export.");return}const rows=[["Order Number","Date","Customer","Mobile","Email","Address","City","State","Pincode","Amount","Payment Method","Payment Status","Order Status","Razorpay Order ID","Razorpay Payment ID","Courier","Tracking Number","Tracking URL"]];filteredOrders.forEach(o=>rows.push([o.order_number||"",o.created_at||"",o.customer_name||"",o.mobile||"",o.email||"",o.address||"",o.city||"",o.state||"",o.pincode||"",(Number(o.amount_paise||0)/100).toFixed(2),o.payment_method||"",o.payment_status||"",o.order_status||"",o.razorpay_order_id||"",o.razorpay_payment_id||"",o.courier_name||"",o.tracking_number||"",o.tracking_url||""]));const csv=rows.map(r=>r.map(csvEscape).join(",")).join("\\r\\n"),b=new Blob(["\\ufeff"+csv],{type:"text/csv;charset=utf-8;"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="perfect-computer-orders-"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);showToast("📥 CSV exported successfully")}
 
 /* SHIPPING */
 function openShipping(i){
@@ -146,7 +146,7 @@ async function saveShipping(orderNumber){
     updateLocalShipping(orderNumber,payload);
     closeModal();
     renderOrders();
-    toast("✅ Shipping information saved successfully");
+    showToast("✅ Shipping information saved successfully");
     return true;
   }catch(error){
     if(btn){btn.disabled=false;btn.textContent="💾 Save Shipping";}
@@ -191,7 +191,7 @@ async function saveShippingAndShip(orderNumber){
     closeModal();
     updateStats();
     renderOrders();
-    toast("🚚 Order saved and marked SHIPPED");
+    showToast("🚚 Order saved and marked SHIPPED");
     return true;
   }catch(error){
     if(btn){btn.disabled=false;btn.textContent="🚚 Save & Mark Shipped";}
@@ -267,7 +267,7 @@ async function saveShippingAndWhatsApp(orderNumber){
 
     closeModal();
     renderOrders();
-    toast("✅ Shipping saved. Opening WhatsApp...");
+    showToast("✅ Shipping saved. Opening WhatsApp...");
 
     if(popup){
       popup.location.href=whatsappUrl;
