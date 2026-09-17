@@ -1,980 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PERFECT COMPUTER — Admin Panel V3</title>
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Arial,sans-serif;background:#f4f7fb;color:#172033}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-#loginScreen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:linear-gradient(135deg,#07111f,#102d50)
-}
-.login-card{
-  width:100%;
-  max-width:420px;
-  background:#fff;
-  border-radius:22px;
-  padding:35px;
-  box-shadow:0 25px 70px rgba(0,0,0,.3)
-}
-.logo{
-  width:64px;height:64px;border-radius:18px;
-  display:flex;align-items:center;justify-content:center;
-  background:#1264ff;color:#fff;font-size:28px;font-weight:900;
-  margin-bottom:20px
-}
-.login-card h1{font-size:27px;margin-bottom:7px}
-.login-card p{color:#6b7280;margin-bottom:25px}
-.form-label{
-  display:block;font-size:13px;font-weight:700;margin-bottom:8px
-}
-.input,.textarea{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid #d7deea;
-  border-radius:10px;
-  outline:none;
-  background:#fff
-}
-.input:focus,.textarea:focus{
-  border-color:#1264ff;
-  box-shadow:0 0 0 3px rgba(18,100,255,.1)
-}
-.textarea{min-height:100px;resize:vertical}
-
-.btn{
-  border:0;border-radius:10px;padding:11px 16px;font-weight:700
-}
-.btn-primary{background:#1264ff;color:#fff}
-.btn-light{background:#eef2f7;color:#172033}
-.btn-success{background:#dcfce7;color:#15803d}
-.btn-danger{background:#fee2e2;color:#b91c1c}
-.btn-warning{background:#fef3c7;color:#92400e}
-.full{width:100%}
-.error{color:#dc2626;font-size:14px;margin-top:12px}
-
-#app{min-height:100vh}
-
-.topbar{
-  height:72px;
-  background:#07111f;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  position:sticky;
-  top:0;
-  z-index:50
-}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-icon{
-  width:42px;height:42px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  background:#1264ff;font-weight:900
-}
-.brand-title{font-size:17px;font-weight:900}
-.brand-sub{font-size:11px;color:#9ca3af}
-.top-actions{display:flex;gap:8px}
-
-.container{
-  max-width:1450px;
-  margin:auto;
-  padding:25px
-}
-
-.page-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:22px
-}
-.page-head h2{font-size:28px}
-.page-head p{color:#6b7280;margin-top:5px}
-.actions{display:flex;gap:9px;flex-wrap:wrap}
-
-.nav-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:22px;
-  background:#fff;
-  border:1px solid #e4e9f1;
-  padding:7px;
-  border-radius:14px;
-  box-shadow:0 4px 18px rgba(15,23,42,.04)
-}
-.nav-tab{
-  border:0;
-  background:transparent;
-  padding:11px 18px;
-  border-radius:9px;
-  font-weight:800;
-  color:#64748b
-}
-.nav-tab.active{
-  background:#1264ff;
-  color:#fff
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin-bottom:22px
-}
-.stat{
-  background:#fff;
-  border:1px solid #e4e9f1;
-  border-radius:17px;
-  padding:20px;
-  box-shadow:0 4px 18px rgba(15,23,42,.04)
-}
-.stat-label{color:#6b7280;font-size:13px;font-weight:700}
-.stat-value{font-size:28px;font-weight:900;margin-top:8px}
-
-.panel{
-  background:#fff;
-  border:1px solid #e4e9f1;
-  border-radius:17px;
-  overflow:hidden;
-  box-shadow:0 4px 18px rgba(15,23,42,.04)
-}
-.toolbar{
-  padding:17px;
-  border-bottom:1px solid #e8edf4;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap
-}
-.search{flex:1;min-width:220px}
-.select{min-width:170px}
-
-.table-wrap{overflow-x:auto}
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:1050px
-}
-th{
-  background:#f8fafc;
-  text-align:left;
-  padding:14px;
-  font-size:12px;
-  color:#64748b;
-  text-transform:uppercase;
-  letter-spacing:.4px
-}
-td{
-  padding:14px;
-  border-top:1px solid #edf1f5;
-  vertical-align:middle;
-  font-size:14px
-}
-
-.order-no{font-weight:900;color:#1264ff}
-.customer{font-weight:800}
-.muted{color:#64748b;font-size:12px;margin-top:3px}
-.amount{font-weight:900}
-
-.badge{
-  display:inline-flex;
-  padding:6px 9px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:800
-}
-.badge-paid{background:#dcfce7;color:#15803d}
-.badge-pending{background:#fef3c7;color:#a16207}
-.badge-created{background:#dbeafe;color:#1d4ed8}
-.badge-failed{background:#fee2e2;color:#b91c1c}
-.badge-cod{background:#ede9fe;color:#6d28d9}
-.badge-active{background:#dcfce7;color:#15803d}
-.badge-inactive{background:#fee2e2;color:#b91c1c}
-
-.status-select{
-  padding:8px;
-  border:1px solid #dbe2ea;
-  border-radius:8px;
-  background:#fff;
-  font-size:12px;
-  font-weight:700
-}
-
-.view-btn{
-  padding:8px 11px;
-  border:0;
-  background:#eef2ff;
-  color:#3730a3;
-  border-radius:8px;
-  font-weight:800
-}
-.order-actions{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap
-}
-.action-btn{
-  border:0;
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
-  font-weight:800
-}
-.whatsapp-btn{background:#dcfce7;color:#15803d}
-.invoice-btn{background:#dbeafe;color:#1d4ed8}
-.shipping-btn{background:#fef3c7;color:#92400e}
-.edit-btn{background:#dbeafe;color:#1d4ed8}
-.delete-btn{background:#fee2e2;color:#b91c1c}
-
-.center{
-  text-align:center;
-  padding:50px 20px;
-  color:#64748b
-}
-.spinner{
-  width:30px;height:30px;
-  border:3px solid #dbe4f0;
-  border-top-color:#1264ff;
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 14px
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(2,8,23,.65);
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px
-}
-.modal-card{
-  width:100%;
-  max-width:850px;
-  max-height:92vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:20px
-}
-.modal-card.large{max-width:1000px}
-.modal-head{
-  padding:20px;
-  border-bottom:1px solid #e5eaf0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  background:#fff;
-  z-index:2
-}
-.close{
-  width:36px;height:36px;
-  border:0;border-radius:9px;
-  background:#eef2f7;font-size:20px
-}
-.modal-body{padding:20px}
-
-.detail-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px
-}
-.detail{
-  border:1px solid #e5eaf0;
-  border-radius:12px;
-  padding:14px
-}
-.detail-label{
-  color:#64748b;
-  font-size:11px;
-  font-weight:800;
-  text-transform:uppercase;
-  margin-bottom:5px
-}
-.detail-value{
-  font-weight:700;
-  word-break:break-word
-}
-
-.items-box,.tracking-box{
-  margin-top:18px;
-  border:1px solid #e5eaf0;
-  border-radius:12px;
-  overflow:hidden
-}
-.items-title,.tracking-title{
-  padding:12px 14px;
-  background:#f8fafc;
-  font-weight:900
-}
-.item-row{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  padding:13px 14px;
-  border-top:1px solid #edf1f5
-}
-
-.shipping-form{
-  padding:15px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
-}
-.shipping-form .full-row{grid-column:1/-1}
-.shipping-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap
-}
-
-.product-form{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px
-}
-.product-form .full-row{grid-column:1/-1}
-.form-actions{
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  grid-column:1/-1;
-  margin-top:5px
-}
-
-.product-image{
-  width:58px;
-  height:58px;
-  border-radius:10px;
-  object-fit:cover;
-  border:1px solid #e5eaf0;
-  background:#f8fafc
-}
-.product-placeholder{
-  width:58px;
-  height:58px;
-  border-radius:10px;
-  background:#eef2f7;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px
-}
-
-.product-name{font-weight:900}
-.product-brand{font-size:12px;color:#64748b;margin-top:3px}
-
-#adminToast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:200;
-  background:#172033;
-  color:#fff;
-  padding:13px 17px;
-  border-radius:10px;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(8px);
-  transition:opacity .18s ease,transform .18s ease,visibility .18s
-}
-.admin-toast-visible{
-  opacity:1!important;
-  visibility:visible!important;
-  transform:translateY(0)!important
-}
-
-.empty-image{
-  width:100%;
-  max-width:160px;
-  height:120px;
-  object-fit:contain;
-  border:1px solid #e5eaf0;
-  border-radius:10px;
-  background:#f8fafc
-}
-
-@media(max-width:900px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .page-head{align-items:flex-start;flex-direction:column}
-  .product-form{grid-template-columns:1fr}
-  .product-form .full-row{grid-column:auto}
-  .form-actions{grid-column:auto}
-}
-@media(max-width:600px){
-  .topbar{padding:0 14px}
-  .brand-sub{display:none}
-  .container{padding:15px}
-  .page-head h2{font-size:23px}
-  .stats{grid-template-columns:1fr 1fr;gap:10px}
-  .stat{padding:15px}
-  .stat-value{font-size:23px}
-  .detail-grid{grid-template-columns:1fr}
-  .shipping-form{grid-template-columns:1fr}
-  .shipping-form .full-row{grid-column:auto}
-  .top-actions .btn{padding:9px 10px}
-  .nav-tabs{overflow-x:auto}
-  .nav-tab{white-space:nowrap}
-}
-</style>
-</head>
-
-<body>
-
-<!-- LOGIN -->
-<section id="loginScreen">
-  <div class="login-card">
-    <div class="logo">PC</div>
-    <h1>PERFECT COMPUTER</h1>
-    <p>Secure Admin Panel</p>
-
-    <label class="form-label">Admin Token</label>
-    <input
-      id="adminToken"
-      class="input"
-      type="password"
-      placeholder="Enter your Admin Token"
-      autocomplete="off"
-    >
-
-    <br><br>
-
-    <button class="btn btn-primary full" onclick="login()">
-      🔐 Login to Admin Panel
-    </button>
-
-    <div id="loginError" class="error"></div>
-  </div>
-</section>
-
-
-<!-- APP -->
-<section id="app" class="hidden">
-
-<header class="topbar">
-
-  <div class="brand">
-    <div class="brand-icon">PC</div>
-
-    <div>
-      <div class="brand-title">PERFECT COMPUTER</div>
-      <div class="brand-sub">
-        Smart Technology. Perfect Choice.
-      </div>
-    </div>
-  </div>
-
-  <div class="top-actions">
-    <button class="btn btn-light" onclick="refreshCurrentTab()">
-      🔄 Refresh
-    </button>
-
-    <button class="btn btn-light" onclick="logout()">
-      Logout
-    </button>
-  </div>
-
-</header>
-
-
-<main class="container">
-
-  <!-- PAGE HEADER -->
-  <div class="page-head">
-
-    <div>
-      <h2 id="pageTitle">📦 Order Management</h2>
-      <p id="pageSubtitle">
-        Manage customer orders, payments and delivery status.
-      </p>
-    </div>
-
-    <div class="actions">
-
-      <button
-        id="exportOrdersBtn"
-        class="btn btn-success"
-        onclick="exportCSV()"
-      >
-        📥 Export CSV
-      </button>
-
-      <button
-        id="addProductTopBtn"
-        class="btn btn-primary hidden"
-        onclick="openProductModal()"
-      >
-        ➕ Add Product
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- NAVIGATION -->
-  <div class="nav-tabs">
-
-    <button
-      id="ordersTab"
-      class="nav-tab active"
-      onclick="switchTab('orders')"
-    >
-      📦 Orders
-    </button>
-
-    <button
-      id="productsTab"
-      class="nav-tab"
-      onclick="switchTab('products')"
-    >
-      🛒 Product Manager
-    </button>
-
-  </div>
-
-
-  <!-- ================= ORDERS ================= -->
-
-  <section id="ordersSection">
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="stat-label">TOTAL ORDERS</div>
-        <div id="totalOrders" class="stat-value">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">NEW ORDERS</div>
-        <div id="newOrders" class="stat-value">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">ONLINE PAID</div>
-        <div id="paidOrders" class="stat-value">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">COD PENDING</div>
-        <div id="codOrders" class="stat-value">0</div>
-      </div>
-
-    </div>
-
-
-    <!-- ORDERS PANEL -->
-
-    <div class="panel">
-
-      <div class="toolbar">
-
-        <input
-          id="search"
-          class="input search"
-          type="search"
-          placeholder="🔎 Search order, customer, mobile..."
-          oninput="renderOrders()"
-        >
-
-        <select
-          id="statusFilter"
-          class="input select"
-          onchange="renderOrders()"
-        >
-          <option value="">All Order Status</option>
-          <option value="new">New</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-
-        <select
-          id="paymentFilter"
-          class="input select"
-          onchange="renderOrders()"
-        >
-          <option value="">All Payments</option>
-          <option value="paid">Paid</option>
-          <option value="cod_pending">COD Pending</option>
-          <option value="created">Created</option>
-          <option value="failed">Failed</option>
-        </select>
-
-      </div>
-
-      <div id="tableArea">
-
-        <div class="center">
-          <div class="spinner"></div>
-          Loading orders...
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= PRODUCTS ================= -->
-
-  <section id="productsSection" class="hidden">
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="stat-label">TOTAL PRODUCTS</div>
-        <div id="totalProducts" class="stat-value">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">ACTIVE PRODUCTS</div>
-        <div id="activeProducts" class="stat-value">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">OUT OF STOCK</div>
-        <div id="outOfStockProducts" class="stat-value">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">CATEGORIES</div>
-        <div id="productCategories" class="stat-value">0</div>
-      </div>
-
-    </div>
-
-
-    <div class="panel">
-
-      <div class="toolbar">
-
-        <input
-          id="productSearch"
-          class="input search"
-          type="search"
-          placeholder="🔎 Search product, brand, SKU..."
-          oninput="renderProducts()"
-        >
-
-        <select
-          id="productCategoryFilter"
-          class="input select"
-          onchange="renderProducts()"
-        >
-          <option value="">All Categories</option>
-        </select>
-
-        <select
-          id="productStatusFilter"
-          class="input select"
-          onchange="renderProducts()"
-        >
-          <option value="">All Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-
-      </div>
-
-
-      <div id="productsTableArea">
-
-        <div class="center">
-          <div class="spinner"></div>
-          Loading products...
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-</main>
-
-</section>
-
-
-<!-- ORDER MODAL -->
-
-<div id="orderModal" class="modal hidden">
-
-  <div class="modal-card">
-
-    <div class="modal-head">
-
-      <h3 id="orderModalTitle">📋 Order Details</h3>
-
-      <button
-        class="close"
-        onclick="closeModal()"
-      >
-        ×
-      </button>
-
-    </div>
-
-    <div id="modalBody" class="modal-body"></div>
-
-  </div>
-
-</div>
-
-
-<!-- PRODUCT MODAL -->
-
-<div id="productModal" class="modal hidden">
-
-  <div class="modal-card large">
-
-    <div class="modal-head">
-
-      <h3 id="productModalTitle">
-        ➕ Add Product
-      </h3>
-
-      <button
-        class="close"
-        onclick="closeProductModal()"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="modal-body">
-
-      <form id="productForm" class="product-form">
-
-        <input
-          id="productId"
-          type="hidden"
-        >
-
-        <div>
-
-          <label class="form-label">
-            Product Name *
-          </label>
-
-          <input
-            id="productName"
-            class="input"
-            required
-            placeholder="Example: HP Core i5 Laptop"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            Brand
-          </label>
-
-          <input
-            id="productBrand"
-            class="input"
-            placeholder="HP / Dell / Lenovo"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            Category *
-          </label>
-
-          <input
-            id="productCategory"
-            class="input"
-            required
-            placeholder="Laptops / SSD / RAM / Monitor"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            SKU
-          </label>
-
-          <input
-            id="productSku"
-            class="input"
-            placeholder="PC-SSD-001"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            Selling Price ₹ *
-          </label>
-
-          <input
-            id="productPrice"
-            class="input"
-            type="number"
-            min="0"
-            step="0.01"
-            required
-            placeholder="2499"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            MRP ₹ *
-          </label>
-
-          <input
-            id="productMrp"
-            class="input"
-            type="number"
-            min="0"
-            step="0.01"
-            required
-            placeholder="2999"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            Stock Quantity
-          </label>
-
-          <input
-            id="productStock"
-            class="input"
-            type="number"
-            min="0"
-            step="1"
-            value="0"
-          >
-
-        </div>
-
-
-        <div>
-
-          <label class="form-label">
-            Status
-          </label>
-
-          <select
-            id="productStatus"
-            class="input"
-          >
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-
-        </div>
-
-
-        <div class="full-row">
-
-          <label class="form-label">
-            Product Image URL
-          </label>
-
-          <input
-            id="productImage"
-            class="input"
-            type="url"
-            placeholder="https://example.com/product.jpg"
-          >
-
-        </div>
-
-
-        <div class="full-row">
-
-          <label class="form-label">
-            Description
-          </label>
-
-          <textarea
-            id="productDescription"
-            class="textarea"
-            placeholder="Product description..."
-          ></textarea>
-
-        </div>
-
-
-        <div class="form-actions">
-
-          <button
-            type="button"
-            class="btn btn-light"
-            onclick="closeProductModal()"
-          >
-            Cancel
-          </button>
-
-          <button
-            id="saveProductBtn"
-            type="submit"
-            class="btn btn-primary"
-          >
-            💾 Save Product
-          </button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<div
-  id="adminToast"
-  aria-live="polite"
-></div>
-
-
 <script>
 
 console.log("PERFECT COMPUTER ADMIN V3 loaded");
@@ -1017,7 +40,8 @@ function showApp(){
 
 function login(){
 
-  const t = $("adminToken").value.trim();
+  const t =
+    $("adminToken").value.trim();
 
   $("loginError").textContent = "";
 
@@ -1029,7 +53,10 @@ function login(){
     return;
   }
 
-  sessionStorage.setItem(tokenKey,t);
+  sessionStorage.setItem(
+    tokenKey,
+    t
+  );
 
   showApp();
 
@@ -1040,7 +67,9 @@ function login(){
 
 function logout(){
 
-  sessionStorage.removeItem(tokenKey);
+  sessionStorage.removeItem(
+    tokenKey
+  );
 
   orders = [];
   filteredOrders = [];
@@ -1050,7 +79,9 @@ function logout(){
 
   $("app").classList.add("hidden");
 
-  $("loginScreen").classList.remove("hidden");
+  $("loginScreen").classList.remove(
+    "hidden"
+  );
 
   $("adminToken").value = "";
 
@@ -1060,12 +91,16 @@ function logout(){
 function authHeaders(){
 
   return {
+
     "Authorization":
       "Bearer " +
-      sessionStorage.getItem(tokenKey),
+      sessionStorage.getItem(
+        tokenKey
+      ),
 
     "Content-Type":
       "application/json"
+
   };
 
 }
@@ -1073,25 +108,31 @@ function authHeaders(){
 
 function showToast(message){
 
-  const el = $("adminToast");
+  const el =
+    $("adminToast");
 
   if(!el) return;
 
-  el.textContent = message;
+  el.textContent =
+    message;
 
   el.classList.add(
     "admin-toast-visible"
   );
 
-  clearTimeout(toastTimer);
+  clearTimeout(
+    toastTimer
+  );
 
-  toastTimer = setTimeout(()=>{
-
-    el.classList.remove(
-      "admin-toast-visible"
+  toastTimer =
+    setTimeout(
+      ()=>{
+        el.classList.remove(
+          "admin-toast-visible"
+        );
+      },
+      3000
     );
-
-  },3000);
 
 }
 
@@ -1099,18 +140,35 @@ function showToast(message){
 function escapeHtml(v){
 
   return String(v ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
 function formatMoney(n){
 
-  return Number(n || 0).toLocaleString(
+  return Number(
+    n || 0
+  ).toLocaleString(
     "en-IN",
     {
       minimumFractionDigits:2,
@@ -1127,7 +185,8 @@ function formatDate(v){
 
   try{
 
-    let x = String(v);
+    let x =
+      String(v);
 
     if(
       !x.includes("T") &&
@@ -1135,14 +194,19 @@ function formatDate(v){
     ){
 
       x =
-        x.replace(" ","T") +
+        x.replace(
+          " ",
+          "T"
+        ) +
         "Z";
 
     }
 
-    const d = new Date(x);
+    const d =
+      new Date(x);
 
-    if(isNaN(d)) return String(v);
+    if(isNaN(d))
+      return String(v);
 
     return d.toLocaleString(
       "en-IN",
@@ -1187,43 +251,78 @@ function parseItems(x){
 
 function switchTab(tab){
 
-  currentTab = tab;
+  currentTab =
+    tab;
 
   if(tab === "orders"){
 
-    $("ordersTab").classList.add("active");
-    $("productsTab").classList.remove("active");
+    $("ordersTab")
+      .classList
+      .add("active");
 
-    $("ordersSection").classList.remove("hidden");
-    $("productsSection").classList.add("hidden");
+    $("productsTab")
+      .classList
+      .remove("active");
 
-    $("pageTitle").textContent =
+    $("ordersSection")
+      .classList
+      .remove("hidden");
+
+    $("productsSection")
+      .classList
+      .add("hidden");
+
+    $("pageTitle")
+      .textContent =
       "📦 Order Management";
 
-    $("pageSubtitle").textContent =
+    $("pageSubtitle")
+      .textContent =
       "Manage customer orders, payments and delivery status.";
 
-    $("exportOrdersBtn").classList.remove("hidden");
-    $("addProductTopBtn").classList.add("hidden");
+    $("exportOrdersBtn")
+      .classList
+      .remove("hidden");
+
+    $("addProductTopBtn")
+      .classList
+      .add("hidden");
 
     loadOrders();
 
   }else{
 
-    $("productsTab").classList.add("active");
-    $("ordersTab").classList.remove("active");
+    $("productsTab")
+      .classList
+      .add("active");
 
-    $("productsSection").classList.remove("hidden");
-    $("ordersSection").classList.add("hidden");
+    $("ordersTab")
+      .classList
+      .remove("active");
 
-    $("pageTitle").textContent =
+    $("productsSection")
+      .classList
+      .remove("hidden");
+
+    $("ordersSection")
+      .classList
+      .add("hidden");
+
+    $("pageTitle")
+      .textContent =
       "🛒 Product Manager";
 
-    $("pageSubtitle").textContent =
+    $("pageSubtitle")
+      .textContent =
       "Add, edit, delete and manage your online store products.";
 
-    $("exportOrdersBtn").classList.add("hidden");
-    $("addProductTopBtn").classList.remove("hidden");
+    $("exportOrdersBtn")
+      .classList
+      .add("hidden");
+
+    $("addProductTopBtn")
+      .classList
+      .remove("hidden");
 
     loadProducts();
 
@@ -1234,7 +333,10 @@ function switchTab(tab){
 
 function refreshCurrentTab(){
 
-  if(currentTab === "orders"){
+  if(
+    currentTab ===
+    "orders"
+  ){
 
     loadOrders();
 
@@ -1261,26 +363,33 @@ async function loadOrders(){
 
   try{
 
-    const r = await fetch(
-      "/api/admin/orders",
-      {
-        headers:authHeaders(),
-        cache:"no-store"
-      }
-    );
+    const r =
+      await fetch(
+        "/api/admin/orders",
+        {
+          headers:
+            authHeaders(),
+          cache:
+            "no-store"
+        }
+      );
 
-    if(r.status === 401){
+    if(
+      r.status === 401
+    ){
 
       logout();
 
-      $("loginError").textContent =
+      $("loginError")
+        .textContent =
         "Invalid Admin Token.";
 
       return;
 
     }
 
-    const d = await r.json();
+    const d =
+      await r.json();
 
     if(!r.ok){
 
@@ -1292,9 +401,11 @@ async function loadOrders(){
     }
 
     orders =
-      Array.isArray(d.orders)
-        ? d.orders
-        : [];
+      Array.isArray(
+        d.orders
+      )
+      ? d.orders
+      : [];
 
     updateStats();
 
@@ -1306,7 +417,9 @@ async function loadOrders(){
       '<div class="center">' +
       '<h3>⚠️ Could not load orders</h3>' +
       '<p>' +
-      escapeHtml(e.message) +
+      escapeHtml(
+        e.message
+      ) +
       '</p><br>' +
       '<button class="btn btn-primary" onclick="loadOrders()">Try Again</button>' +
       '</div>';
@@ -1318,28 +431,41 @@ async function loadOrders(){
 
 function updateStats(){
 
-  $("totalOrders").textContent =
+  $("totalOrders")
+    .textContent =
     orders.length;
 
-  $("newOrders").textContent =
+  $("newOrders")
+    .textContent =
     orders.filter(
       o =>
-        String(o.order_status)
-        .toLowerCase() === "new"
+        String(
+          o.order_status
+        )
+        .toLowerCase() ===
+        "new"
     ).length;
 
-  $("paidOrders").textContent =
+  $("paidOrders")
+    .textContent =
     orders.filter(
       o =>
-        String(o.payment_status)
-        .toLowerCase() === "paid"
+        String(
+          o.payment_status
+        )
+        .toLowerCase() ===
+        "paid"
     ).length;
 
-  $("codOrders").textContent =
+  $("codOrders")
+    .textContent =
     orders.filter(
       o =>
-        String(o.payment_status)
-        .toLowerCase() === "cod_pending"
+        String(
+          o.payment_status
+        )
+        .toLowerCase() ===
+        "cod_pending"
     ).length;
 
 }
@@ -1348,54 +474,64 @@ function updateStats(){
 function renderOrders(){
 
   const s =
-    $("search").value
+    $("search")
+      .value
       .trim()
       .toLowerCase();
 
   const st =
-    $("statusFilter").value;
+    $("statusFilter")
+      .value;
 
   const p =
-    $("paymentFilter").value;
-
+    $("paymentFilter")
+      .value;
 
   filteredOrders =
-    orders.filter(o => {
+    orders.filter(
+      o => {
 
-      const txt = [
+        const txt = [
 
-        o.order_number,
-        o.customer_name,
-        o.mobile,
-        o.email,
-        o.city,
-        o.state,
-        o.payment_status,
-        o.order_status
+          o.order_number,
+          o.customer_name,
+          o.mobile,
+          o.email,
+          o.city,
+          o.state,
+          o.payment_status,
+          o.order_status
 
-      ]
-      .join(" ")
-      .toLowerCase();
+        ]
+        .join(" ")
+        .toLowerCase();
 
+        return (
 
-      return (
+          (!s ||
+            txt.includes(s)
+          ) &&
 
-        (!s || txt.includes(s)) &&
+          (!st ||
+            String(
+              o.order_status
+            )
+            .toLowerCase() ===
+            st
+          ) &&
 
-        (!st ||
-          String(o.order_status)
-          .toLowerCase() === st
-        ) &&
+          (!p ||
+            String(
+              o.payment_status
+            )
+            .toLowerCase() ===
+            p
+          )
 
-        (!p ||
-          String(o.payment_status)
-          .toLowerCase() === p
-        )
+        );
 
-      );
-
-    });
-
+      }
+    );
 
   drawTable();
 
@@ -1404,7 +540,9 @@ function renderOrders(){
 
 function drawTable(){
 
-  if(!filteredOrders.length){
+  if(
+    !filteredOrders.length
+  ){
 
     $("tableArea").innerHTML =
       '<div class="center">' +
@@ -1416,15 +554,11 @@ function drawTable(){
 
   }
 
-
   let h =
     '<div class="table-wrap">' +
     '<table>' +
-
     '<thead>' +
-
     '<tr>' +
-
     '<th>Order</th>' +
     '<th>Customer</th>' +
     '<th>Items</th>' +
@@ -1433,155 +567,167 @@ function drawTable(){
     '<th>Order Status</th>' +
     '<th>Date</th>' +
     '<th>Action</th>' +
-
     '</tr>' +
-
     '</thead>' +
-
     '<tbody>';
 
+  filteredOrders.forEach(
+    (o,i)=>{
 
-  filteredOrders.forEach((o,i)=>{
+      const n =
+        getItemCount(
+          o.items_json
+        );
 
-    const n =
-      getItemCount(o.items_json);
+      h +=
 
+        '<tr>' +
 
-    h +=
+        '<td>' +
 
-      '<tr>' +
+        '<div class="order-no">' +
+        escapeHtml(
+          o.order_number ||
+          "-"
+        ) +
+        '</div>' +
 
-      '<td>' +
+        '<div class="muted">ID #' +
+        escapeHtml(
+          o.id ?? "-"
+        ) +
+        '</div>' +
 
-      '<div class="order-no">' +
-      escapeHtml(
-        o.order_number || "-"
-      ) +
-      '</div>' +
+        '</td>' +
 
-      '<div class="muted">ID #' +
-      escapeHtml(o.id ?? "-") +
-      '</div>' +
+        '<td>' +
 
-      '</td>' +
+        '<div class="customer">' +
+        escapeHtml(
+          o.customer_name ||
+          "-"
+        ) +
+        '</div>' +
 
+        '<div class="muted">' +
+        escapeHtml(
+          o.mobile ||
+          ""
+        ) +
+        '</div>' +
 
-      '<td>' +
+        '</td>' +
 
-      '<div class="customer">' +
-      escapeHtml(
-        o.customer_name || "-"
-      ) +
-      '</div>' +
+        '<td>' +
+        n +
+        ' item' +
+        (
+          n === 1
+            ? ""
+            : "s"
+        ) +
+        '</td>' +
 
-      '<div class="muted">' +
-      escapeHtml(
-        o.mobile || ""
-      ) +
-      '</div>' +
+        '<td>' +
 
-      '</td>' +
+        '<div class="amount">' +
+        '₹' +
+        formatMoney(
+          Number(
+            o.amount_paise ||
+            0
+          ) / 100
+        ) +
+        '</div>' +
 
+        '</td>' +
 
-      '<td>' +
+        '<td>' +
 
-      n +
-      ' item' +
-      (n === 1 ? "" : "s") +
+        paymentBadge(
+          o.payment_status,
+          o.payment_method
+        ) +
 
-      '</td>' +
+        '</td>' +
 
+        '<td>' +
 
-      '<td>' +
+        '<select class="status-select" ' +
+        'onchange=\'changeStatus(' +
+        JSON.stringify(
+          o.order_number ||
+          ""
+        ) +
+        ',this.value)\'>' +
 
-      '<div class="amount">' +
-      '₹' +
-      formatMoney(
-        Number(o.amount_paise || 0) / 100
-      ) +
-      '</div>' +
+        statusOptions(
+          o.order_status
+        ) +
 
-      '</td>' +
+        '</select>' +
 
+        '</td>' +
 
-      '<td>' +
+        '<td>' +
 
-      paymentBadge(
-        o.payment_status,
-        o.payment_method
-      ) +
+        formatDate(
+          o.created_at
+        ) +
 
-      '</td>' +
+        '</td>' +
 
+        '<td>' +
 
-      '<td>' +
+        '<div class="order-actions">' +
 
-      '<select class="status-select" ' +
-      'onchange=\'changeStatus(' +
-      JSON.stringify(
-        o.order_number || ""
-      ) +
-      ',this.value)\'>' +
+        '<button class="action-btn whatsapp-btn" ' +
+        'data-action="whatsapp" ' +
+        'data-index="' +
+        i +
+        '">' +
+        '📱 WhatsApp' +
+        '</button>' +
 
-      statusOptions(
-        o.order_status
-      ) +
+        '<button class="action-btn invoice-btn" ' +
+        'data-action="invoice" ' +
+        'data-index="' +
+        i +
+        '">' +
+        '🧾 Invoice' +
+        '</button>' +
 
-      '</select>' +
+        '<button class="action-btn shipping-btn" ' +
+        'data-action="shipping" ' +
+        'data-index="' +
+        i +
+        '">' +
+        '🚚 Shipping' +
+        '</button>' +
 
-      '</td>' +
+        '<button class="view-btn" ' +
+        'data-action="view" ' +
+        'data-index="' +
+        i +
+        '">' +
+        '👁 View' +
+        '</button>' +
 
+        '</div>' +
 
-      '<td>' +
+        '</td>' +
 
-      formatDate(
-        o.created_at
-      ) +
+        '</tr>';
 
-      '</td>' +
-
-
-      '<td>' +
-
-      '<div class="order-actions">' +
-
-      '<button class="action-btn whatsapp-btn" ' +
-      'data-action="whatsapp" ' +
-      'data-index="' + i + '">' +
-      '📱 WhatsApp' +
-      '</button>' +
-
-      '<button class="action-btn invoice-btn" ' +
-      'data-action="invoice" ' +
-      'data-index="' + i + '">' +
-      '🧾 Invoice' +
-      '</button>' +
-
-      '<button class="action-btn shipping-btn" ' +
-      'data-action="shipping" ' +
-      'data-index="' + i + '">' +
-      '🚚 Shipping' +
-      '</button>' +
-
-      '<button class="view-btn" ' +
-      'data-action="view" ' +
-      'data-index="' + i + '">' +
-      '👁 View' +
-      '</button>' +
-
-      '</div>' +
-
-      '</td>' +
-
-      '</tr>';
-
-  });
-
+    }
+  );
 
   h +=
     '</tbody></table></div>';
 
-  $("tableArea").innerHTML = h;
+  $("tableArea")
+    .innerHTML =
+    h;
 
 }
 
@@ -1597,25 +743,26 @@ function statusOptions(c){
     ["cancelled","Cancelled"]
 
   ]
+  .map(
+    s =>
 
-  .map(s =>
+      '<option value="' +
+      s[0] +
+      '" ' +
 
-    '<option value="' +
-    s[0] +
-    '" ' +
+      (
+        String(c)
+          .toLowerCase() ===
+        s[0]
+          ? "selected"
+          : ""
+      ) +
 
-    (
-      String(c)
-      .toLowerCase() === s[0]
-        ? "selected"
-        : ""
-    ) +
+      '>' +
 
-    '>' +
+      s[1] +
 
-    s[1] +
-
-    '</option>'
+      '</option>'
 
   )
   .join("");
@@ -1630,35 +777,40 @@ async function changeStatus(
 
   try{
 
-    const r = await fetch(
-      "/api/admin/order-status",
-      {
-        method:"POST",
-        headers:authHeaders(),
+    const r =
+      await fetch(
+        "/api/admin/order-status",
+        {
+          method:"POST",
+          headers:
+            authHeaders(),
 
-        body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-          order_number:num,
-          order_status:status
+              order_number:
+                num,
 
-        })
+              order_status:
+                status
 
-      }
-    );
+            })
 
+        }
+      );
 
     const d =
       await r.json();
 
-
-    if(r.status === 401){
+    if(
+      r.status === 401
+    ){
 
       logout();
 
       return;
 
     }
-
 
     if(!r.ok){
 
@@ -1669,13 +821,12 @@ async function changeStatus(
 
     }
 
-
     const o =
       orders.find(
         x =>
-          x.order_number === num
+          x.order_number ===
+          num
       );
-
 
     if(o){
 
@@ -1683,7 +834,6 @@ async function changeStatus(
         status;
 
     }
-
 
     updateStats();
 
@@ -1693,7 +843,6 @@ async function changeStatus(
       "✅ Order status updated to " +
       status.toUpperCase()
     );
-
 
   }catch(e){
 
@@ -1713,7 +862,10 @@ async function changeStatus(
    ORDER DETAILS
 ========================================================= */
 
-function detail(label,value){
+function detail(
+  label,
+  value
+){
 
   return (
 
@@ -1725,7 +877,8 @@ function detail(label,value){
 
     '<div class="detail-value">' +
     escapeHtml(
-      value == null || value === ""
+      value == null ||
+      value === ""
         ? "-"
         : String(value)
     ) +
@@ -1745,69 +898,69 @@ function viewOrder(i){
 
   if(!o) return;
 
-
   const items =
     parseItems(
       o.items_json
     );
 
-
   let ih = "";
-
 
   if(
     Array.isArray(items) &&
     items.length
   ){
 
-    ih = items.map(
-      (x,j)=>{
+    ih =
+      items.map(
+        (x,j)=>{
 
-        const q =
-          Number(
-            x.quantity ||
-            x.qty ||
-            1
+          const q =
+            Number(
+              x.quantity ||
+              x.qty ||
+              1
+            );
+
+          const p =
+            Number(
+              x.price ||
+              0
+            );
+
+          return (
+
+            '<div class="item-row">' +
+
+            '<div>' +
+
+            '<strong>' +
+            escapeHtml(
+              x.name ||
+              x.title ||
+              "Product"
+            ) +
+            '</strong>' +
+
+            '<div class="muted">' +
+            'Qty: ' +
+            q +
+            '</div>' +
+
+            '</div>' +
+
+            '<strong>' +
+            '₹' +
+            formatMoney(
+              p * q
+            ) +
+            '</strong>' +
+
+            '</div>'
+
           );
 
-        const p =
-          Number(
-            x.price ||
-            0
-          );
-
-
-        return (
-
-          '<div class="item-row">' +
-
-          '<div>' +
-
-          '<strong>' +
-          escapeHtml(
-            x.name ||
-            x.title ||
-            "Product"
-          ) +
-          '</strong>' +
-
-          '<div class="muted">' +
-          'Qty: ' + q +
-          '</div>' +
-
-          '</div>' +
-
-          '<strong>' +
-          '₹' +
-          formatMoney(p*q) +
-          '</strong>' +
-
-          '</div>'
-
-        );
-
-      }
-    ).join("");
+        }
+      ).join("");
 
   }else{
 
@@ -1817,7 +970,6 @@ function viewOrder(i){
       '</div>';
 
   }
-
 
   $("modalBody").innerHTML =
 
@@ -1830,7 +982,9 @@ function viewOrder(i){
 
     detail(
       "Order Date",
-      formatDate(o.created_at)
+      formatDate(
+        o.created_at
+      )
     ) +
 
     detail(
@@ -1852,7 +1006,10 @@ function viewOrder(i){
       "Amount",
       "₹" +
       formatMoney(
-        Number(o.amount_paise || 0) / 100
+        Number(
+          o.amount_paise ||
+          0
+        ) / 100
       )
     ) +
 
@@ -1873,12 +1030,14 @@ function viewOrder(i){
 
     detail(
       "Razorpay Order ID",
-      o.razorpay_order_id || "-"
+      o.razorpay_order_id ||
+      "-"
     ) +
 
     detail(
       "Razorpay Payment ID",
-      o.razorpay_payment_id || "-"
+      o.razorpay_payment_id ||
+      "-"
     ) +
 
     detail(
@@ -1903,12 +1062,14 @@ function viewOrder(i){
 
     detail(
       "Courier",
-      o.courier_name || "-"
+      o.courier_name ||
+      "-"
     ) +
 
     detail(
       "Tracking Number",
-      o.tracking_number || "-"
+      o.tracking_number ||
+      "-"
     ) +
 
     '</div>' +
@@ -1923,69 +1084,83 @@ function viewOrder(i){
 
     '</div>';
 
-
-  $("orderModal").classList.remove(
-    "hidden"
-  );
+  $("orderModal")
+    .classList
+    .remove("hidden");
 
 }
 
 
 function closeModal(){
 
-  $("orderModal").classList.add(
-    "hidden"
-  );
+  $("orderModal")
+    .classList
+    .add("hidden");
 
 }
 
 
-function paymentBadge(s,m){
+function paymentBadge(
+  s,
+  m
+){
 
   s =
     String(s || "")
-    .toLowerCase();
-
+      .toLowerCase();
 
   if(s === "paid"){
 
-    return '<span class="badge badge-paid">' +
+    return (
+      '<span class="badge badge-paid">' +
       '✓ PAID' +
-      '</span>';
+      '</span>'
+    );
 
   }
 
+  if(
+    s ===
+    "cod_pending"
+  ){
 
-  if(s === "cod_pending"){
-
-    return '<span class="badge badge-cod">' +
+    return (
+      '<span class="badge badge-cod">' +
       'COD PENDING' +
-      '</span>';
+      '</span>'
+    );
 
   }
-
 
   if(s === "created"){
 
-    return '<span class="badge badge-created">' +
+    return (
+      '<span class="badge badge-created">' +
       'ONLINE CREATED' +
-      '</span>';
+      '</span>'
+    );
 
   }
-
 
   if(s === "failed"){
 
-    return '<span class="badge badge-failed">' +
+    return (
+      '<span class="badge badge-failed">' +
       'FAILED' +
-      '</span>';
+      '</span>'
+    );
 
   }
 
-
-  return '<span class="badge badge-pending">' +
-    escapeHtml(m || s || "Pending") +
-    '</span>';
+  return (
+    '<span class="badge badge-pending">' +
+    escapeHtml(
+      m ||
+      s ||
+      "Pending"
+    ) +
+    '</span>'
+  );
 
 }
 
@@ -1994,7 +1169,6 @@ function getItemCount(x){
 
   const a =
     parseItems(x);
-
 
   return Array.isArray(a)
     ? a.reduce(
@@ -2020,7 +1194,6 @@ function csvEscape(v){
 
   const s =
     String(v ?? "");
-
 
   return (
     s.includes(",") ||
@@ -2056,11 +1229,9 @@ function exportCSV(){
 
   }
 
-
   const rows = [
 
     [
-
       "Order Number",
       "Date",
       "Customer",
@@ -2079,55 +1250,55 @@ function exportCSV(){
       "Courier",
       "Tracking Number",
       "Tracking URL"
-
     ]
 
   ];
 
+  filteredOrders.forEach(
+    o => {
 
-  filteredOrders.forEach(o=>{
+      rows.push([
 
-    rows.push([
+        o.order_number || "",
+        o.created_at || "",
+        o.customer_name || "",
+        o.mobile || "",
+        o.email || "",
+        o.address || "",
+        o.city || "",
+        o.state || "",
+        o.pincode || "",
 
-      o.order_number || "",
-      o.created_at || "",
-      o.customer_name || "",
-      o.mobile || "",
-      o.email || "",
-      o.address || "",
-      o.city || "",
-      o.state || "",
-      o.pincode || "",
+        (
+          Number(
+            o.amount_paise ||
+            0
+          ) / 100
+        ).toFixed(2),
 
-      (
-        Number(
-          o.amount_paise || 0
-        ) / 100
-      ).toFixed(2),
+        o.payment_method || "",
+        o.payment_status || "",
+        o.order_status || "",
+        o.razorpay_order_id || "",
+        o.razorpay_payment_id || "",
+        o.courier_name || "",
+        o.tracking_number || "",
+        o.tracking_url || ""
 
-      o.payment_method || "",
-      o.payment_status || "",
-      o.order_status || "",
-      o.razorpay_order_id || "",
-      o.razorpay_payment_id || "",
-      o.courier_name || "",
-      o.tracking_number || "",
-      o.tracking_url || ""
+      ]);
 
-    ]);
-
-  });
-
+    }
+  );
 
   const csv =
     rows
       .map(
         r =>
-          r.map(csvEscape)
-           .join(",")
+          r
+            .map(csvEscape)
+            .join(",")
       )
       .join("\r\n");
-
 
   const b =
     new Blob(
@@ -2138,16 +1309,14 @@ function exportCSV(){
       }
     );
 
-
   const u =
     URL.createObjectURL(b);
-
 
   const a =
     document.createElement("a");
 
-
-  a.href = u;
+  a.href =
+    u;
 
   a.download =
     "perfect-computer-orders-" +
@@ -2156,7 +1325,6 @@ function exportCSV(){
       .slice(0,10) +
     ".csv";
 
-
   document.body.appendChild(a);
 
   a.click();
@@ -2164,7 +1332,6 @@ function exportCSV(){
   a.remove();
 
   URL.revokeObjectURL(u);
-
 
   showToast(
     "📥 CSV exported successfully"
@@ -2183,7 +1350,6 @@ function openShipping(i){
     filteredOrders[i];
 
   if(!o) return;
-
 
   $("modalBody").innerHTML =
 
@@ -2233,12 +1399,12 @@ function openShipping(i){
     'placeholder="Delhivery / DTDC / Blue Dart" ' +
     'value="' +
     escapeHtml(
-      o.courier_name || ""
+      o.courier_name ||
+      ""
     ) +
     '">' +
 
     '</div>' +
-
 
     '<div>' +
 
@@ -2250,12 +1416,12 @@ function openShipping(i){
     'placeholder="Enter tracking number" ' +
     'value="' +
     escapeHtml(
-      o.tracking_number || ""
+      o.tracking_number ||
+      ""
     ) +
     '">' +
 
     '</div>' +
-
 
     '<div class="full-row">' +
 
@@ -2268,12 +1434,12 @@ function openShipping(i){
     'placeholder="https://..." ' +
     'value="' +
     escapeHtml(
-      o.tracking_url || ""
+      o.tracking_url ||
+      ""
     ) +
     '">' +
 
     '</div>' +
-
 
     '<div class="full-row shipping-actions">' +
 
@@ -2295,11 +1461,9 @@ function openShipping(i){
 
     '</div>';
 
-
-  $("orderModal").classList.remove(
-    "hidden"
-  );
-
+  $("orderModal")
+    .classList
+    .remove("hidden");
 
   $("saveShippingBtn")
     .addEventListener(
@@ -2310,7 +1474,6 @@ function openShipping(i){
         )
     );
 
-
   $("shipOrderBtn")
     .addEventListener(
       "click",
@@ -2319,7 +1482,6 @@ function openShipping(i){
           o.order_number
         )
     );
-
 
   $("shipWhatsAppBtn")
     .addEventListener(
@@ -2374,12 +1536,14 @@ async function postShipping(
       "/api/admin/shipping",
       {
         method:"POST",
-        headers:authHeaders(),
+        headers:
+          authHeaders(),
         body:
-          JSON.stringify(payload)
+          JSON.stringify(
+            payload
+          )
       }
     );
-
 
   let data = {};
 
@@ -2390,8 +1554,10 @@ async function postShipping(
 
   }catch{}
 
-
-  if(response.status === 401){
+  if(
+    response.status ===
+    401
+  ){
 
     logout();
 
@@ -2400,7 +1566,6 @@ async function postShipping(
     );
 
   }
-
 
   if(!response.ok){
 
@@ -2414,7 +1579,6 @@ async function postShipping(
     );
 
   }
-
 
   return data;
 
@@ -2432,7 +1596,6 @@ function updateLocalShipping(
         x.order_number ===
         orderNumber
     );
-
 
   if(o){
 
@@ -2457,22 +1620,20 @@ async function saveShipping(
   const btn =
     $("saveShippingBtn");
 
-
   const payload =
     shippingPayload(
       orderNumber
     );
 
-
   if(btn){
 
-    btn.disabled = true;
+    btn.disabled =
+      true;
 
     btn.textContent =
       "Saving...";
 
   }
-
 
   try{
 
@@ -2480,12 +1641,10 @@ async function saveShipping(
       payload
     );
 
-
     updateLocalShipping(
       orderNumber,
       payload
     );
-
 
     closeModal();
 
@@ -2495,18 +1654,17 @@ async function saveShipping(
       "✅ Shipping information saved successfully"
     );
 
-
   }catch(error){
 
     if(btn){
 
-      btn.disabled = false;
+      btn.disabled =
+        false;
 
       btn.textContent =
         "💾 Save Shipping";
 
     }
-
 
     alert(
       "Shipping save failed:\n\n" +
@@ -2525,22 +1683,20 @@ async function saveShippingAndShip(
   const btn =
     $("shipOrderBtn");
 
-
   const payload =
     shippingPayload(
       orderNumber
     );
 
-
   if(btn){
 
-    btn.disabled = true;
+    btn.disabled =
+      true;
 
     btn.textContent =
       "Saving & Shipping...";
 
   }
-
 
   try{
 
@@ -2548,33 +1704,32 @@ async function saveShippingAndShip(
       payload
     );
 
-
     updateLocalShipping(
       orderNumber,
       payload
     );
-
 
     const response =
       await fetch(
         "/api/admin/order-status",
         {
           method:"POST",
-          headers:authHeaders(),
+          headers:
+            authHeaders(),
 
-          body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-            order_number:
-              orderNumber,
+              order_number:
+                orderNumber,
 
-            order_status:
-              "shipped"
+              order_status:
+                "shipped"
 
-          })
+            })
 
         }
       );
-
 
     let data = {};
 
@@ -2585,8 +1740,10 @@ async function saveShippingAndShip(
 
     }catch{}
 
-
-    if(response.status === 401){
+    if(
+      response.status ===
+      401
+    ){
 
       logout();
 
@@ -2595,7 +1752,6 @@ async function saveShippingAndShip(
       );
 
     }
-
 
     if(!response.ok){
 
@@ -2610,7 +1766,6 @@ async function saveShippingAndShip(
 
     }
 
-
     const o =
       orders.find(
         x =>
@@ -2618,14 +1773,12 @@ async function saveShippingAndShip(
           orderNumber
       );
 
-
     if(o){
 
       o.order_status =
         "shipped";
 
     }
-
 
     closeModal();
 
@@ -2637,18 +1790,17 @@ async function saveShippingAndShip(
       "🚚 Order saved and marked SHIPPED"
     );
 
-
   }catch(error){
 
     if(btn){
 
-      btn.disabled = false;
+      btn.disabled =
+        false;
 
       btn.textContent =
         "🚚 Save & Mark Shipped";
 
     }
-
 
     alert(
       "Could not mark order as shipped:\n\n" +
@@ -2667,9 +1819,12 @@ function buildShippingWhatsAppUrl(
 
   const phone =
     String(
-      order.mobile || ""
-    ).replace(/\D/g,"");
-
+      order.mobile ||
+      ""
+    ).replace(
+      /\D/g,
+      ""
+    );
 
   if(!phone){
 
@@ -2679,12 +1834,10 @@ function buildShippingWhatsAppUrl(
 
   }
 
-
   const whatsappNumber =
     phone.length === 10
       ? "91" + phone
       : phone;
-
 
   let message =
 
@@ -2697,7 +1850,6 @@ function buildShippingWhatsAppUrl(
 → Courier: ${payload.courier_name || "-"}
 • Tracking No: ${payload.tracking_number || "-"}`;
 
-
   if(payload.tracking_url){
 
     message +=
@@ -2709,7 +1861,6 @@ ${payload.tracking_url}`;
 
   }
 
-
   message +=
 
 `
@@ -2718,14 +1869,13 @@ ${payload.tracking_url}`;
 
 Smart Technology. Perfect Choice.`;
 
-
   return (
-
     "https://wa.me/" +
     whatsappNumber +
     "?text=" +
-    encodeURIComponent(message)
-
+    encodeURIComponent(
+      message
+    )
   );
 
 }
@@ -2741,18 +1891,17 @@ async function saveShippingAndWhatsApp(
       "_blank"
     );
 
-
   const btn =
     $("shipWhatsAppBtn");
-
 
   const payload =
     shippingPayload(
       orderNumber
     );
 
-
-  if(!payload.tracking_number){
+  if(
+    !payload.tracking_number
+  ){
 
     if(popup)
       popup.close();
@@ -2765,16 +1914,15 @@ async function saveShippingAndWhatsApp(
 
   }
 
-
   if(btn){
 
-    btn.disabled = true;
+    btn.disabled =
+      true;
 
     btn.textContent =
       "Saving...";
 
   }
-
 
   try{
 
@@ -2782,14 +1930,12 @@ async function saveShippingAndWhatsApp(
       payload
     );
 
-
     const order =
       orders.find(
         x =>
           x.order_number ===
           orderNumber
       );
-
 
     if(!order){
 
@@ -2799,19 +1945,16 @@ async function saveShippingAndWhatsApp(
 
     }
 
-
     updateLocalShipping(
       orderNumber,
       payload
     );
-
 
     const whatsappUrl =
       buildShippingWhatsAppUrl(
         order,
         payload
       );
-
 
     closeModal();
 
@@ -2820,7 +1963,6 @@ async function saveShippingAndWhatsApp(
     showToast(
       "✅ Shipping saved. Opening WhatsApp..."
     );
-
 
     if(popup){
 
@@ -2834,22 +1976,20 @@ async function saveShippingAndWhatsApp(
 
     }
 
-
   }catch(error){
 
     if(popup)
       popup.close();
 
-
     if(btn){
 
-      btn.disabled = false;
+      btn.disabled =
+        false;
 
       btn.textContent =
         "📱 Save & WhatsApp Tracking";
 
     }
-
 
     alert(
       "Shipping / WhatsApp failed:\n\n" +
@@ -2872,12 +2012,14 @@ function whatsappCustomer(i){
 
   if(!o) return;
 
-
   const phone =
     String(
-      o.mobile || ""
-    ).replace(/\D/g,"");
-
+      o.mobile ||
+      ""
+    ).replace(
+      /\D/g,
+      ""
+    );
 
   if(!phone){
 
@@ -2889,12 +2031,10 @@ function whatsappCustomer(i){
 
   }
 
-
   const whatsappNumber =
     phone.length === 10
       ? "91" + phone
       : phone;
-
 
   let message =
 
@@ -2907,7 +2047,6 @@ Thank you for ordering from PERFECT COMPUTER.
 
 → Status: ${String(o.order_status || "new").toUpperCase()}
 Payment: ${o.payment_method === "cod" ? "Cash on Delivery" : String(o.payment_status || "").toUpperCase()}`;
-
 
   if(o.tracking_number){
 
@@ -2932,7 +2071,6 @@ ${o.tracking_url}`;
 
   }
 
-
   message +=
 
 `
@@ -2941,7 +2079,6 @@ ${o.tracking_url}`;
 
 Smart Technology. Perfect Choice.`;
 
-
   const url =
     "https://wa.me/" +
     whatsappNumber +
@@ -2949,7 +2086,6 @@ Smart Technology. Perfect Choice.`;
     encodeURIComponent(
       message
     );
-
 
   window.open(
     url,
@@ -2970,12 +2106,10 @@ function generateInvoice(i){
 
   if(!o) return;
 
-
   const items =
     parseItems(
       o.items_json
     );
-
 
   const rows =
     Array.isArray(items)
@@ -2997,7 +2131,6 @@ function generateInvoice(i){
               x.price ||
               0
             );
-
 
           return (
 
@@ -3024,7 +2157,9 @@ function generateInvoice(i){
             '</td>' +
 
             '<td>₹' +
-            formatMoney(p*q) +
+            formatMoney(
+              p*q
+            ) +
             '</td>' +
 
             '</tr>'
@@ -3038,14 +2173,12 @@ function generateInvoice(i){
 
       "";
 
-
   const w =
     window.open(
       "",
       "_blank",
       "width=900,height=700"
     );
-
 
   if(!w){
 
@@ -3057,15 +2190,11 @@ function generateInvoice(i){
 
   }
 
-
   w.document.write(
 
 `<!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
 
 <title>
@@ -3177,7 +2306,6 @@ th{
 }
 
 </style>
-
 </head>
 
 <body>
@@ -3191,7 +2319,6 @@ th{
 </button>
 
 </div>
-
 
 <div class="header">
 
@@ -3217,7 +2344,6 @@ Phone: 7875867861
 
 </div>
 
-
 <div class="invoice-title">
 
 <h2>
@@ -3227,7 +2353,8 @@ ORDER INVOICE
 <p>
 Invoice:
 ${escapeHtml(
-  o.order_number || "-"
+  o.order_number ||
+  "-"
 )}
 </p>
 
@@ -3242,7 +2369,6 @@ ${formatDate(
 
 </div>
 
-
 <div class="info">
 
 <div class="box">
@@ -3253,48 +2379,54 @@ BILL TO
 
 <strong>
 ${escapeHtml(
-  o.customer_name || "-"
+  o.customer_name ||
+  "-"
 )}
 </strong>
 
 <br>
 
 ${escapeHtml(
-  o.mobile || "-"
+  o.mobile ||
+  "-"
 )}
 
 <br>
 
 ${escapeHtml(
-  o.email || ""
+  o.email ||
+  ""
 )}
 
 <br><br>
 
 ${escapeHtml(
-  o.address || "-"
+  o.address ||
+  "-"
 )}
 
 <br>
 
 ${escapeHtml(
-  o.city || ""
+  o.city ||
+  ""
 )
 },
 
 ${escapeHtml(
-  o.state || ""
+  o.state ||
+  ""
 )}
 
 <br>
 
 PIN:
 ${escapeHtml(
-  o.pincode || "-"
+  o.pincode ||
+  "-"
 )}
 
 </div>
-
 
 <div class="box">
 
@@ -3304,23 +2436,25 @@ PAYMENT
 
 Method:
 ${escapeHtml(
-  o.payment_method || "-"
+  o.payment_method ||
+  "-"
 )}
 
 <br>
 
 Status:
 ${escapeHtml(
-  o.payment_status || "-"
+  o.payment_status ||
+  "-"
 )}
 
 <br><br>
 
 Order Status:
 ${escapeHtml(
-  o.order_status || "-"
+  o.order_status ||
+  "-"
 )}
-
 
 ${
   o.tracking_number
@@ -3330,7 +2464,8 @@ ${
   `<br><br>
   Courier:
   ${escapeHtml(
-    o.courier_name || "-"
+    o.courier_name ||
+    "-"
   )}
 
   <br>
@@ -3348,7 +2483,6 @@ ${
 </div>
 
 </div>
-
 
 <table>
 
@@ -3374,18 +2508,17 @@ ${rows}
 
 </table>
 
-
 <div class="total">
 
 Grand Total:
 ₹${formatMoney(
   Number(
-    o.amount_paise || 0
+    o.amount_paise ||
+    0
   ) / 100
 )}
 
 </div>
-
 
 <div class="footer">
 
@@ -3403,11 +2536,9 @@ Smart Technology. Perfect Choice.
 </div>
 
 </body>
-
 </html>`
 
   );
-
 
   w.document.close();
 
@@ -3426,34 +2557,35 @@ async function loadProducts(){
     'Loading products...' +
     '</div>';
 
-
   try{
 
     const r =
       await fetch(
         "/api/admin/products",
         {
-          headers:authHeaders(),
-          cache:"no-store"
+          headers:
+            authHeaders(),
+          cache:
+            "no-store"
         }
       );
 
-
-    if(r.status === 401){
+    if(
+      r.status === 401
+    ){
 
       logout();
 
-      $("loginError").textContent =
+      $("loginError")
+        .textContent =
         "Invalid Admin Token.";
 
       return;
 
     }
 
-
     const d =
       await r.json();
-
 
     if(!r.ok){
 
@@ -3465,12 +2597,12 @@ async function loadProducts(){
 
     }
 
-
     products =
-      Array.isArray(d.products)
-        ? d.products
-        : [];
-
+      Array.isArray(
+        d.products
+      )
+      ? d.products
+      : [];
 
     updateProductStats();
 
@@ -3478,10 +2610,10 @@ async function loadProducts(){
 
     renderProducts();
 
-
   }catch(error){
 
-    $("productsTableArea").innerHTML =
+    $("productsTableArea")
+      .innerHTML =
 
       '<div class="center">' +
 
@@ -3506,28 +2638,31 @@ async function loadProducts(){
 
 function updateProductStats(){
 
-  $("totalProducts").textContent =
+  $("totalProducts")
+    .textContent =
     products.length;
 
-
-  $("activeProducts").textContent =
+  $("activeProducts")
+    .textContent =
     products.filter(
       p =>
         String(
-          p.status || ""
-        ).toLowerCase()
-        === "active"
+          p.status ||
+          ""
+        )
+        .toLowerCase() ===
+        "active"
     ).length;
 
-
-  $("outOfStockProducts").textContent =
+  $("outOfStockProducts")
+    .textContent =
     products.filter(
       p =>
         Number(
-          p.stock_qty || 0
+          p.stock_qty ||
+          0
         ) <= 0
     ).length;
-
 
   const categories =
     new Set(
@@ -3535,14 +2670,15 @@ function updateProductStats(){
         .map(
           p =>
             String(
-              p.category || ""
+              p.category ||
+              ""
             ).trim()
         )
         .filter(Boolean)
     );
 
-
-  $("productCategories").textContent =
+  $("productCategories")
+    .textContent =
     categories.size;
 
 }
@@ -3553,10 +2689,8 @@ function updateProductCategoryFilter(){
   const select =
     $("productCategoryFilter");
 
-
   const current =
     select.value;
-
 
   const categories =
     [
@@ -3565,7 +2699,8 @@ function updateProductCategoryFilter(){
           .map(
             p =>
               String(
-                p.category || ""
+                p.category ||
+                ""
               ).trim()
           )
           .filter(Boolean)
@@ -3573,24 +2708,22 @@ function updateProductCategoryFilter(){
     ]
     .sort(
       (a,b)=>
-        a.localeCompare(
-          b
-        )
+        a.localeCompare(b)
     );
-
 
   select.innerHTML =
     '<option value="">All Categories</option>' +
 
-    categories.map(
-      c =>
-        '<option value="' +
-        escapeHtml(c) +
-        '">' +
-        escapeHtml(c) +
-        '</option>'
-    ).join("");
-
+    categories
+      .map(
+        c =>
+          '<option value="' +
+          escapeHtml(c) +
+          '">' +
+          escapeHtml(c) +
+          '</option>'
+      )
+      .join("");
 
   if(
     categories.includes(
@@ -3614,16 +2747,13 @@ function renderProducts(){
       .trim()
       .toLowerCase();
 
-
   const category =
     $("productCategoryFilter")
       .value;
 
-
   const status =
     $("productStatusFilter")
       .value;
-
 
   filteredProducts =
     products.filter(
@@ -3631,17 +2761,14 @@ function renderProducts(){
 
         const text =
           [
-
             p.name,
             p.brand,
             p.category,
             p.sku,
             p.description
-
           ]
           .join(" ")
           .toLowerCase();
-
 
         return (
 
@@ -3651,22 +2778,25 @@ function renderProducts(){
 
           (!category ||
             String(
-              p.category || ""
-            ) === category
+              p.category ||
+              ""
+            ) ===
+            category
           ) &&
 
           (!status ||
             String(
-              p.status || ""
-            ).toLowerCase()
-            === status
+              p.status ||
+              ""
+            )
+            .toLowerCase() ===
+            status
           )
 
         );
 
       }
     );
-
 
   drawProducts();
 
@@ -3675,9 +2805,12 @@ function renderProducts(){
 
 function drawProducts(){
 
-  if(!filteredProducts.length){
+  if(
+    !filteredProducts.length
+  ){
 
-    $("productsTableArea").innerHTML =
+    $("productsTableArea")
+      .innerHTML =
 
       '<div class="center">' +
 
@@ -3692,7 +2825,6 @@ function drawProducts(){
     return;
 
   }
-
 
   let h =
 
@@ -3720,12 +2852,12 @@ function drawProducts(){
 
     '<tbody>';
 
-
   filteredProducts.forEach(
     (p,i)=>{
 
       const image =
         p.image_url
+
           ?
 
           '<img class="product-image" src="' +
@@ -3740,30 +2872,29 @@ function drawProducts(){
 
           '<div class="product-placeholder">🖥️</div>';
 
-
       const price =
         Number(
-          p.price_paise || 0
+          p.price_paise ||
+          0
         ) / 100;
-
 
       const mrp =
         Number(
-          p.mrp_paise || 0
+          p.mrp_paise ||
+          0
         ) / 100;
-
 
       const stock =
         Number(
-          p.stock_qty || 0
+          p.stock_qty ||
+          0
         );
-
 
       const status =
         String(
-          p.status || "active"
+          p.status ||
+          "active"
         ).toLowerCase();
-
 
       h +=
 
@@ -3779,13 +2910,15 @@ function drawProducts(){
 
         '<div class="product-name">' +
         escapeHtml(
-          p.name || "-"
+          p.name ||
+          "-"
         ) +
         '</div>' +
 
         '<div class="product-brand">' +
         escapeHtml(
-          p.brand || ""
+          p.brand ||
+          ""
         ) +
         '</div>' +
 
@@ -3794,41 +2927,42 @@ function drawProducts(){
         '</div>' +
 
         '</td>' +
-
 
         '<td>' +
         escapeHtml(
-          p.category || "-"
+          p.category ||
+          "-"
         ) +
         '</td>' +
-
 
         '<td>' +
         escapeHtml(
-          p.sku || "-"
+          p.sku ||
+          "-"
         ) +
         '</td>' +
-
 
         '<td>' +
 
         '<strong>' +
         '₹' +
-        formatMoney(price) +
+        formatMoney(
+          price
+        ) +
         '</strong>' +
 
         '</td>' +
-
 
         '<td>' +
 
         '<span style="color:#64748b">' +
         '₹' +
-        formatMoney(mrp) +
+        formatMoney(
+          mrp
+        ) +
         '</span>' +
 
         '</td>' +
-
 
         '<td>' +
 
@@ -3846,11 +2980,11 @@ function drawProducts(){
 
         '</td>' +
 
-
         '<td>' +
 
         (
-          status === "active"
+          status ===
+          "active"
 
             ?
 
@@ -3867,7 +3001,6 @@ function drawProducts(){
 
         '</td>' +
 
-
         '<td>' +
 
         formatDate(
@@ -3876,7 +3009,6 @@ function drawProducts(){
         ) +
 
         '</td>' +
-
 
         '<td>' +
 
@@ -3907,163 +3039,211 @@ function drawProducts(){
     }
   );
 
-
   h +=
-
     '</tbody>' +
     '</table>' +
     '</div>';
 
-
-  $("productsTableArea").innerHTML =
+  $("productsTableArea")
+    .innerHTML =
     h;
 
 }
 
 
+/* =========================================================
+   PRODUCT MODAL
+========================================================= */
+
 function openProductModal(
   product = null
 ){
 
-  $("productForm").reset();
+  $("productForm")
+    .reset();
 
-  $("productId").value =
-    "";
+  $("productId")
+    .value = "";
 
-  $("productStatus").value =
+  $("productStatus")
+    .value =
     "active";
 
-  $("productStock").value =
+  $("productStock")
+    .value =
     "0";
-
 
   if(product){
 
-    $("productModalTitle").textContent =
+    $("productModalTitle")
+      .textContent =
       "✏️ Edit Product";
 
+    $("productId")
+      .value =
+      product.id ||
+      "";
 
-    $("productId").value =
-      product.id || "";
+    $("productName")
+      .value =
+      product.name ||
+      "";
 
+    $("productBrand")
+      .value =
+      product.brand ||
+      "";
 
-    $("productName").value =
-      product.name || "";
+    $("productCategory")
+      .value =
+      product.category ||
+      "";
 
+    $("productSku")
+      .value =
+      product.sku ||
+      "";
 
-    $("productBrand").value =
-      product.brand || "";
+    /*
+      Database stores paise.
+      Form displays rupees.
+    */
 
-
-    $("productCategory").value =
-      product.category || "";
-
-
-    $("productSku").value =
-      product.sku || "";
-
-
-    $("productPrice").value =
+    $("productPrice")
+      .value =
       Number(
-        product.price_paise || 0
+        product.price_paise ||
+        0
       ) / 100;
 
-
-    $("productMrp").value =
+    $("productMrp")
+      .value =
       Number(
-        product.mrp_paise || 0
+        product.mrp_paise ||
+        0
       ) / 100;
 
+    $("productStock")
+      .value =
+      product.stock_qty ||
+      0;
 
-    $("productStock").value =
-      product.stock_qty || 0;
+    $("productStatus")
+      .value =
+      product.status ||
+      "active";
 
+    $("productImage")
+      .value =
+      product.image_url ||
+      "";
 
-    $("productStatus").value =
-      product.status || "active";
-
-
-    $("productImage").value =
-      product.image_url || "";
-
-
-    $("productDescription").value =
-      product.description || "";
-
+    $("productDescription")
+      .value =
+      product.description ||
+      "";
 
   }else{
 
-    $("productModalTitle").textContent =
+    $("productModalTitle")
+      .textContent =
       "➕ Add Product";
 
   }
 
-
-  $("productModal").classList.remove(
-    "hidden"
-  );
+  $("productModal")
+    .classList
+    .remove("hidden");
 
 }
 
 
 function closeProductModal(){
 
-  $("productModal").classList.add(
-    "hidden"
-  );
+  $("productModal")
+    .classList
+    .add("hidden");
 
 }
 
+
+/* =========================================================
+   FIXED PRODUCT FORM DATA
+========================================================= */
 
 function productFormData(){
 
   const price =
     Number(
-      $("productPrice").value || 0
+      $("productPrice")
+        .value || 0
     );
-
 
   const mrp =
     Number(
-      $("productMrp").value || 0
+      $("productMrp")
+        .value || 0
     );
-
 
   const stock =
     Number(
-      $("productStock").value || 0
+      $("productStock")
+        .value || 0
     );
 
+  /*
+    IMPORTANT:
+
+    Backend expects:
+
+    price = rupees
+    mrp   = rupees
+
+    Backend itself converts:
+
+    price * 100 -> price_paise
+    mrp   * 100 -> mrp_paise
+  */
 
   return {
 
     name:
-      $("productName").value.trim(),
+      $("productName")
+        .value
+        .trim(),
 
     brand:
-      $("productBrand").value.trim(),
+      $("productBrand")
+        .value
+        .trim(),
 
     category:
-      $("productCategory").value.trim(),
+      $("productCategory")
+        .value
+        .trim(),
 
     sku:
-      $("productSku").value.trim(),
+      $("productSku")
+        .value
+        .trim(),
 
     description:
-      $("productDescription").value.trim(),
+      $("productDescription")
+        .value
+        .trim(),
 
     image_url:
-      $("productImage").value.trim(),
+      $("productImage")
+        .value
+        .trim(),
 
-    price_paise:
-      Math.round(
-        price * 100
-      ),
+    /* FIX */
+    price:
+      price,
 
-    mrp_paise:
-      Math.round(
-        mrp * 100
-      ),
+    /* FIX */
+    mrp:
+      mrp,
 
     stock_qty:
       Math.max(
@@ -4072,26 +3252,33 @@ function productFormData(){
       ),
 
     status:
-      $("productStatus").value
+      $("productStatus")
+        .value
 
   };
 
 }
 
 
+/* =========================================================
+   FIXED SAVE PRODUCT
+========================================================= */
+
 async function saveProduct(){
 
   const btn =
     $("saveProductBtn");
 
-
   const id =
-    $("productId").value.trim();
-
+    $("productId")
+      .value
+      .trim();
 
   const data =
     productFormData();
 
+
+  /* PRODUCT NAME */
 
   if(!data.name){
 
@@ -4104,6 +3291,8 @@ async function saveProduct(){
   }
 
 
+  /* CATEGORY */
+
   if(!data.category){
 
     alert(
@@ -4115,10 +3304,17 @@ async function saveProduct(){
   }
 
 
-  if(data.price_paise < 0){
+  /* SELLING PRICE */
+
+  if(
+    !Number.isFinite(
+      data.price
+    ) ||
+    data.price < 0
+  ){
 
     alert(
-      "Price cannot be negative."
+      "Please enter a valid Selling Price."
     );
 
     return;
@@ -4126,10 +3322,17 @@ async function saveProduct(){
   }
 
 
-  if(data.mrp_paise < 0){
+  /* MRP */
+
+  if(
+    !Number.isFinite(
+      data.mrp
+    ) ||
+    data.mrp < 0
+  ){
 
     alert(
-      "MRP cannot be negative."
+      "Please enter a valid MRP."
     );
 
     return;
@@ -4137,19 +3340,32 @@ async function saveProduct(){
   }
 
 
-  btn.disabled = true;
+  /* STOCK */
+
+  if(
+    !Number.isInteger(
+      data.stock_qty
+    ) ||
+    data.stock_qty < 0
+  ){
+
+    alert(
+      "Please enter a valid Stock Quantity."
+    );
+
+    return;
+
+  }
+
+
+  btn.disabled =
+    true;
 
   btn.textContent =
     "Saving...";
 
 
   try{
-
-    const url =
-      id
-        ? "/api/admin/products"
-        : "/api/admin/products";
-
 
     const method =
       id
@@ -4159,26 +3375,47 @@ async function saveProduct(){
 
     const body =
       id
-        ? {
-            id:Number(id),
-            ...data
-          }
-        : data;
+
+        ?
+
+        {
+          id:
+            Number(id),
+
+          ...data
+        }
+
+        :
+
+        data;
+
+
+    console.log(
+      "Product API payload:",
+      body
+    );
 
 
     const r =
       await fetch(
-        url,
+        "/api/admin/products",
         {
-          method,
-          headers:authHeaders(),
+          method:
+            method,
+
+          headers:
+            authHeaders(),
+
           body:
-            JSON.stringify(body)
+            JSON.stringify(
+              body
+            )
         }
       );
 
 
     let result = {};
+
 
     try{
 
@@ -4188,12 +3425,15 @@ async function saveProduct(){
     }catch{}
 
 
-    if(r.status === 401){
+    if(
+      r.status ===
+      401
+    ){
 
       logout();
 
       throw new Error(
-        "Admin session expired."
+        "Admin session expired. Please login again."
       );
 
     }
@@ -4215,10 +3455,17 @@ async function saveProduct(){
 
     closeProductModal();
 
+
     showToast(
       id
-        ? "✅ Product updated successfully"
-        : "✅ Product added successfully"
+
+        ?
+
+        "✅ Product updated successfully"
+
+        :
+
+        "✅ Product added successfully"
     );
 
 
@@ -4227,6 +3474,11 @@ async function saveProduct(){
 
   }catch(error){
 
+    console.error(
+      "Product save error:",
+      error
+    );
+
     alert(
       "Could not save product:\n\n" +
       error.message
@@ -4234,7 +3486,8 @@ async function saveProduct(){
 
   }finally{
 
-    btn.disabled = false;
+    btn.disabled =
+      false;
 
     btn.textContent =
       "💾 Save Product";
@@ -4244,12 +3497,16 @@ async function saveProduct(){
 }
 
 
+/* =========================================================
+   DELETE PRODUCT
+========================================================= */
+
 async function deleteProduct(
   product
 ){
 
-  if(!product) return;
-
+  if(!product)
+    return;
 
   const ok =
     confirm(
@@ -4262,9 +3519,8 @@ async function deleteProduct(
 
     );
 
-
-  if(!ok) return;
-
+  if(!ok)
+    return;
 
   try{
 
@@ -4272,19 +3528,21 @@ async function deleteProduct(
       await fetch(
         "/api/admin/products",
         {
-          method:"DELETE",
-          headers:authHeaders(),
+          method:
+            "DELETE",
+
+          headers:
+            authHeaders(),
 
           body:
             JSON.stringify({
-              id:Number(
-                product.id
-              )
+              id:
+                Number(
+                  product.id
+                )
             })
-
         }
       );
-
 
     let d = {};
 
@@ -4295,15 +3553,16 @@ async function deleteProduct(
 
     }catch{}
 
-
-    if(r.status === 401){
+    if(
+      r.status ===
+      401
+    ){
 
       logout();
 
       return;
 
     }
-
 
     if(!r.ok){
 
@@ -4318,14 +3577,11 @@ async function deleteProduct(
 
     }
 
-
     showToast(
       "🗑 Product deleted successfully"
     );
 
-
     await loadProducts();
-
 
   }catch(error){
 
@@ -4352,15 +3608,13 @@ document.addEventListener(
         "[data-product-action]"
       );
 
-
-    if(!btn) return;
-
+    if(!btn)
+      return;
 
     const action =
       btn.getAttribute(
         "data-product-action"
       );
-
 
     const index =
       Number(
@@ -4369,15 +3623,16 @@ document.addEventListener(
         )
       );
 
-
     const product =
       filteredProducts[index];
 
+    if(!product)
+      return;
 
-    if(!product) return;
-
-
-    if(action === "edit"){
+    if(
+      action ===
+      "edit"
+    ){
 
       openProductModal(
         product
@@ -4385,9 +3640,9 @@ document.addEventListener(
 
     }
 
-
     else if(
-      action === "delete"
+      action ===
+      "delete"
     ){
 
       deleteProduct(
@@ -4413,15 +3668,13 @@ document.addEventListener(
         "[data-action]"
       );
 
-
-    if(!btn) return;
-
+    if(!btn)
+      return;
 
     const action =
       btn.getAttribute(
         "data-action"
       );
-
 
     const index =
       Number(
@@ -4430,36 +3683,47 @@ document.addEventListener(
         )
       );
 
-
     if(
-      action === "whatsapp"
+      action ===
+      "whatsapp"
     ){
 
-      whatsappCustomer(index);
+      whatsappCustomer(
+        index
+      );
 
     }
 
     else if(
-      action === "invoice"
+      action ===
+      "invoice"
     ){
 
-      generateInvoice(index);
+      generateInvoice(
+        index
+      );
 
     }
 
     else if(
-      action === "shipping"
+      action ===
+      "shipping"
     ){
 
-      openShipping(index);
+      openShipping(
+        index
+      );
 
     }
 
     else if(
-      action === "view"
+      action ===
+      "view"
     ){
 
-      viewOrder(index);
+      viewOrder(
+        index
+      );
 
     }
 
@@ -4468,7 +3732,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   FORM
+   PRODUCT FORM
 ========================================================= */
 
 $("productForm")
@@ -4492,7 +3756,10 @@ document.addEventListener(
   "keydown",
   function(e){
 
-    if(e.key === "Escape"){
+    if(
+      e.key ===
+      "Escape"
+    ){
 
       closeModal();
 
@@ -4545,7 +3812,10 @@ $("adminToken")
     "keydown",
     function(e){
 
-      if(e.key === "Enter"){
+      if(
+        e.key ===
+        "Enter"
+      ){
 
         login();
 
@@ -4576,6 +3846,3 @@ $("adminToken")
 })();
 
 </script>
-
-</body>
-</html>
