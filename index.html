@@ -47,6 +47,7 @@ h2{margin:22px 0 13px}
 .detail{display:grid;grid-template-columns:1fr 1fr;gap:25px}
 .detailpic{background:#edf4fb;min-height:260px;display:flex;align-items:center;justify-content:center;font-size:100px;border-radius:15px;overflow:hidden}
 .detailpic img{width:100%;height:260px;object-fit:contain}
+.detail-actions{display:flex;gap:9px;margin-top:15px}.detail-actions button{flex:1;padding:12px;border:0;border-radius:9px;font-weight:800;cursor:pointer}.detail-add{background:#071b31;color:#fff}.detail-buy{background:#1976ed;color:#fff}.detail-actions button:disabled{opacity:.45;cursor:not-allowed}.detail-meta{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.meta-pill{background:#f1f5f9;padding:6px 9px;border-radius:20px;font-size:11px}
 .cartrow{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eee;padding:14px 0;align-items:center}
 .qty button{width:30px;height:30px;border:1px solid #ddd;background:#fff}
 .checkout{width:100%;padding:13px;border:0;background:#1976ed;color:#fff;border-radius:9px;font-weight:bold;margin-top:15px}
@@ -449,26 +450,35 @@ function details(id){
   if(!p) return;
 
   const image = p.image
-    ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.display=\'none\';">'
+    ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.display=\'none\';this.parentElement.textContent=\'💻\';">'
     : p.icon;
+
+  const out = p.stock <= 0;
 
   document.getElementById("detail").innerHTML =
     '<div class="detail">' +
       '<div class="detailpic">' + image + '</div>' +
       '<div>' +
-        '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
-        '<h2>' + escapeHtml(p.name) + '</h2>' +
-        '<p>' + escapeHtml(p.desc || "Quality technology product from PERFECT COMPUTER.") + '</p>' +
-        '<p><b>Category:</b> ' + escapeHtml(p.cat) + '</p>' +
-        (p.sku ? '<p><b>SKU:</b> ' + escapeHtml(p.sku) + '</p>' : '') +
-        '<h2>' + money(p.price) +
+        '<div class="brand">' + escapeHtml(p.brand || "PERFECT COMPUTER") + '</div>' +
+        '<h2 style="margin-top:6px">' + escapeHtml(p.name) + '</h2>' +
+        '<div class="detail-meta">' +
+          '<span class="meta-pill">📂 ' + escapeHtml(p.cat) + '</span>' +
+          (p.sku ? '<span class="meta-pill">🏷️ SKU: ' + escapeHtml(p.sku) + '</span>' : '') +
+        '</div>' +
+        '<p style="line-height:1.6">' + escapeHtml(p.desc || "Quality technology product from PERFECT COMPUTER.") + '</p>' +
+        '<h2 style="margin-bottom:5px">' + money(p.price) +
           (p.mrp > p.price ? ' <span class="mrp">' + money(p.mrp) + '</span>' : '') +
         '</h2>' +
-        '<p class="' + (p.stock > 0 ? "stock ok" : "stock out") + '">' +
-          (p.stock > 0 ? "✓ In Stock • " + p.stock + " available" : "❌ Out of Stock") +
+        (p.mrp > p.price ? '<div class="small-note">You save ' + money(p.mrp-p.price) + '</div>' : '') +
+        '<p class="' + (out ? "stock out" : "stock ok") + '">' +
+          (out ? "❌ Currently Out of Stock" : "✓ In Stock • " + p.stock + " available") +
         '</p>' +
-        '<button class="primary" ' + (p.stock <= 0 ? "disabled" : "") +
-          ' onclick="add(' + p.id + ');closeModal(\'productModal\')">Add to Cart</button>' +
+        '<div class="detail-actions">' +
+          '<button class="detail-add" ' + (out ? "disabled" : "") +
+            ' onclick="add(' + p.id + ');closeModal(\'productModal\');openCart()">🛒 Add to Cart</button>' +
+          '<button class="detail-buy" ' + (out ? "disabled" : "") +
+            ' onclick="buy(' + p.id + ');closeModal(\'productModal\')">⚡ Buy Now</button>' +
+        '</div>' +
       '</div>' +
     '</div>';
 
