@@ -89,6 +89,117 @@ h2{margin:22px 0 13px}
 .products{gap:9px}.card h3{font-size:13px}.price{font-size:15px}
 .actions button{font-size:11px;padding:8px}.cat{padding:14px}
 }
+
+/* ===== PERFECT COMPUTER PREMIUM UPGRADE ===== */
+:root{
+  --pc-blue:#1976ed;
+  --pc-dark:#071b31;
+  --pc-bg:#f5f7fb;
+  --pc-border:#e5eaf1;
+}
+html{scroll-behavior:smooth}
+body{background:linear-gradient(180deg,#f7f9fc 0%,#f5f7fb 100%)}
+.top{background:linear-gradient(90deg,#061a2d,#0b2e52,#061a2d);padding:8px 4%;gap:15px;flex-wrap:wrap}
+header{backdrop-filter:blur(10px);background:rgba(255,255,255,.96)}
+.logo{letter-spacing:-.5px}
+.search{box-shadow:0 3px 14px #0000000a}
+.search input{font-size:13px}
+nav{background:#061a2d;box-shadow:0 3px 12px #0002;position:sticky;top:72px;z-index:9}
+nav a{padding:3px 0;opacity:.92}
+nav a:hover{opacity:1;color:#7db7ff}
+.container{padding-top:24px}
+.hero{
+  min-height:320px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 85% 25%,#ffffff25 0 80px,transparent 81px),
+    radial-gradient(circle at 92% 85%,#ffffff18 0 130px,transparent 131px),
+    linear-gradient(120deg,#061a2d,#1252a0 62%,#1976ed);
+  box-shadow:0 16px 40px #071b3128;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:260px;height:260px;
+  right:-80px;top:-90px;
+  border:2px solid #ffffff22;
+  border-radius:50%;
+}
+.hero h1{font-size:clamp(32px,5vw,52px);letter-spacing:-1.5px;max-width:650px}
+.hero p{max-width:680px;line-height:1.7;color:#eaf3ff}
+.hero .primary{width:max-content;box-shadow:0 8px 20px #0003;cursor:pointer}
+.section-intro{
+  display:flex;justify-content:space-between;align-items:end;gap:15px;margin-top:30px
+}
+.section-intro h2{margin-bottom:5px}
+.section-intro p{margin:0;color:#667085;font-size:12px}
+.quick-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 8px
+}
+.quick-item{
+  background:#fff;border:1px solid var(--pc-border);border-radius:13px;padding:13px;
+  display:flex;align-items:center;gap:10px;box-shadow:0 3px 12px #00000008
+}
+.quick-item strong{display:block;font-size:12px}.quick-item small{color:#667085;font-size:10px}
+.cats{grid-template-columns:repeat(4,1fr)}
+.cat{
+  border:1px solid transparent;transition:.2s;min-height:92px
+}
+.cat:hover{transform:translateY(-3px);border-color:#b8d5fb;box-shadow:0 10px 25px #1976ed18}
+.products{gap:18px}
+.card{border:1px solid #e9edf3;transition:.22s;box-shadow:0 5px 20px #0000000d}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 30px #00000018}
+.pic{background:linear-gradient(135deg,#f1f6fb,#e9f2fc)}
+.info{padding:15px}
+.brand{text-transform:uppercase;letter-spacing:.5px;font-weight:800}
+.price{color:#071b31}
+.buy{box-shadow:0 4px 12px #1976ed25;cursor:pointer}
+.add{cursor:pointer}
+.features{gap:15px}
+.feature{border:1px solid var(--pc-border);box-shadow:0 4px 15px #00000008;transition:.2s}
+.feature:hover{transform:translateY(-2px)}
+.promo-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin-top:15px}
+.promo{
+  border-radius:17px;padding:22px;color:#fff;min-height:145px;overflow:hidden;position:relative;
+  background:linear-gradient(120deg,#071b31,#1559a8)
+}
+.promo.alt{background:linear-gradient(120deg,#12243a,#1976ed)}
+.promo h3{margin:0 0 7px;font-size:20px}.promo p{margin:0;line-height:1.5;font-size:12px;color:#eaf3ff}
+.promo b{display:inline-block;margin-top:13px;background:#fff;color:#071b31;padding:8px 12px;border-radius:8px;font-size:11px}
+.brands{
+  display:flex;gap:9px;flex-wrap:wrap;margin-top:13px
+}
+.brand-chip{
+  background:#fff;border:1px solid var(--pc-border);padding:10px 14px;border-radius:10px;
+  font-size:11px;font-weight:800;color:#24344d;cursor:pointer
+}
+.brand-chip:hover{border-color:#9fc7f7;color:#1976ed}
+footer{
+  margin-top:45px;background:#061a2d;color:#fff;padding:35px 4% 20px
+}
+.footer-grid{max-width:1250px;margin:auto;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px}
+footer h3{margin:0 0 10px}.footer-title{font-size:22px;font-weight:900}
+footer p,footer li{font-size:11px;color:#cbd7e6;line-height:1.7}
+footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
+.footer-bottom{max-width:1250px;margin:25px auto 0;padding-top:15px;border-top:1px solid #ffffff1a;font-size:10px;color:#9fb0c4}
+@media(max-width:800px){
+  nav{top:116px}
+  .quick-strip{grid-template-columns:repeat(2,1fr)}
+  .promo-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:430px){
+  .quick-strip{grid-template-columns:1fr 1fr;gap:7px}
+  .quick-item{padding:10px 8px}
+  .cats{gap:8px}
+  .promo{padding:17px;min-height:125px}
+  .footer-grid{grid-template-columns:1fr}
+}
+
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
@@ -128,10 +239,17 @@ h2{margin:22px 0 13px}
 <main class="container">
 
 <section class="hero">
-  <h1>Upgrade Your Tech 🚀</h1>
-  <p>Computers • Laptops • Gaming • Components • Printers • CCTV • Accessories</p>
-  <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+  <h1>Smart Technology. Perfect Choice. 🚀</h1>
+  <p>Shop laptops, desktops, gaming PCs, SSDs, RAM, monitors, printers, CCTV and computer accessories — all in one place.</p>
+  <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">🛍️ Shop Products</button>
 </section>
+
+<div class="quick-strip">
+  <div class="quick-item"><span>🚚</span><div><strong>India-wide Delivery</strong><small>Reliable shipping</small></div></div>
+  <div class="quick-item"><span>🔒</span><div><strong>Secure Checkout</strong><small>Online payment + COD</small></div></div>
+  <div class="quick-item"><span>💬</span><div><strong>WhatsApp Support</strong><small>Quick assistance</small></div></div>
+  <div class="quick-item"><span>🛠️</span><div><strong>Computer Expertise</strong><small>Tech you can trust</small></div></div>
+</div>
 
 <h2>Shop by Category</h2>
 <div class="cats" id="categoryCards">
@@ -144,6 +262,40 @@ h2{margin:22px 0 13px}
   <div class="cat" onclick="filterCat('CCTV')">📹<b>CCTV</b><small>Shop now</small></div>
   <div class="cat" onclick="filterCat('Storage')">💾<b>Storage</b><small>Shop now</small></div>
 </div>
+
+<section>
+  <div class="section-intro">
+    <div><h2>🔥 Latest Offers</h2><p>Check our latest computer & electronics deals.</p></div>
+  </div>
+  <div class="promo-grid">
+    <div class="promo">
+      <h3>Build Your Perfect PC 💻</h3>
+      <p>Choose processors, motherboards, RAM, SSD, cabinets, graphics cards and more.</p>
+      <b onclick="filterCat('PC Components')">Explore Components →</b>
+    </div>
+    <div class="promo alt">
+      <h3>Storage Upgrade ⚡</h3>
+      <p>Upgrade your laptop or desktop with fast SSD storage.</p>
+      <b onclick="filterCat('Storage')">Shop Storage →</b>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-intro">
+    <div><h2>🏷️ Popular Brands</h2><p>Search products by brand.</p></div>
+  </div>
+  <div class="brands">
+    <button class="brand-chip" onclick="document.getElementById('search').value='HP';render()">HP</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Dell';render()">Dell</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Lenovo';render()">Lenovo</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='ASUS';render()">ASUS</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Acer';render()">Acer</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='EVM';render()">EVM</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Zebronics';render()">Zebronics</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='';render()">All Brands</button>
+  </div>
+</section>
 
 <section id="products">
   <h2>Featured Products</h2>
@@ -173,6 +325,36 @@ h2{margin:22px 0 13px}
 </main>
 
 <a class="wa" href="https://wa.me/917875867861?text=Hello%20PERFECT%20COMPUTER" target="_blank">💬 WhatsApp</a>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-title">PERFECT COMPUTER</div>
+      <p>Smart Technology. Perfect Choice.</p>
+      <p>Near Saifullah Chowk, Shadab Nagar, Akola, Maharashtra.</p>
+      <p>📞 7875867861</p>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        <li onclick="filterCat('Laptops')">💻 Laptops</li>
+        <li onclick="filterCat('Desktop')">🖥️ Desktop</li>
+        <li onclick="filterCat('Gaming')">🎮 Gaming</li>
+        <li onclick="filterCat('PC Components')">🔧 PC Components</li>
+        <li onclick="filterCat('Storage')">💾 Storage</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Customer Care</h3>
+      <ul>
+        <li onclick="openOrders()">👤 My Orders</li>
+        <li onclick="openCart()">🛒 Cart</li>
+        <li><a href="https://wa.me/917875867861?text=Hello%20PERFECT%20COMPUTER" target="_blank" style="color:#cbd7e6;text-decoration:none">💬 WhatsApp Support</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 PERFECT COMPUTER • Smart Technology. Perfect Choice.</div>
+</footer>
 
 <div class="modal" id="productModal">
   <div class="box">
