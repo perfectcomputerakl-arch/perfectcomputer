@@ -68,6 +68,15 @@ h2{margin:22px 0 13px}
 .center{text-align:center;padding:35px;color:#667085}
 .error{background:#fff1f1;color:#b42318;padding:14px;border-radius:10px;margin:12px 0}
 .empty{background:#fff;padding:30px;border-radius:14px;text-align:center;color:#667085}
+.order-card{border:1px solid #e3e8ef;border-radius:14px;padding:15px;margin:12px 0;background:#fff}
+.order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.order-status{display:inline-block;padding:5px 9px;border-radius:20px;background:#eef5ff;color:#1557a6;font-size:11px;font-weight:800}
+.order-items{font-size:12px;color:#475467;line-height:1.6;margin:8px 0}
+.order-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}
+.order-meta div{background:#f8fafc;border-radius:9px;padding:8px;font-size:11px}
+.order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.order-actions a,.order-actions button{border:0;border-radius:8px;padding:9px 12px;font-weight:700;text-decoration:none;cursor:pointer}
+.track-btn{background:#1976ed;color:#fff}.wa-btn{background:#18a957;color:#fff}.invoice-btn{background:#071b31;color:#fff}
 @media(max-width:800px){
 .top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}
 .search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
@@ -100,6 +109,8 @@ h2{margin:22px 0 13px}
     <input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()">
     <button>🔍</button>
   </div>
+  <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
+  <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
   <button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </header>
 
@@ -181,6 +192,20 @@ h2{margin:22px 0 13px}
   </div>
 </div>
 
+<div class="modal" id="ordersModal">
+  <div class="box">
+    <button class="close" onclick="closeModal('ordersModal')">×</button>
+    <h2>👤 My Orders</h2>
+    <p class="small-note">Enter the mobile number used while placing your order.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+      <input id="ordersMobile" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" style="flex:1;min-width:220px;padding:12px;border:1px solid #d8dee8;border-radius:9px">
+      <button class="primary" onclick="loadMyOrders()">🔎 Find Orders</button>
+    </div>
+    <div id="ordersStatus"></div>
+    <div id="ordersList"></div>
+  </div>
+</div>
+
 <div class="modal" id="checkoutModal">
   <div class="box">
     <button class="close" onclick="closeModal('checkoutModal')">×</button>
@@ -251,6 +276,57 @@ const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {
   minimumFractionDigits: 0,
   maximumFractionDigits: 2
 });
+
+function openOrders(){
+  document.getElementById("ordersMobile").value = localStorage.getItem("pc_customer_mobile") || "";
+  document.getElementById("ordersStatus").innerHTML = "";
+  document.getElementById("ordersList").innerHTML = "";
+  document.getElementById("ordersModal").style.display = "block";
+}
+
+function orderStatusLabel(status){
+  const s=String(status||"new").toLowerCase();
+  return s.charAt(0).toUpperCase()+s.slice(1).replaceAll("_"," ");
+}
+
+function formatOrderDate(v){
+  if(!v) return "";
+  const d=new Date(String(v).replace(" ","T")+"Z");
+  return Number.isNaN(d.getTime()) ? String(v) : d.toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
+}
+
+function invoiceHtml(order){
+  const items=Array.isArray(order.items) ? order.items : [];
+  const rows=items.map(i=>`<tr><td>${escapeHtml(i.name||"Product")}</td><td>${Number(i.quantity||0)}</td><td>${money(i.price)}</td><td>${money(Number(i.price||0)*Number(i.quantity||0))}</td></tr>`).join("");
+  const w=window.open("","_blank","width=800,height=900");
+  if(!w){ alert("Please allow pop-ups to print the invoice."); return; }
+  w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.close();
+}
+
+async function loadMyOrders(){
+  const mobile=document.getElementById("ordersMobile").value.trim();
+  const status=document.getElementById("ordersStatus");
+  const list=document.getElementById("ordersList");
+  if(!/^\d{10}$/.test(mobile)){ status.innerHTML='<div class="error">Please enter a valid 10-digit mobile number.</div>'; return; }
+  localStorage.setItem("pc_customer_mobile",mobile);
+  status.innerHTML='<div class="status-box">🔎 Finding your orders…</div>';
+  list.innerHTML="";
+  try{
+    const r=await fetch("/api/my-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error||"Could not load orders");
+    const orders=Array.isArray(data.orders)?data.orders:[];
+    if(!orders.length){ status.innerHTML='<div class="empty">No orders found for this mobile number.</div>'; return; }
+    status.innerHTML='<div class="status-box">✅ '+orders.length+' order(s) found.</div>';
+    list.innerHTML=orders.map(o=>{
+      const tracking=o.tracking_url ? `<a class="track-btn" href="${escapeHtml(o.tracking_url)}" target="_blank" rel="noopener">🔗 Track Shipment</a>` : "";
+      const waText=encodeURIComponent(`Hello PERFECT COMPUTER, I want an update for Order ${o.order_number}.`);
+      const items=(Array.isArray(o.items)?o.items:[]).map(i=>`${escapeHtml(i.name||"Product")} × ${Number(i.quantity||0)}`).join("<br>");
+      return `<div class="order-card"><div class="order-head"><div><b>${escapeHtml(o.order_number)}</b><br><small>${escapeHtml(formatOrderDate(o.created_at))}</small></div><span class="order-status">${escapeHtml(orderStatusLabel(o.order_status))}</span></div><div class="order-items">${items||"Order items"}</div><div class="order-meta"><div><b>Total</b><br>${money(Number(o.amount_paise||0)/100)}</div><div><b>Payment</b><br>${escapeHtml(orderStatusLabel(o.payment_status))}</div>${o.courier_name?`<div><b>Courier</b><br>${escapeHtml(o.courier_name)}</div>`:""}${o.tracking_number?`<div><b>Tracking ID</b><br>${escapeHtml(o.tracking_number)}</div>`:""}</div><div class="order-actions">${tracking}<a class="wa-btn" href="https://wa.me/917875867861?text=${waText}" target="_blank" rel="noopener">💬 WhatsApp</a><button class="invoice-btn" onclick='invoiceHtml(${JSON.stringify(o).replace(/'/g,"&#039;")})'>🧾 Invoice</button></div></div>`;
+    }).join("");
+  }catch(e){ status.innerHTML='<div class="error">❌ '+escapeHtml(e.message)+'</div>'; }
+}
 
 function escapeHtml(v){
   return String(v ?? "")
@@ -735,6 +811,7 @@ document.addEventListener("keydown", function(e){
     closeModal("productModal");
     closeModal("cartModal");
     closeModal("checkoutModal");
+    closeModal("ordersModal");
   }
 });
 
