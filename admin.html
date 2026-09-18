@@ -3763,45 +3763,46 @@ document.addEventListener(
 );
 
 
-$("orderModal")
-  .addEventListener(
+const orderModal = $("orderModal");
+
+if (orderModal) {
+  orderModal.addEventListener(
     "click",
-    function(e){
-
-      if(
-        e.target.id ===
-        "orderModal"
-      ){
-
+    function(e) {
+      if (e.target.id === "orderModal") {
         closeModal();
-
       }
-
     }
   );
+}
 
 
-$("productModal")
-  .addEventListener(
+const productModal = $("productModal");
+
+if (productModal) {
+  productModal.addEventListener(
     "click",
-    function(e){
-
-      if(
-        e.target.id ===
-        "productModal"
-      ){
-
+    function(e) {
+      if (e.target.id === "productModal") {
         closeProductModal();
-
       }
-
     }
   );
+}
 
 
-$("adminToken")
-  .addEventListener(
+const adminToken = $("adminToken");
+
+if (adminToken) {
+  adminToken.addEventListener(
     "keydown",
+    function(e) {
+      if (e.key === "Enter") {
+        login();
+      }
+    }
+  );
+}
     function(e){
 
       if(
