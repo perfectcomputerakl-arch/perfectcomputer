@@ -1,827 +1,1695 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PERFECT COMPUTER — Smart Technology. Perfect Choice.</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
-.top{background:#071b31;color:#fff;padding:7px 4%;display:flex;justify-content:space-between;font-size:12px}
-header{background:#fff;padding:13px 4%;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0001}
-.logo{font-size:23px;font-weight:800;white-space:nowrap}.logo span{color:#1976ed}
-.tag{font-size:10px;color:#777}
-.search{flex:1;display:flex;border:1px solid #ddd;border-radius:25px;overflow:hidden;max-width:650px}
-.search input{flex:1;border:0;padding:12px 16px;outline:0}.search button{border:0;background:#1976ed;color:white;padding:0 18px}
-.cartbtn,.primary{background:#1976ed;color:#fff;border:0;border-radius:9px;padding:11px 17px;font-weight:bold}
-.cartbtn{border-radius:22px;white-space:nowrap}
-nav{background:#061a2d;color:#fff;display:flex;gap:25px;padding:10px 4%;overflow:auto;font-size:13px}
-nav a{white-space:nowrap;cursor:pointer}
-.container{max-width:1250px;margin:auto;padding:20px 3%}
-.hero{background:linear-gradient(120deg,#09213c,#1f59a4);color:#fff;border-radius:24px;padding:42px 5%;margin-bottom:25px}
-.hero h1{font-size:40px;margin:0 0 10px}.hero p{font-size:17px}
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.cat{background:#fff;padding:18px;border-radius:14px;box-shadow:0 3px 14px #0001;cursor:pointer}
-.cat b{display:block;margin-top:7px}
-h2{margin:22px 0 13px}
-.toolbar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}
-.toolbar select{padding:10px;border:1px solid #ddd;border-radius:9px;background:#fff}
-.products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 15px #0002;position:relative}
-.pic{height:170px;background:#edf4fb;display:flex;align-items:center;justify-content:center;font-size:55px;overflow:hidden}
-.pic img{width:100%;height:100%;object-fit:contain}
-.info{padding:13px}.brand{font-size:11px;color:#1976ed}
-.card h3{font-size:15px;margin:7px 0}.price{font-size:17px;font-weight:800;margin:10px 0}
-.mrp{font-size:12px;color:#888;text-decoration:line-through;margin-left:7px;font-weight:normal}
-.stock{font-size:11px;margin:5px 0 9px}.stock.ok{color:#16803c}.stock.out{color:#c62828}
-.actions{display:flex;gap:7px}.actions button{flex:1;border:0;border-radius:8px;padding:9px;font-weight:bold}
-.add{background:#071b31;color:#fff}.buy{background:#1976ed;color:#fff}
-.actions button:disabled{opacity:.45;cursor:not-allowed}
-.heart{position:absolute;right:9px;top:9px;border:0;background:white;border-radius:50%;font-size:18px;cursor:pointer;z-index:2}
-.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.feature{background:#fff;padding:20px;border-radius:14px}
-.wa{position:fixed;right:15px;bottom:18px;background:#18a957;color:#fff;padding:13px 18px;border-radius:28px;z-index:20;font-weight:bold;text-decoration:none}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;padding:30px 15px;overflow:auto}
-.box{max-width:720px;margin:30px auto;background:#fff;border-radius:18px;padding:22px}
-.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:18px}
-.detail{display:grid;grid-template-columns:1fr 1fr;gap:25px}
-.detailpic{background:#edf4fb;min-height:260px;display:flex;align-items:center;justify-content:center;font-size:100px;border-radius:15px;overflow:hidden}
-.detailpic img{width:100%;height:260px;object-fit:contain}
-.detail-actions{display:flex;gap:9px;margin-top:15px}.detail-actions button{flex:1;padding:12px;border:0;border-radius:9px;font-weight:800;cursor:pointer}.detail-add{background:#071b31;color:#fff}.detail-buy{background:#1976ed;color:#fff}.detail-actions button:disabled{opacity:.45;cursor:not-allowed}.detail-meta{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.meta-pill{background:#f1f5f9;padding:6px 9px;border-radius:20px;font-size:11px}
-.cartrow{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eee;padding:14px 0;align-items:center}
-.qty button{width:30px;height:30px;border:1px solid #ddd;background:#fff}
-.checkout{width:100%;padding:13px;border:0;background:#1976ed;color:#fff;border-radius:9px;font-weight:bold;margin-top:15px}
-.checkout-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-.form-card,.summary-card{background:#f8fafc;border:1px solid #e5eaf1;border-radius:14px;padding:16px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.form-grid .full{grid-column:1/-1}
-.form-card label{display:block;font-size:12px;font-weight:700;margin:8px 0 5px}
-.form-card input,.form-card textarea,.form-card select{width:100%;padding:11px;border:1px solid #d8dee8;border-radius:9px;outline:0;background:#fff}
-.form-card textarea{min-height:80px;resize:vertical}
-.pay-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.pay-btn{padding:13px;border:1px solid #cfd7e3;border-radius:10px;background:#fff;font-weight:800;cursor:pointer}
-.pay-btn.active{border:2px solid #1976ed;background:#eef5ff}
-.small-note{font-size:11px;color:#697386;margin-top:8px;line-height:1.4}
-.summary-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #e5eaf1}
-.summary-total{font-size:19px;font-weight:900;padding-top:12px}
-.status-box{padding:13px;border-radius:10px;margin-top:12px;background:#eef5ff;color:#17365d;font-size:13px}
-.center{text-align:center;padding:35px;color:#667085}
-.error{background:#fff1f1;color:#b42318;padding:14px;border-radius:10px;margin:12px 0}
-.empty{background:#fff;padding:30px;border-radius:14px;text-align:center;color:#667085}
-.order-card{border:1px solid #e3e8ef;border-radius:14px;padding:15px;margin:12px 0;background:#fff}
-.order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.order-status{display:inline-block;padding:5px 9px;border-radius:20px;background:#eef5ff;color:#1557a6;font-size:11px;font-weight:800}
-.order-items{font-size:12px;color:#475467;line-height:1.6;margin:8px 0}
-.order-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}
-.order-meta div{background:#f8fafc;border-radius:9px;padding:8px;font-size:11px}
-.order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.order-actions a,.order-actions button{border:0;border-radius:8px;padding:9px 12px;font-weight:700;text-decoration:none;cursor:pointer}
-.track-btn{background:#1976ed;color:#fff}.wa-btn{background:#18a957;color:#fff}.invoice-btn{background:#071b31;color:#fff}
-@media(max-width:800px){
-.top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}
-.search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
-.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}
-.hero{padding:28px 6%}.hero h1{font-size:30px}.detail{grid-template-columns:1fr}
-.detailpic{min-height:190px;font-size:70px}.checkout-grid{grid-template-columns:1fr}
-.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}
-}
-@media(max-width:430px){
-.products{gap:9px}.card h3{font-size:13px}.price{font-size:15px}
-.actions button{font-size:11px;padding:8px}.cat{padding:14px}
-}
-</style>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-</head>
-<body>
+const corsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
+  "access-control-allow-headers": "Content-Type, Authorization"
+};
 
-<div class="top">
-  <span>🇮🇳 India-wide Delivery</span>
-  <span>🔒 Secure Payments</span>
-  <span>💬 WhatsApp: 7875867861</span>
-</div>
-
-<header>
-  <div>
-    <div class="logo">PERFECT <span>COMPUTER</span></div>
-    <div class="tag">Smart Technology. Perfect Choice.</div>
-  </div>
-  <div class="search">
-    <input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()">
-    <button>🔍</button>
-  </div>
-  <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
-  <button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
-</header>
-
-<nav id="mainNav">
-  <a onclick="filterCat('All')">Home</a>
-  <a onclick="filterCat('Laptops')">Laptops</a>
-  <a onclick="filterCat('Desktop')">Desktop</a>
-  <a onclick="filterCat('Gaming')">Gaming</a>
-  <a onclick="filterCat('PC Components')">PC Components</a>
-  <a onclick="filterCat('Printers')">Printers</a>
-  <a onclick="filterCat('CCTV')">CCTV</a>
-  <a onclick="filterCat('Monitors')">Monitors</a>
-  <a onclick="filterCat('Accessories')">Accessories</a>
-</nav>
-
-<main class="container">
-
-<section class="hero">
-  <h1>Upgrade Your Tech 🚀</h1>
-  <p>Computers • Laptops • Gaming • Components • Printers • CCTV • Accessories</p>
-  <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
-</section>
-
-<h2>Shop by Category</h2>
-<div class="cats" id="categoryCards">
-  <div class="cat" onclick="filterCat('Laptops')">💻<b>Laptops</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('Desktop')">🖥️<b>Desktop</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('Gaming')">🎮<b>Gaming</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('PC Components')">🔧<b>PC Components</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('Monitors')">🖥️<b>Monitors</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('Printers')">🖨️<b>Printers</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('CCTV')">📹<b>CCTV</b><small>Shop now</small></div>
-  <div class="cat" onclick="filterCat('Storage')">💾<b>Storage</b><small>Shop now</small></div>
-</div>
-
-<section id="products">
-  <h2>Featured Products</h2>
-  <div class="toolbar">
-    <select id="catFilter" onchange="filterCat(this.value)">
-      <option value="All">All Products</option>
-    </select>
-    <select id="sort" onchange="render()">
-      <option value="featured">Featured</option>
-      <option value="low">Price: Low to High</option>
-      <option value="high">Price: High to Low</option>
-    </select>
-  </div>
-  <div class="products" id="grid">
-    <div class="center">Loading products...</div>
-  </div>
-</section>
-
-<h2>Why Shop With Us?</h2>
-<div class="features">
-  <div class="feature">🚚 <b>Fast Delivery</b><br><small>India-wide shipping</small></div>
-  <div class="feature">🔒 <b>Secure Payment</b><br><small>Safe checkout</small></div>
-  <div class="feature">✅ <b>Quality Products</b><br><small>Carefully selected tech</small></div>
-  <div class="feature">💬 <b>WhatsApp Support</b><br><small>Quick assistance</small></div>
-</div>
-
-</main>
-
-<a class="wa" href="https://wa.me/917875867861?text=Hello%20PERFECT%20COMPUTER" target="_blank">💬 WhatsApp</a>
-
-<div class="modal" id="productModal">
-  <div class="box">
-    <button class="close" onclick="closeModal('productModal')">×</button>
-    <div id="detail"></div>
-  </div>
-</div>
-
-<div class="modal" id="cartModal">
-  <div class="box">
-    <button class="close" onclick="closeModal('cartModal')">×</button>
-    <h2>🛒 Your Cart</h2>
-    <div id="cartItems"></div>
-    <div id="cartTotal"></div>
-    <button class="checkout" onclick="checkout()">Proceed to Checkout</button>
-  </div>
-</div>
-
-<div class="modal" id="ordersModal">
-  <div class="box">
-    <button class="close" onclick="closeModal('ordersModal')">×</button>
-    <h2>👤 My Orders</h2>
-    <p class="small-note">Enter the mobile number used while placing your order.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
-      <input id="ordersMobile" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" style="flex:1;min-width:220px;padding:12px;border:1px solid #d8dee8;border-radius:9px">
-      <button class="primary" onclick="loadMyOrders()">🔎 Find Orders</button>
-    </div>
-    <div id="ordersStatus"></div>
-    <div id="ordersList"></div>
-  </div>
-</div>
-
-<div class="modal" id="checkoutModal">
-  <div class="box">
-    <button class="close" onclick="closeModal('checkoutModal')">×</button>
-    <h2>🔐 Secure Checkout</h2>
-    <div class="checkout-grid">
-      <div class="form-card">
-        <h3 style="margin-top:0">Customer Details</h3>
-        <div class="form-grid">
-          <div>
-            <label>Full Name *</label>
-            <input id="coName" autocomplete="name" placeholder="Your full name">
-          </div>
-          <div>
-            <label>Mobile *</label>
-            <input id="coMobile" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="10-digit mobile">
-          </div>
-          <div>
-            <label>Email</label>
-            <input id="coEmail" type="email" autocomplete="email" placeholder="you@example.com">
-          </div>
-          <div>
-            <label>Pincode *</label>
-            <input id="coPincode" inputmode="numeric" maxlength="6" placeholder="6-digit pincode">
-          </div>
-          <div class="full">
-            <label>Full Address *</label>
-            <textarea id="coAddress" autocomplete="street-address" placeholder="House/Shop, Street, Area"></textarea>
-          </div>
-          <div>
-            <label>City *</label>
-            <input id="coCity" autocomplete="address-level2" placeholder="City">
-          </div>
-          <div>
-            <label>State *</label>
-            <input id="coState" autocomplete="address-level1" value="Maharashtra" placeholder="State">
-          </div>
-        </div>
-
-        <h3>Payment Method</h3>
-        <div class="pay-options">
-          <button class="pay-btn active" id="payOnline" onclick="selectPay('online')">💳 Online Payment</button>
-          <button class="pay-btn" id="payCOD" onclick="selectPay('cod')">💵 Cash on Delivery</button>
-        </div>
-        <div class="small-note">Online payment is processed through Razorpay. Your Razorpay Secret Key is never placed in this page.</div>
-        <div id="checkoutStatus"></div>
-      </div>
-
-      <div class="summary-card">
-        <h3 style="margin-top:0">Order Summary</h3>
-        <div id="checkoutSummary"></div>
-        <div class="summary-total" id="checkoutGrandTotal"></div>
-        <button class="checkout" id="placeOrderBtn" onclick="placeOrder()">Place Order & Pay</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-console.log("PERFECT COMPUTER STORE loaded");
-
-let products = [];
-let selectedCat = "All";
-let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
-let wishlist = JSON.parse(localStorage.getItem("pc_wish") || "[]");
-let selectedPay = "online";
-
-const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 2
-});
-
-function openOrders(){
-  document.getElementById("ordersMobile").value = localStorage.getItem("pc_customer_mobile") || "";
-  document.getElementById("ordersStatus").innerHTML = "";
-  document.getElementById("ordersList").innerHTML = "";
-  document.getElementById("ordersModal").style.display = "block";
-}
-
-function orderStatusLabel(status){
-  const s=String(status||"new").toLowerCase();
-  return s.charAt(0).toUpperCase()+s.slice(1).replaceAll("_"," ");
-}
-
-function formatOrderDate(v){
-  if(!v) return "";
-  const d=new Date(String(v).replace(" ","T")+"Z");
-  return Number.isNaN(d.getTime()) ? String(v) : d.toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
-}
-
-function invoiceHtml(order){
-  const items=Array.isArray(order.items) ? order.items : [];
-  const rows=items.map(i=>`<tr><td>${escapeHtml(i.name||"Product")}</td><td>${Number(i.quantity||0)}</td><td>${money(i.price)}</td><td>${money(Number(i.price||0)*Number(i.quantity||0))}</td></tr>`).join("");
-  const w=window.open("","_blank","width=800,height=900");
-  if(!w){ alert("Please allow pop-ups to print the invoice."); return; }
-  w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><script>window.onload=()=>window.print()<\/script></body></html>`);
-  w.document.close();
-}
-
-async function loadMyOrders(){
-  const mobile=document.getElementById("ordersMobile").value.trim();
-  const status=document.getElementById("ordersStatus");
-  const list=document.getElementById("ordersList");
-  if(!/^\d{10}$/.test(mobile)){ status.innerHTML='<div class="error">Please enter a valid 10-digit mobile number.</div>'; return; }
-  localStorage.setItem("pc_customer_mobile",mobile);
-  status.innerHTML='<div class="status-box">🔎 Finding your orders…</div>';
-  list.innerHTML="";
-  try{
-    const r=await fetch("/api/my-orders?mobile="+encodeURIComponent(mobile),{cache:"no-store"});
-    const data=await r.json();
-    if(!r.ok) throw new Error(data.error||"Could not load orders");
-    const orders=Array.isArray(data.orders)?data.orders:[];
-    if(!orders.length){ status.innerHTML='<div class="empty">No orders found for this mobile number.</div>'; return; }
-    status.innerHTML='<div class="status-box">✅ '+orders.length+' order(s) found.</div>';
-    list.innerHTML=orders.map(o=>{
-      const tracking=o.tracking_url ? `<a class="track-btn" href="${escapeHtml(o.tracking_url)}" target="_blank" rel="noopener">🔗 Track Shipment</a>` : "";
-      const waText=encodeURIComponent(`Hello PERFECT COMPUTER, I want an update for Order ${o.order_number}.`);
-      const items=(Array.isArray(o.items)?o.items:[]).map(i=>`${escapeHtml(i.name||"Product")} × ${Number(i.quantity||0)}`).join("<br>");
-      return `<div class="order-card"><div class="order-head"><div><b>${escapeHtml(o.order_number)}</b><br><small>${escapeHtml(formatOrderDate(o.created_at))}</small></div><span class="order-status">${escapeHtml(orderStatusLabel(o.order_status))}</span></div><div class="order-items">${items||"Order items"}</div><div class="order-meta"><div><b>Total</b><br>${money(Number(o.amount_paise||0)/100)}</div><div><b>Payment</b><br>${escapeHtml(orderStatusLabel(o.payment_status))}</div>${o.courier_name?`<div><b>Courier</b><br>${escapeHtml(o.courier_name)}</div>`:""}${o.tracking_number?`<div><b>Tracking ID</b><br>${escapeHtml(o.tracking_number)}</div>`:""}</div><div class="order-actions">${tracking}<a class="wa-btn" href="https://wa.me/917875867861?text=${waText}" target="_blank" rel="noopener">💬 WhatsApp</a><button class="invoice-btn" onclick='invoiceHtml(${JSON.stringify(o).replace(/'/g,"&#039;")})'>🧾 Invoice</button></div></div>`;
-    }).join("");
-  }catch(e){ status.innerHTML='<div class="error">❌ '+escapeHtml(e.message)+'</div>'; }
-}
-
-function escapeHtml(v){
-  return String(v ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-function normalizeProduct(p, index){
-  const pricePaise = Number(p.price_paise ?? 0);
-  const mrpPaise = Number(p.mrp_paise ?? 0);
-
-  return {
-    id: Number(p.id ?? (index + 1)),
-    brand: String(p.brand || ""),
-    name: String(p.name || "Unnamed Product"),
-    cat: String(p.category || "Other"),
-    price: Number.isFinite(pricePaise) ? pricePaise / 100 : 0,
-    mrp: Number.isFinite(mrpPaise) ? mrpPaise / 100 : 0,
-    stock: Math.max(0, Number(p.stock_qty ?? 0)),
-    status: String(p.status || "active").toLowerCase(),
-    image: String(p.image_url || ""),
-    sku: String(p.sku || ""),
-    desc: String(p.description || ""),
-    icon: "💻"
-  };
-}
-
-async function loadProducts(){
-  const grid = document.getElementById("grid");
-  grid.innerHTML = '<div class="center">Loading products...</div>';
-
-  try{
-    const r = await fetch("/api/products", {cache:"no-store"});
-    const data = await r.json();
-
-    if(!r.ok){
-      throw new Error(data.error || data.message || ("Product API returned HTTP " + r.status));
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      ...corsHeaders
     }
-
-    const raw = Array.isArray(data) ? data : (Array.isArray(data.products) ? data.products : []);
-
-    products = raw
-      .map(normalizeProduct)
-      .filter(p => p.status === "active");
-
-    buildCategoryFilter();
-    render();
-
-    console.log("Customer products loaded:", products);
-  }catch(error){
-    console.error("Customer product loading error:", error);
-    grid.innerHTML =
-      '<div class="error"><b>⚠️ Products could not be loaded.</b><br>' +
-      escapeHtml(error.message) +
-      '<br><br>Please refresh the page.</div>';
-  }
+  });
 }
 
-function buildCategoryFilter(){
-  const select = document.getElementById("catFilter");
-  const current = selectedCat;
+function withCors(response) {
+  const headers = new Headers(response.headers);
 
-  const categories = [...new Set(products.map(p => p.cat).filter(Boolean))]
-    .sort((a,b) => a.localeCompare(b));
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    headers.set(key, value);
+  });
 
-  select.innerHTML =
-    '<option value="All">All Products</option>' +
-    categories.map(c => '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>').join("");
-
-  if(categories.includes(current) || current === "All"){
-    select.value = current;
-  }else{
-    selectedCat = "All";
-    select.value = "All";
-  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
 }
 
-function filterCat(c){
-  selectedCat = c || "All";
-  const select = document.getElementById("catFilter");
+function orderNumber() {
+  const d = new Date();
 
-  if([...select.options].some(o => o.value === selectedCat)){
-    select.value = selectedCat;
-  }else{
-    selectedCat = "All";
-    select.value = "All";
-  }
+  const pad = n => String(n).padStart(2, "0");
 
-  render();
-  document.getElementById("products").scrollIntoView({behavior:"smooth"});
+  const stamp =
+    d.getFullYear() +
+    pad(d.getMonth() + 1) +
+    pad(d.getDate()) +
+    pad(d.getHours()) +
+    pad(d.getMinutes()) +
+    pad(d.getSeconds());
+
+  const suffix = Math.random()
+    .toString(36)
+    .slice(2, 6)
+    .toUpperCase();
+
+  return `PC-${stamp}-${suffix}`;
 }
 
-function render(){
-  const q = (document.getElementById("search").value || "").toLowerCase().trim();
+async function razorpayRequest(env, path, options = {}) {
+  const keyId = env.RAZORPAY_KEY_ID;
+  const keySecret = env.RAZORPAY_KEY_SECRET;
 
-  let a = products.filter(p =>
-    (selectedCat === "All" || p.cat === selectedCat) &&
-    ((p.name + " " + p.brand + " " + p.cat + " " + p.sku).toLowerCase().includes(q))
+  if (!keyId || !keySecret) {
+    throw new Error("Razorpay credentials are not configured");
+  }
+
+  const auth = btoa(`${keyId}:${keySecret}`);
+
+  const response = await fetch(
+    `https://api.razorpay.com/v1${path}`,
+    {
+      ...options,
+      headers: {
+        "content-type": "application/json",
+        "authorization": `Basic ${auth}`,
+        ...(options.headers || {})
+      }
+    }
   );
 
-  const s = document.getElementById("sort").value;
-  if(s === "low") a.sort((x,y) => x.price - y.price);
-  if(s === "high") a.sort((x,y) => y.price - x.price);
+  const text = await response.text();
 
-  const grid = document.getElementById("grid");
+  let data;
 
-  if(!a.length){
-    grid.innerHTML = '<div class="empty">No products found. Try another search or category.</div>';
-    updateCount();
-    return;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    data = { error: text };
   }
 
-  grid.innerHTML = a.map(p => {
-    const image = p.image
-      ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.textContent=\'💾\';">'
-      : p.icon;
-
-    const out = p.stock <= 0;
-
-    return '<article class="card">' +
-      '<button class="heart" onclick="wish(' + p.id + ')">' +
-      (wishlist.includes(p.id) ? "❤️" : "♡") +
-      '</button>' +
-      '<div class="pic">' + image + '</div>' +
-      '<div class="info">' +
-      '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
-      '<h3>' + escapeHtml(p.name) + '</h3>' +
-      '<small>' + escapeHtml(p.cat) + '</small>' +
-      '<div class="price">' + money(p.price) +
-      (p.mrp > p.price ? '<span class="mrp">' + money(p.mrp) + '</span>' : '') +
-      '</div>' +
-      '<div class="stock ' + (out ? "out" : "ok") + '">' +
-      (out ? "❌ Out of Stock" : "✓ In Stock • " + p.stock + " available") +
-      '</div>' +
-      '<div class="actions">' +
-      '<button class="add" ' + (out ? "disabled" : "") + ' onclick="add(' + p.id + ')">Add to Cart</button>' +
-      '<button class="buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ')">Buy Now</button>' +
-      '</div>' +
-      '<button style="margin-top:8px;width:100%;border:0;background:#eef4ff;padding:8px;border-radius:8px" onclick="details(' + p.id + ')">View Details</button>' +
-      '</div></article>';
-  }).join("");
-
-  updateCount();
-}
-
-function findProduct(id){
-  return products.find(p => Number(p.id) === Number(id));
-}
-
-function add(id){
-  const p = findProduct(id);
-  if(!p) return;
-  if(p.stock <= 0){ alert("Product is out of stock."); return; }
-
-  const currentQty = cart.filter(x => Number(x) === Number(id)).length;
-  if(currentQty >= p.stock){
-    alert("Only " + p.stock + " item(s) available.");
-    return;
+  if (!response.ok) {
+    throw new Error(
+      data?.error?.description ||
+      data?.error?.reason ||
+      data?.error ||
+      `Razorpay HTTP ${response.status}`
+    );
   }
 
-  cart.push(Number(id));
-  save();
-  alert("Product added to cart 🛒");
+  return data;
 }
 
-function buy(id){
-  const p = findProduct(id);
-  if(!p || p.stock <= 0) return;
-  cart.push(Number(id));
-  save();
-  openCart();
+async function verifyRazorpaySignature(
+  orderId,
+  paymentId,
+  signature,
+  secret
+) {
+  const message = `${orderId}|${paymentId}`;
+
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    {
+      name: "HMAC",
+      hash: "SHA-256"
+    },
+    false,
+    ["sign"]
+  );
+
+  const signatureBuffer = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(message)
+  );
+
+  const expected = [...new Uint8Array(signatureBuffer)]
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return expected === String(signature || "").toLowerCase();
 }
 
-function wish(id){
-  wishlist.includes(Number(id))
-    ? wishlist = wishlist.filter(x => Number(x) !== Number(id))
-    : wishlist.push(Number(id));
+function getAdminToken(request, env) {
+  const headerToken =
+    request.headers.get("authorization") || "";
 
-  localStorage.setItem("pc_wish", JSON.stringify(wishlist));
-  render();
-}
-
-function save(){
-  localStorage.setItem("pc_cart", JSON.stringify(cart));
-  updateCount();
-}
-
-function updateCount(){
-  document.getElementById("cartCount").textContent = cart.length;
-}
-
-function details(id){
-  const p = findProduct(id);
-  if(!p) return;
-
-  const image = p.image
-    ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.display=\'none\';this.parentElement.textContent=\'💻\';">'
-    : p.icon;
-
-  const out = p.stock <= 0;
-
-  document.getElementById("detail").innerHTML =
-    '<div class="detail">' +
-      '<div class="detailpic">' + image + '</div>' +
-      '<div>' +
-        '<div class="brand">' + escapeHtml(p.brand || "PERFECT COMPUTER") + '</div>' +
-        '<h2 style="margin-top:6px">' + escapeHtml(p.name) + '</h2>' +
-        '<div class="detail-meta">' +
-          '<span class="meta-pill">📂 ' + escapeHtml(p.cat) + '</span>' +
-          (p.sku ? '<span class="meta-pill">🏷️ SKU: ' + escapeHtml(p.sku) + '</span>' : '') +
-        '</div>' +
-        '<p style="line-height:1.6">' + escapeHtml(p.desc || "Quality technology product from PERFECT COMPUTER.") + '</p>' +
-        '<h2 style="margin-bottom:5px">' + money(p.price) +
-          (p.mrp > p.price ? ' <span class="mrp">' + money(p.mrp) + '</span>' : '') +
-        '</h2>' +
-        (p.mrp > p.price ? '<div class="small-note">You save ' + money(p.mrp-p.price) + '</div>' : '') +
-        '<p class="' + (out ? "stock out" : "stock ok") + '">' +
-          (out ? "❌ Currently Out of Stock" : "✓ In Stock • " + p.stock + " available") +
-        '</p>' +
-        '<div class="detail-actions">' +
-          '<button class="detail-add" ' + (out ? "disabled" : "") +
-            ' onclick="add(' + p.id + ');closeModal(\'productModal\');openCart()">🛒 Add to Cart</button>' +
-          '<button class="detail-buy" ' + (out ? "disabled" : "") +
-            ' onclick="buy(' + p.id + ');closeModal(\'productModal\')">⚡ Buy Now</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-
-  document.getElementById("productModal").style.display = "block";
-}
-
-function cartGroups(){
-  const g = {};
-  cart.forEach(id => g[id] = (g[id] || 0) + 1);
-  return g;
-}
-
-function openCart(){
-  const g = cartGroups();
-  let total = 0;
-
-  const rows = Object.entries(g).map(([id,q]) => {
-    const p = findProduct(id);
-    if(!p) return "";
-
-    const safeQty = Math.min(q, p.stock);
-    const sub = p.price * safeQty;
-    total += sub;
-
-    return '<div class="cartrow">' +
-      '<div><b>' + escapeHtml(p.name) + '</b><br><small>' + money(p.price) + ' each</small></div>' +
-      '<div class="qty"><button onclick="change(' + p.id + ',-1)">−</button> ' + safeQty + ' <button onclick="change(' + p.id + ',1)">+</button></div>' +
-      '<b>' + money(sub) + '</b>' +
-    '</div>';
-  }).join("");
-
-  document.getElementById("cartItems").innerHTML = rows || "<p>Your cart is empty.</p>";
-  document.getElementById("cartTotal").innerHTML = "<h2>Total: " + money(total) + "</h2>";
-  document.getElementById("cartModal").style.display = "block";
-}
-
-function change(id,n){
-  const p = findProduct(id);
-  if(!p) return;
-
-  if(n > 0){
-    const currentQty = cart.filter(x => Number(x) === Number(id)).length;
-    if(currentQty >= p.stock){
-      alert("Only " + p.stock + " item(s) available.");
-      return;
-    }
-    cart.push(Number(id));
-  }else{
-    const i = cart.indexOf(Number(id));
-    if(i >= 0) cart.splice(i,1);
+  if (headerToken.startsWith("Bearer ")) {
+    return headerToken.slice(7).trim();
   }
 
-  save();
-  openCart();
+  const url = new URL(request.url);
+
+  return String(
+    url.searchParams.get("token") || ""
+  ).trim();
 }
 
-function closeModal(id){
-  document.getElementById(id).style.display = "none";
-}
+function requireAdmin(request, env) {
+  const expected =
+    String(env.ADMIN_TOKEN || "").trim();
 
-function selectPay(mode){
-  selectedPay = mode;
-  document.getElementById("payOnline").classList.toggle("active", mode === "online");
-  document.getElementById("payCOD").classList.toggle("active", mode === "cod");
-  document.getElementById("placeOrderBtn").textContent =
-    mode === "online" ? "Place Order & Pay" : "Place COD Order";
-}
+  const actual =
+    getAdminToken(request, env);
 
-function cartTotal(){
-  return Object.entries(cartGroups()).reduce((sum,[id,q]) => {
-    const p = findProduct(id);
-    return sum + (p ? p.price * q : 0);
-  },0);
-}
-
-function openCheckout(){
-  if(!cart.length){
-    alert("Cart is empty");
-    return;
+  if (!expected || !actual || actual !== expected) {
+    return json({
+      error: "Unauthorized"
+    }, 401);
   }
 
-  const g = cartGroups();
-
-  document.getElementById("checkoutSummary").innerHTML =
-    Object.entries(g).map(([id,q]) => {
-      const p = findProduct(id);
-      return p
-        ? '<div class="summary-row"><span>' + escapeHtml(p.name) + ' × ' + q + '</span><b>' + money(p.price*q) + '</b></div>'
-        : "";
-    }).join("");
-
-  document.getElementById("checkoutGrandTotal").textContent = "Total: " + money(cartTotal());
-  document.getElementById("checkoutStatus").innerHTML = "";
-  document.getElementById("checkoutModal").style.display = "block";
-  closeModal("cartModal");
-  selectPay(selectedPay);
+  return null;
 }
 
-function checkout(){
-  openCheckout();
-}
+function productAdminData(body = {}) {
+  const name =
+    String(body.name || "").trim();
 
-function getCustomer(){
+  const brand =
+    String(body.brand || "").trim();
+
+  const category =
+    String(body.category || "").trim();
+
+  const sku =
+    String(body.sku || "").trim();
+
+  const description =
+    String(body.description || "").trim();
+
+  const imageUrl =
+    String(body.image_url || "").trim();
+
+  const status =
+    String(body.status || "active")
+      .trim()
+      .toLowerCase();
+
+  const price = Number(body.price);
+  const mrp = Number(body.mrp);
+  const stockQty = Number(body.stock_qty);
+
+  if (!name || !category) {
+    throw new Error(
+      "Product name and category are required"
+    );
+  }
+
+  if (!Number.isFinite(price) || price < 0) {
+    throw new Error(
+      "Invalid selling price"
+    );
+  }
+
+  if (!Number.isFinite(mrp) || mrp < 0) {
+    throw new Error(
+      "Invalid MRP"
+    );
+  }
+
+  if (
+    !Number.isInteger(stockQty) ||
+    stockQty < 0
+  ) {
+    throw new Error(
+      "Invalid stock quantity"
+    );
+  }
+
+  if (
+    !["active", "inactive"].includes(status)
+  ) {
+    throw new Error(
+      "Invalid product status"
+    );
+  }
+
+  if (
+    imageUrl &&
+    !/^https?:\/\//i.test(imageUrl)
+  ) {
+    throw new Error(
+      "Image URL must start with http:// or https://"
+    );
+  }
+
   return {
-    name:document.getElementById("coName").value.trim(),
-    mobile:document.getElementById("coMobile").value.trim(),
-    email:document.getElementById("coEmail").value.trim(),
-    address:document.getElementById("coAddress").value.trim(),
-    city:document.getElementById("coCity").value.trim(),
-    state:document.getElementById("coState").value.trim(),
-    pincode:document.getElementById("coPincode").value.trim()
+    name,
+    brand,
+    category,
+    sku,
+    description,
+    image_url: imageUrl,
+
+    price_paise:
+      Math.round(price * 100),
+
+    mrp_paise:
+      Math.round(mrp * 100),
+
+    stock_qty:
+      stockQty,
+
+    status
   };
 }
 
-function validateCustomer(c){
-  if(!c.name || !c.address || !c.city || !c.state ||
-     !/^\d{6}$/.test(c.pincode) ||
-     !/^\d{10}$/.test(c.mobile)){
-    alert("Please fill all required details correctly. Mobile must be 10 digits and pincode 6 digits.");
-    return false;
-  }
-  return true;
+async function publicProducts(request, env) {
+  const result =
+    await env.DB.prepare(`
+      SELECT
+        id,
+        name,
+        brand,
+        category,
+        sku,
+        description,
+        image_url,
+        price_paise,
+        mrp_paise,
+        stock_qty,
+        status,
+        created_at,
+        updated_at
+      FROM products
+      WHERE status = 'active'
+      ORDER BY id DESC
+    `).all();
+
+  return json({
+    ok: true,
+    products: result.results || []
+  });
 }
 
-function setCheckoutStatus(msg){
-  document.getElementById("checkoutStatus").innerHTML =
-    '<div class="status-box">' + msg + '</div>';
-}
+async function adminProducts(request, env) {
+  const authError =
+    requireAdmin(request, env);
 
-async function placeOrder(){
-  const c = getCustomer();
-  if(!validateCustomer(c) || !cart.length) return;
-
-  const btn = document.getElementById("placeOrderBtn");
-  btn.disabled = true;
-  btn.style.opacity = ".6";
-  setCheckoutStatus("Creating your order…");
-
-  const items = Object.entries(cartGroups()).map(([id,q]) => {
-    const p = findProduct(id);
-    return p ? {
-      product_id:Number(p.id),
-      name:p.name,
-      price:p.price,
-      quantity:q
-    } : null;
-  }).filter(Boolean);
-
-  if(!items.length){
-    setCheckoutStatus("❌ Your cart contains unavailable products.");
-    btn.disabled = false;
-    btn.style.opacity = "1";
-    return;
+  if (authError) {
+    return authError;
   }
 
-  try{
-    const r = await fetch("/api/create-order", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        amount:cartTotal(),
-        customer:c,
-        items,
-        payment_method:selectedPay
-      })
-    });
+  const result =
+    await env.DB.prepare(`
+      SELECT
+        id,
+        name,
+        brand,
+        category,
+        sku,
+        description,
+        image_url,
+        price_paise,
+        mrp_paise,
+        stock_qty,
+        status,
+        created_at,
+        updated_at
+      FROM products
+      ORDER BY id DESC
+    `).all();
 
-    const data = await r.json();
+  return json({
+    ok: true,
+    products: result.results || []
+  });
+}
 
-    if(!r.ok) throw new Error(data.error || "Could not create order");
+async function createProduct(request, env) {
+  const authError =
+    requireAdmin(request, env);
 
-    if(selectedPay === "cod"){
-      localStorage.removeItem("pc_cart");
-      cart = [];
-      save();
+  if (authError) {
+    return authError;
+  }
 
-      document.getElementById("checkoutStatus").innerHTML =
-        '<div class="status-box"><b>✅ COD Order Placed</b><br>' +
-        'Order ID: ' + escapeHtml(data.order_number) +
-        '<br>We will contact you on ' + escapeHtml(c.mobile) + '.</div>';
+  try {
+    const body =
+      await request.json();
 
-      btn.textContent = "Order Placed";
-      return;
+    const p =
+      productAdminData(body);
+
+    const result =
+      await env.DB.prepare(`
+        INSERT INTO products (
+          name,
+          brand,
+          category,
+          sku,
+          description,
+          image_url,
+          price_paise,
+          mrp_paise,
+          stock_qty,
+          status
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).bind(
+        p.name,
+        p.brand,
+        p.category,
+        p.sku,
+        p.description,
+        p.image_url,
+        p.price_paise,
+        p.mrp_paise,
+        p.stock_qty,
+        p.status
+      ).run();
+
+    return json({
+      ok: true,
+      id:
+        result.meta?.last_row_id || null,
+      message:
+        "Product created successfully"
+    }, 201);
+
+  } catch (error) {
+    return json({
+      error:
+        error?.message ||
+        "Could not create product"
+    }, 400);
+  }
+}
+
+async function updateProduct(request, env) {
+  const authError =
+    requireAdmin(request, env);
+
+  if (authError) {
+    return authError;
+  }
+
+  try {
+    const body =
+      await request.json();
+
+    const id =
+      Number(body.id);
+
+    if (
+      !Number.isInteger(id) ||
+      id <= 0
+    ) {
+      return json({
+        error: "Invalid product ID"
+      }, 400);
     }
 
-    const keyRes = await fetch("/api/config", {cache:"no-store"});
-    const cfg = await keyRes.json();
+    const p =
+      productAdminData(body);
 
-    if(!cfg.key_id) throw new Error("Razorpay Key ID is not configured");
+    const result =
+      await env.DB.prepare(`
+        UPDATE products
+        SET
+          name = ?,
+          brand = ?,
+          category = ?,
+          sku = ?,
+          description = ?,
+          image_url = ?,
+          price_paise = ?,
+          mrp_paise = ?,
+          stock_qty = ?,
+          status = ?,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `).bind(
+        p.name,
+        p.brand,
+        p.category,
+        p.sku,
+        p.description,
+        p.image_url,
+        p.price_paise,
+        p.mrp_paise,
+        p.stock_qty,
+        p.status,
+        id
+      ).run();
 
-    const options = {
-      key:cfg.key_id,
-      amount:data.amount,
-      currency:"INR",
-      name:"PERFECT COMPUTER",
-      description:"Retail technology order",
-      order_id:data.razorpay_order_id,
-      prefill:{name:c.name,email:c.email,contact:c.mobile},
-      notes:{order_number:data.order_number},
-      theme:{color:"#1976ed"},
-      handler:async function(resp){
-        try{
-          setCheckoutStatus("Verifying payment…");
+    if (!result.meta?.changes) {
+      return json({
+        error: "Product not found"
+      }, 404);
+    }
 
-          const vr = await fetch("/api/verify-payment", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({
-              order_number:data.order_number,
-              razorpay_order_id:resp.razorpay_order_id,
-              razorpay_payment_id:resp.razorpay_payment_id,
-              razorpay_signature:resp.razorpay_signature
-            })
-          });
+    return json({
+      ok: true,
+      message:
+        "Product updated successfully"
+    });
 
-          const vd = await vr.json();
-          if(!vr.ok) throw new Error(vd.error || "Payment verification failed");
-
-          localStorage.removeItem("pc_cart");
-          cart = [];
-          save();
-
-          setCheckoutStatus(
-            '<b>✅ Payment Successful</b><br>' +
-            'Order ID: ' + escapeHtml(data.order_number) +
-            '<br>Payment ID: ' + escapeHtml(resp.razorpay_payment_id)
-          );
-
-          btn.textContent = "Order Placed";
-        }catch(e){
-          setCheckoutStatus("⚠️ " + escapeHtml(e.message));
-        }
-      },
-      modal:{
-        ondismiss:function(){
-          setCheckoutStatus("Payment window closed. Your order is still pending payment.");
-        }
-      }
-    };
-
-    const rp = new Razorpay(options);
-    rp.open();
-
-  }catch(e){
-    setCheckoutStatus("❌ " + escapeHtml(e.message));
-  }finally{
-    btn.disabled = false;
-    btn.style.opacity = "1";
+  } catch (error) {
+    return json({
+      error:
+        error?.message ||
+        "Could not update product"
+    }, 400);
   }
 }
 
-document.addEventListener("keydown", function(e){
-  if(e.key === "Escape"){
-    closeModal("productModal");
-    closeModal("cartModal");
-    closeModal("checkoutModal");
-    closeModal("ordersModal");
+async function deleteProduct(request, env) {
+  const authError =
+    requireAdmin(request, env);
+
+  if (authError) {
+    return authError;
   }
-});
 
-document.querySelectorAll(".modal").forEach(modal => {
-  modal.addEventListener("click", function(e){
-    if(e.target === modal) modal.style.display = "none";
+  try {
+    const body =
+      await request.json();
+
+    const id =
+      Number(body.id);
+
+    if (
+      !Number.isInteger(id) ||
+      id <= 0
+    ) {
+      return json({
+        error: "Invalid product ID"
+      }, 400);
+    }
+
+    const result =
+      await env.DB.prepare(`
+        DELETE FROM products
+        WHERE id = ?
+      `).bind(id).run();
+
+    if (!result.meta?.changes) {
+      return json({
+        error: "Product not found"
+      }, 404);
+    }
+
+    return json({
+      ok: true,
+      message:
+        "Product deleted successfully"
+    });
+
+  } catch (error) {
+    return json({
+      error:
+        error?.message ||
+        "Could not delete product"
+    }, 400);
+  }
+}async function adminOrders(request, env) {
+  const authError =
+    requireAdmin(request, env);
+
+  if (authError) {
+    return authError;
+  }
+
+  const result =
+    await env.DB.prepare(`
+      SELECT
+        id,
+        order_number,
+        razorpay_order_id,
+        razorpay_payment_id,
+        customer_name,
+        mobile,
+        email,
+        address,
+        city,
+        state,
+        pincode,
+        amount_paise,
+        payment_method,
+        payment_status,
+        order_status,
+        items_json,
+        courier_name,
+        tracking_number,
+        tracking_url,
+        shipped_at,
+        delivered_at,
+        created_at,
+        updated_at
+      FROM orders
+      ORDER BY id DESC
+      LIMIT 500
+    `).all();
+
+  const orders =
+    (result.results || []).map(row => {
+      let items = [];
+
+      try {
+        items =
+          JSON.parse(
+            row.items_json || "[]"
+          );
+
+        if (!Array.isArray(items)) {
+          items = [];
+        }
+      } catch {
+        items = [];
+      }
+
+      return {
+        ...row,
+        amount_paise:
+          Number(row.amount_paise || 0),
+        items
+      };
+    });
+
+  return json({
+    ok: true,
+    orders
   });
-});
+}
 
-loadProducts();
-updateCount();
-</script>
-</body>
-</html>
+
+async function adminOrderStatus(request, env) {
+  const authError =
+    requireAdmin(request, env);
+
+  if (authError) {
+    return authError;
+  }
+
+  try {
+    const body =
+      await request.json();
+
+    const orderNumberValue =
+      String(
+        body.order_number || ""
+      ).trim();
+
+    const orderStatus =
+      String(
+        body.order_status || ""
+      ).trim().toLowerCase();
+
+    if (!orderNumberValue) {
+      return json({
+        error:
+          "Order number is required"
+      }, 400);
+    }
+
+    if (
+      ![
+        "new",
+        "confirmed",
+        "shipped",
+        "delivered"
+      ].includes(orderStatus)
+    ) {
+      return json({
+        error:
+          "Invalid order status"
+      }, 400);
+    }
+
+    let sql = `
+      UPDATE orders
+      SET
+        order_status = ?,
+        updated_at = CURRENT_TIMESTAMP
+    `;
+
+    const params = [
+      orderStatus
+    ];
+
+    if (
+      orderStatus === "shipped"
+    ) {
+      sql += `,
+        shipped_at = CURRENT_TIMESTAMP
+      `;
+    }
+
+    if (
+      orderStatus === "delivered"
+    ) {
+      sql += `,
+        delivered_at = CURRENT_TIMESTAMP
+      `;
+    }
+
+    sql += `
+      WHERE order_number = ?
+    `;
+
+    params.push(
+      orderNumberValue
+    );
+
+    const result =
+      await env.DB
+        .prepare(sql)
+        .bind(...params)
+        .run();
+
+    if (!result.meta?.changes) {
+      return json({
+        error:
+          "Order not found"
+      }, 404);
+    }
+
+    return json({
+      ok: true,
+      message:
+        "Order status updated"
+    });
+
+  } catch (error) {
+    return json({
+      error:
+        error?.message ||
+        "Could not update order status"
+    }, 400);
+  }
+}
+
+
+async function adminShipping(request, env) {
+  const authError =
+    requireAdmin(request, env);
+
+  if (authError) {
+    return authError;
+  }
+
+  try {
+    const body =
+      await request.json();
+
+    const orderNumberValue =
+      String(
+        body.order_number || ""
+      ).trim();
+
+    const courierName =
+      String(
+        body.courier_name || ""
+      ).trim();
+
+    const trackingNumber =
+      String(
+        body.tracking_number || ""
+      ).trim();
+
+    const trackingUrl =
+      String(
+        body.tracking_url || ""
+      ).trim();
+
+    if (!orderNumberValue) {
+      return json({
+        error:
+          "Order number is required"
+      }, 400);
+    }
+
+    if (
+      trackingUrl &&
+      !/^https?:\/\//i.test(
+        trackingUrl
+      )
+    ) {
+      return json({
+        error:
+          "Tracking URL must start with http:// or https://"
+      }, 400);
+    }
+
+    const result =
+      await env.DB.prepare(`
+        UPDATE orders
+        SET
+          courier_name = ?,
+          tracking_number = ?,
+          tracking_url = ?,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE order_number = ?
+      `).bind(
+        courierName,
+        trackingNumber,
+        trackingUrl,
+        orderNumberValue
+      ).run();
+
+    if (!result.meta?.changes) {
+      return json({
+        error:
+          "Order not found"
+      }, 404);
+    }
+
+    return json({
+      ok: true,
+      message:
+        "Shipping details updated"
+    });
+
+  } catch (error) {
+    return json({
+      error:
+        error?.message ||
+        "Could not update shipping details"
+    }, 400);
+  }
+}
+
+
+/*
+=========================================================
+CUSTOMER MY ORDERS
+=========================================================
+*/
+
+async function myOrders(request, env) {
+  const url =
+    new URL(request.url);
+
+  const mobile =
+    String(
+      url.searchParams.get(
+        "mobile"
+      ) || ""
+    ).trim();
+
+  if (!/^\d{10}$/.test(mobile)) {
+    return json({
+      error:
+        "Valid 10-digit mobile number required"
+    }, 400);
+  }
+
+  try {
+    const result =
+      await env.DB.prepare(`
+        SELECT
+          order_number,
+          mobile,
+          amount_paise,
+          payment_method,
+          payment_status,
+          order_status,
+          items_json,
+          courier_name,
+          tracking_number,
+          tracking_url,
+          created_at,
+          updated_at,
+          shipped_at,
+          delivered_at
+        FROM orders
+        WHERE mobile = ?
+        ORDER BY id DESC
+        LIMIT 50
+      `).bind(mobile).all();
+
+    const orders =
+      (result.results || []).map(row => {
+
+        let items = [];
+
+        try {
+          items =
+            JSON.parse(
+              row.items_json || "[]"
+            );
+
+          if (
+            !Array.isArray(items)
+          ) {
+            items = [];
+          }
+
+        } catch {
+          items = [];
+        }
+
+        return {
+          order_number:
+            row.order_number,
+
+          mobile:
+            row.mobile,
+
+          amount_paise:
+            Number(
+              row.amount_paise || 0
+            ),
+
+          payment_method:
+            row.payment_method || "",
+
+          payment_status:
+            row.payment_status || "",
+
+          order_status:
+            row.order_status || "",
+
+          items,
+
+          courier_name:
+            row.courier_name || "",
+
+          tracking_number:
+            row.tracking_number || "",
+
+          tracking_url:
+            row.tracking_url || "",
+
+          created_at:
+            row.created_at || "",
+
+          updated_at:
+            row.updated_at || "",
+
+          shipped_at:
+            row.shipped_at || null,
+
+          delivered_at:
+            row.delivered_at || null
+        };
+      });
+
+    return json({
+      ok: true,
+      orders
+    });
+
+  } catch (error) {
+    return json({
+      error:
+        error?.message ||
+        "Could not load orders"
+    }, 500);
+  }
+}
+
+
+/*
+=========================================================
+CREATE ORDER
+=========================================================
+*/
+
+async function createOrder(request, env) {
+  try {
+
+    const body =
+      await request.json();
+
+    const amount =
+      Number(body.amount);
+
+    const customerName =
+      String(
+        body.customer_name || ""
+      ).trim();
+
+    const mobile =
+      String(
+        body.mobile || ""
+      ).trim();
+
+    const email =
+      String(
+        body.email || ""
+      ).trim();
+
+    const address =
+      String(
+        body.address || ""
+      ).trim();
+
+    const city =
+      String(
+        body.city || ""
+      ).trim();
+
+    const state =
+      String(
+        body.state || ""
+      ).trim();
+
+    const pincode =
+      String(
+        body.pincode || ""
+      ).trim();
+
+    const paymentMethod =
+      String(
+        body.payment_method ||
+        "online"
+      )
+        .trim()
+        .toLowerCase();
+
+    const items =
+      Array.isArray(body.items)
+        ? body.items
+        : [];
+
+    if (
+      !Number.isInteger(amount) ||
+      amount <= 0 ||
+      amount > 100000000
+    ) {
+      return json({
+        error:
+          "Invalid order amount"
+      }, 400);
+    }
+
+    if (
+      !customerName ||
+      !/^\d{10}$/.test(mobile)
+    ) {
+      return json({
+        error:
+          "Valid customer name and 10-digit mobile are required"
+      }, 400);
+    }
+
+    if (
+      !address ||
+      !city ||
+      !state ||
+      !pincode
+    ) {
+      return json({
+        error:
+          "Complete delivery address is required"
+      }, 400);
+    }
+
+    if (
+      ![
+        "online",
+        "cod"
+      ].includes(paymentMethod)
+    ) {
+      return json({
+        error:
+          "Invalid payment method"
+      }, 400);
+    }
+
+    if (!items.length) {
+      return json({
+        error:
+          "Order must contain at least one item"
+      }, 400);
+    }
+
+    const orderNo =
+      orderNumber();
+
+    let razorpayOrderId =
+      null;
+
+    if (
+      paymentMethod === "online"
+    ) {
+
+      const rp =
+        await razorpayRequest(
+          env,
+          "/orders",
+          {
+            method: "POST",
+
+            body:
+              JSON.stringify({
+                amount:
+                  amount * 100,
+
+                currency:
+                  "INR",
+
+                receipt:
+                  orderNo,
+
+                notes: {
+                  order_number:
+                    orderNo
+                }
+              })
+          }
+        );
+
+      razorpayOrderId =
+        rp.id;
+    }
+
+    await env.DB
+      .prepare(`
+        INSERT INTO orders (
+          order_number,
+          razorpay_order_id,
+          customer_name,
+          mobile,
+          email,
+          address,
+          city,
+          state,
+          pincode,
+          amount_paise,
+          payment_method,
+          payment_status,
+          order_status,
+          items_json
+        )
+        VALUES (
+          ?, ?, ?, ?, ?, ?, ?, ?, ?,
+          ?, ?, ?, ?, ?
+        )
+      `)
+      .bind(
+        orderNo,
+        razorpayOrderId,
+        customerName,
+        mobile,
+        email,
+        address,
+        city,
+        state,
+        pincode,
+        amount * 100,
+        paymentMethod,
+
+        paymentMethod === "cod"
+          ? "pending"
+          : "created",
+
+        "new",
+
+        JSON.stringify(items)
+      )
+      .run();
+
+    return json({
+      ok: true,
+
+      order_number:
+        orderNo,
+
+      razorpay_order_id:
+        razorpayOrderId,
+
+      amount_paise:
+        amount * 100,
+
+      currency:
+        "INR",
+
+      payment_method:
+        paymentMethod
+    });
+
+  } catch (error) {
+
+    return json({
+      error:
+        error?.message ||
+        "Could not create order"
+    }, 500);
+  }
+}
+
+
+/*
+=========================================================
+VERIFY PAYMENT
+=========================================================
+*/
+
+async function verifyPayment(
+  request,
+  env
+) {
+  try {
+
+    const body =
+      await request.json();
+
+    const orderNumberValue =
+      String(
+        body.order_number || ""
+      ).trim();
+
+    const razorpayOrderId =
+      String(
+        body.razorpay_order_id ||
+        ""
+      ).trim();
+
+    const razorpayPaymentId =
+      String(
+        body.razorpay_payment_id ||
+        ""
+      ).trim();
+
+    const razorpaySignature =
+      String(
+        body.razorpay_signature ||
+        ""
+      ).trim();
+
+    if (
+      !orderNumberValue ||
+      !razorpayOrderId ||
+      !razorpayPaymentId ||
+      !razorpaySignature
+    ) {
+      return json({
+        error:
+          "Incomplete payment verification data"
+      }, 400);
+    }
+
+    const order =
+      await env.DB
+        .prepare(`
+          SELECT
+            id,
+            order_number,
+            razorpay_order_id,
+            payment_status
+          FROM orders
+          WHERE order_number = ?
+          LIMIT 1
+        `)
+        .bind(
+          orderNumberValue
+        )
+        .first();
+
+    if (!order) {
+      return json({
+        error:
+          "Order not found"
+      }, 404);
+    }
+
+    if (
+      order.razorpay_order_id !==
+      razorpayOrderId
+    ) {
+      return json({
+        error:
+          "Razorpay order mismatch"
+      }, 400);
+    }
+
+    const valid =
+      await verifyRazorpaySignature(
+        razorpayOrderId,
+        razorpayPaymentId,
+        razorpaySignature,
+        env.RAZORPAY_KEY_SECRET
+      );
+
+    if (!valid) {
+      return json({
+        error:
+          "Payment signature verification failed"
+      }, 400);
+    }
+
+    await env.DB
+      .prepare(`
+        UPDATE orders
+        SET
+          razorpay_payment_id = ?,
+          payment_status = 'paid',
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `)
+      .bind(
+        razorpayPaymentId,
+        order.id
+      )
+      .run();
+
+    return json({
+      ok: true,
+
+      order_number:
+        orderNumberValue,
+
+      payment_status:
+        "paid"
+    });
+
+  } catch (error) {
+
+    return json({
+      error:
+        error?.message ||
+        "Could not verify payment"
+    }, 500);
+  }
+}
+
+
+/*
+=========================================================
+WEBHOOK
+=========================================================
+*/
+
+async function webhook(request, env) {
+  try {
+
+    const rawBody =
+      await request.text();
+
+    if (
+      env.RAZORPAY_WEBHOOK_SECRET
+    ) {
+
+      const signature =
+        request.headers.get(
+          "x-razorpay-signature"
+        ) || "";
+
+      const key =
+        await crypto.subtle.importKey(
+          "raw",
+          new TextEncoder().encode(
+            env.RAZORPAY_WEBHOOK_SECRET
+          ),
+          {
+            name: "HMAC",
+            hash: "SHA-256"
+          },
+          false,
+          ["sign"]
+        );
+
+      const sigBuffer =
+        await crypto.subtle.sign(
+          "HMAC",
+          key,
+          new TextEncoder().encode(
+            rawBody
+          )
+        );
+
+      const expected =
+        [...new Uint8Array(
+          sigBuffer
+        )]
+          .map(b =>
+            b.toString(16)
+             .padStart(2, "0")
+          )
+          .join("");
+
+      if (
+        expected !==
+        signature.toLowerCase()
+      ) {
+        return json({
+          error:
+            "Invalid webhook signature"
+        }, 400);
+      }
+    }
+
+    let payload = {};
+
+    try {
+      payload =
+        JSON.parse(rawBody);
+    } catch {
+      payload = {};
+    }
+
+    const event =
+      String(
+        payload.event || ""
+      );
+
+    if (
+      event ===
+        "payment.captured" ||
+      event ===
+        "payment.authorized"
+    ) {
+
+      const payment =
+        payload?.payload
+          ?.payment
+          ?.entity;
+
+      const razorpayOrderId =
+        String(
+          payment?.order_id || ""
+        ).trim();
+
+      const paymentId =
+        String(
+          payment?.id || ""
+        ).trim();
+
+      if (
+        razorpayOrderId &&
+        paymentId
+      ) {
+
+        await env.DB
+          .prepare(`
+            UPDATE orders
+            SET
+              razorpay_payment_id = ?,
+              payment_status = 'paid',
+              updated_at = CURRENT_TIMESTAMP
+            WHERE razorpay_order_id = ?
+          `)
+          .bind(
+            paymentId,
+            razorpayOrderId
+          )
+          .run();
+      }
+    }
+
+    return json({
+      ok: true
+    });
+
+  } catch (error) {
+
+    return json({
+      error:
+        error?.message ||
+        "Webhook error"
+    }, 500);
+  }
+}
+
+
+/*
+=========================================================
+API ROUTER
+=========================================================
+*/
+
+async function handleApi(
+  request,
+  env
+) {
+
+  const url =
+    new URL(request.url);
+
+  if (
+    request.method ===
+    "OPTIONS"
+  ) {
+
+    return new Response(
+      null,
+      {
+        status: 204,
+        headers:
+          corsHeaders
+      }
+    );
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/config" &&
+    request.method ===
+      "GET"
+  ) {
+
+    return json({
+      ok: true,
+
+      razorpay_key_id:
+        env.RAZORPAY_KEY_ID ||
+        ""
+    });
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/create-order" &&
+    request.method ===
+      "POST"
+  ) {
+
+    return createOrder(
+      request,
+      env
+    );
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/verify-payment" &&
+    request.method ===
+      "POST"
+  ) {
+
+    return verifyPayment(
+      request,
+      env
+    );
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/webhook" &&
+    request.method ===
+      "POST"
+  ) {
+
+    return webhook(
+      request,
+      env
+    );
+  }
+
+
+  /*
+  CUSTOMER MY ORDERS
+  */
+
+  if (
+    url.pathname ===
+      "/api/my-orders" &&
+    request.method ===
+      "GET"
+  ) {
+
+    return myOrders(
+      request,
+      env
+    );
+  }
+
+
+  /*
+  PUBLIC PRODUCTS
+  */
+
+  if (
+    url.pathname ===
+      "/api/products" &&
+    request.method ===
+      "GET"
+  ) {
+
+    return publicProducts(
+      request,
+      env
+    );
+  }
+
+
+  /*
+  ADMIN PRODUCTS
+  */
+
+  if (
+    url.pathname ===
+      "/api/admin/products" &&
+    request.method ===
+      "GET"
+  ) {
+
+    return adminProducts(
+      request,
+      env
+    );
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/admin/products" &&
+    request.method ===
+      "POST"
+  ) {
+
+    return createProduct(
+      request,
+      env
+    );
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/admin/products" &&
+    request.method ===
+      "PUT"
+  ) {
+
+    return updateProduct(
+      request,
+      env
+    );
+  }
+
+
+  if (
+    url.pathname ===
+      "/api/admin/products" &&
+    request.method ===
+      "DELETE"
+  ) {
+
+    return deleteProduct(
+      request,
+      env
+    );
+  }
+
+
+  /*
+  ADMIN ORDERS
+  */
+
+  if (
+    url.pathname ===
+      "/api/admin/orders" &&
+    request.method ===
+      "GET"
+  ) {
+
+    return adminOrders(
+      request,
+      env
+    );
+  }
+
+
+  /*
+  ADMIN SHIPPING
+  */
+
+  if (
+    url.pathname ===
+      "/api/admin/shipping" &&
+    request.method ===
+      "POST"
+  ) {
+
+    return adminShipping(
+      request,
+      env
+    );
+  }
+
+
+  /*
+  ADMIN ORDER STATUS
+  */
+
+  if (
+    url.pathname ===
+      "/api/admin/order-status" &&
+    request.method ===
+      "POST"
+  ) {
+
+    return adminOrderStatus(
+      request,
+      env
+    );
+  }
+
+
+  return json({
+    error:
+      "API endpoint not found"
+  }, 404);
+}
+
+
+/*
+=========================================================
+CLOUDFLARE WORKER
+=========================================================
+*/
+
+export default {
+
+  async fetch(
+    request,
+    env,
+    ctx
+  ) {
+
+    try {
+
+      const url =
+        new URL(request.url);
+
+      if (
+        url.pathname.startsWith(
+          "/api/"
+        )
+      ) {
+
+        return withCors(
+          await handleApi(
+            request,
+            env
+          )
+        );
+      }
+
+      return env.ASSETS.fetch(
+        request
+      );
+
+    } catch (error) {
+
+      return json({
+        error:
+          error?.message ||
+          "Internal server error"
+      }, 500);
+    }
+  }
+};
