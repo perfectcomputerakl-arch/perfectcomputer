@@ -200,6 +200,44 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
   .footer-grid{grid-template-columns:1fr}
 }
 
+
+/* ===== NEXT UPGRADE: SHOPPING EXPERIENCE ===== */
+.back-top{
+  position:fixed;right:18px;bottom:18px;z-index:40;width:43px;height:43px;border:0;border-radius:50%;
+  background:#071b31;color:#fff;font-size:18px;box-shadow:0 8px 22px #0003;cursor:pointer;display:none
+}
+.wishlist-btn{
+  position:absolute;right:10px;top:10px;width:35px;height:35px;border:1px solid #e1e7ef;
+  border-radius:50%;background:#fff;cursor:pointer;font-size:17px;box-shadow:0 3px 10px #0001
+}
+.pic{position:relative}
+.wishlist-btn.active{background:#fff0f2;border-color:#ffccd3}
+.compare-bar{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:39;background:#071b31;color:#fff;
+  padding:11px 15px;border-radius:13px;box-shadow:0 10px 30px #0004;display:none;align-items:center;gap:10px;font-size:11px
+}
+.compare-bar button{border:0;border-radius:8px;padding:8px 11px;cursor:pointer;font-weight:800}
+.compare-open{background:#1976ed;color:#fff}.compare-clear{background:#fff;color:#071b31}
+.toast2{
+  position:fixed;right:18px;bottom:75px;z-index:50;background:#071b31;color:#fff;padding:12px 15px;
+  border-radius:10px;font-size:12px;box-shadow:0 8px 25px #0004;opacity:0;pointer-events:none;transition:.25s
+}
+.toast2.show{opacity:1}
+.stock-low{color:#b54708;font-weight:800;font-size:10px;margin-top:5px}
+.stock-ok{color:#067647;font-weight:800;font-size:10px;margin-top:5px}
+.wishlist-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mini-product{border:1px solid #e5eaf1;border-radius:12px;padding:12px;background:#fff}
+.mini-product img{width:100%;height:110px;object-fit:contain;background:#f5f8fb;border-radius:9px}
+.mini-product h4{font-size:12px;margin:8px 0 4px}
+.mini-product p{font-size:12px;font-weight:800;margin:0}
+.compare-table{width:100%;border-collapse:collapse;font-size:11px}
+.compare-table th,.compare-table td{border:1px solid #e5eaf1;padding:9px;text-align:left}
+.compare-table th{background:#f6f8fb}
+@media(max-width:600px){
+ .wishlist-grid{grid-template-columns:1fr}
+ .compare-bar{left:10px;right:10px;transform:none;justify-content:center}
+}
+
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
@@ -221,6 +259,7 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
     <button>🔍</button>
   </div>
   <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
+  <button class="cartbtn" onclick="openWishlist()">♡ Wishlist (<span id="wishCount">0</span>)</button>
   <button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </header>
 
@@ -356,6 +395,32 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
   <div class="footer-bottom">© 2026 PERFECT COMPUTER • Smart Technology. Perfect Choice.</div>
 </footer>
 
+
+<div class="modal" id="wishlistModal">
+  <div class="box">
+    <button class="close" onclick="closeModal('wishlistModal')">×</button>
+    <h2>♡ My Wishlist</h2>
+    <p class="small-note">Save products here and add them to your cart anytime.</p>
+    <div id="wishlistList"></div>
+  </div>
+</div>
+
+<div class="modal" id="compareModal">
+  <div class="box">
+    <button class="close" onclick="closeModal('compareModal')">×</button>
+    <h2>⚖️ Compare Products</h2>
+    <p class="small-note">Compare selected products side by side.</p>
+    <div id="compareList"></div>
+  </div>
+</div>
+
+<div class="compare-bar" id="compareBar">
+  <span id="compareText">0 products selected</span>
+  <button class="compare-open" onclick="openCompare()">Compare</button>
+  <button class="compare-clear" onclick="clearCompare()">Clear</button>
+</div>
+<div class="toast2" id="toast2"></div>
+
 <div class="modal" id="productModal">
   <div class="box">
     <button class="close" onclick="closeModal('productModal')">×</button>
@@ -481,7 +546,8 @@ function invoiceHtml(order){
   const rows=items.map(i=>`<tr><td>${escapeHtml(i.name||"Product")}</td><td>${Number(i.quantity||0)}</td><td>${money(i.price)}</td><td>${money(Number(i.price||0)*Number(i.quantity||0))}</td></tr>`).join("");
   const w=window.open("","_blank","width=800,height=900");
   if(!w){ alert("Please allow pop-ups to print the invoice."); return; }
-  w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><script>window.onload=()=>window.print()<\/script><button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+</body></html>`);
   w.document.close();
 }
 
@@ -634,7 +700,7 @@ function render(){
       '<button class="heart" onclick="wish(' + p.id + ')">' +
       (wishlist.includes(p.id) ? "❤️" : "♡") +
       '</button>' +
-      '<div class="pic">' + image + '</div>' +
+      '<div class="pic"><span class="wishlist-btn" onclick="toggleWishlist(${p.id},event)">${isWishlisted(p.id) ? "♥" : "♡"}</span>' + image + '</div>' +
       '<div class="info">' +
       '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
       '<h3>' + escapeHtml(p.name) + '</h3>' +
@@ -647,7 +713,7 @@ function render(){
       '</div>' +
       '<div class="actions">' +
       '<button class="add" ' + (out ? "disabled" : "") + ' onclick="add(' + p.id + ')">Add to Cart</button>' +
-      '<button class="buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ')">Buy Now</button>' +
+      '<button class="buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ')">Buy Now</button><button class="secondary" onclick="toggleCompare(${p.id},event)">${compareIds.includes(Number(p.id)) ? "✓ Comparing" : "⚖️ Compare"}</button>' +
       '</div>' +
       '<button style="margin-top:8px;width:100%;border:0;background:#eef4ff;padding:8px;border-radius:8px" onclick="details(' + p.id + ')">View Details</button>' +
       '</div></article>';
@@ -1004,6 +1070,114 @@ document.querySelectorAll(".modal").forEach(modal => {
 
 loadProducts();
 updateCount();
+
+/* ===== NEXT UPGRADE FEATURES ===== */
+let wishlist = JSON.parse(localStorage.getItem("pc_wishlist") || "[]");
+let compareIds = JSON.parse(localStorage.getItem("pc_compare") || "[]");
+
+function saveWishlist(){
+  localStorage.setItem("pc_wishlist", JSON.stringify(wishlist));
+  updateWishCount();
+}
+function updateWishCount(){
+  const el=document.getElementById("wishCount");
+  if(el) el.textContent=wishlist.length;
+}
+function isWishlisted(id){ return wishlist.map(Number).includes(Number(id)); }
+
+function toggleWishlist(id, ev){
+  if(ev) ev.stopPropagation();
+  id=Number(id);
+  if(isWishlisted(id)){
+    wishlist=wishlist.filter(x=>Number(x)!==id);
+    showUpgradeToast("Removed from Wishlist");
+  }else{
+    wishlist.push(id);
+    showUpgradeToast("♡ Added to Wishlist");
+  }
+  saveWishlist();
+  render();
+}
+
+function openWishlist(){
+  const list=document.getElementById("wishlistList");
+  const wanted=wishlist.map(id=>products.find(p=>Number(p.id)===Number(id))).filter(Boolean);
+  if(!wanted.length){
+    list.innerHTML='<div class="empty">Your wishlist is empty.</div>';
+  }else{
+    list.innerHTML='<div class="wishlist-grid">'+wanted.map(p=>`
+      <div class="mini-product">
+        <img src="${escapeHtml(p.image || '')}" onerror="this.style.display='none'">
+        <h4>${escapeHtml(p.name)}</h4>
+        <p>₹${money(p.price)}</p>
+        <div style="display:flex;gap:7px;margin-top:9px">
+          <button class="primary" onclick="addToCart(${Number(p.id)});closeModal('wishlistModal')">🛒 Add to Cart</button>
+          <button class="secondary" onclick="toggleWishlist(${Number(p.id)})">Remove</button>
+        </div>
+      </div>`).join('')+'</div>';
+  }
+  document.getElementById("wishlistModal").style.display="block";
+}
+
+function toggleCompare(id, ev){
+  if(ev) ev.stopPropagation();
+  id=Number(id);
+  if(compareIds.includes(id)){
+    compareIds=compareIds.filter(x=>x!==id);
+  }else{
+    if(compareIds.length>=3){ showUpgradeToast("Compare up to 3 products"); return; }
+    compareIds.push(id);
+  }
+  localStorage.setItem("pc_compare",JSON.stringify(compareIds));
+  updateCompareBar();
+  render();
+}
+
+function updateCompareBar(){
+  const bar=document.getElementById("compareBar");
+  const text=document.getElementById("compareText");
+  if(!bar) return;
+  bar.style.display=compareIds.length ? "flex" : "none";
+  if(text) text.textContent=compareIds.length+" product"+(compareIds.length===1?"":"s")+" selected";
+}
+function clearCompare(){
+  compareIds=[];
+  localStorage.setItem("pc_compare","[]");
+  updateCompareBar();
+  render();
+}
+function openCompare(){
+  const wanted=compareIds.map(id=>products.find(p=>Number(p.id)===Number(id))).filter(Boolean);
+  const el=document.getElementById("compareList");
+  if(!wanted.length){ el.innerHTML='<div class="empty">Select products to compare.</div>'; }
+  else{
+    const rows=[
+      ["Product", ...wanted.map(p=>escapeHtml(p.name))],
+      ["Brand", ...wanted.map(p=>escapeHtml(p.brand||"-"))],
+      ["Category", ...wanted.map(p=>escapeHtml(p.cat||"-"))],
+      ["Price", ...wanted.map(p=>"₹"+money(p.price))],
+      ["MRP", ...wanted.map(p=>"₹"+money(p.mrp))],
+      ["Stock", ...wanted.map(p=>String(p.stock))],
+      ["SKU", ...wanted.map(p=>escapeHtml(p.sku||"-"))]
+    ];
+    el.innerHTML='<table class="compare-table">'+rows.map((r,i)=>'<tr>'+r.map((c,j)=>(i===0||j===0?'<th>'+c+'</th>':'<td>'+c+'</td>')).join('')+'</tr>').join('')+'</table>';
+  }
+  document.getElementById("compareModal").style.display="block";
+}
+function showUpgradeToast(msg){
+  const t=document.getElementById("toast2");
+  if(!t)return;
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(window.__pcToastTimer);
+  window.__pcToastTimer=setTimeout(()=>t.classList.remove("show"),1800);
+}
+window.addEventListener("scroll",()=>{
+  const b=document.getElementById("backTop");
+  if(b)b.style.display=window.scrollY>500?"block":"none";
+});
+updateWishCount();
+updateCompareBar();
+
 </script>
 </body>
 </html>
