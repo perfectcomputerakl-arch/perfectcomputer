@@ -1,3 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERFECT COMPUTER — Admin Panel</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,Arial,sans-serif;background:#f4f7fb;color:#172033}body{min-height:100vh}.hidden{display:none!important}.topbar{background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:20}.topbar-inner{max-width:1400px;margin:auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:800;font-size:20px}.brand small{display:block;font-size:11px;color:#64748b;margin-top:2px}.container{max-width:1400px;margin:auto;padding:24px}.header-row{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:20px}.header-row h1{margin:0 0 6px;font-size:28px}.header-row p{margin:0;color:#64748b}.nav-actions{display:flex;gap:8px;flex-wrap:wrap}.btn,.action-btn,.view-btn{border:0;border-radius:9px;padding:10px 14px;cursor:pointer;font-weight:700}.btn-primary{background:#2563eb;color:#fff}.btn-success{background:#16a34a;color:#fff}.btn-danger{background:#dc2626;color:#fff}.btn-light{background:#eef2f7;color:#172033}.btn:disabled{opacity:.6;cursor:not-allowed}.tabs{display:flex;gap:8px;margin-bottom:18px}.tab{border:1px solid #dbe1ea;background:#fff;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}.tab.active{background:#172033;color:#fff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px}.stat-label{font-size:13px;color:#64748b}.stat-value{font-size:28px;font-weight:800;margin-top:5px}.panel{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}.input,.select{width:100%;border:1px solid #d5dbe5;border-radius:9px;padding:11px 12px;background:#fff;color:#172033}.toolbar .grow{flex:1;min-width:220px}.toolbar .small{width:190px}.table-wrap{overflow:auto}.table-wrap table{width:100%;border-collapse:collapse;min-width:1000px}.table-wrap th,.table-wrap td{border-bottom:1px solid #edf0f4;padding:12px;text-align:left;vertical-align:top}.table-wrap th{background:#f8fafc;font-size:12px;text-transform:uppercase;color:#64748b}.order-no,.customer,.product-name{font-weight:800}.muted,.product-brand{color:#64748b;font-size:12px;margin-top:3px}.amount{font-weight:800}.order-actions{display:flex;gap:6px;flex-wrap:wrap}.action-btn{font-size:12px;background:#eef2ff}.whatsapp-btn{background:#dcfce7}.invoice-btn{background:#fef3c7}.shipping-btn{background:#e0f2fe}.view-btn{background:#f1f5f9}.edit-btn{background:#e0e7ff}.delete-btn{background:#fee2e2}.status-select{border:1px solid #d5dbe5;border-radius:7px;padding:7px}.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}.badge-active{background:#dcfce7;color:#166534}.badge-inactive{background:#fee2e2;color:#991b1b}.center{text-align:center;padding:50px 20px;color:#64748b}.spinner{width:28px;height:28px;border:3px solid #dbe3ef;border-top-color:#2563eb;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}@keyframes spin{to{transform:rotate(360deg)}}.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}.modal-card{background:#fff;width:min(900px,100%);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #e5e7eb}.modal-head h2{margin:0}.modal-body{padding:20px}.close{border:0;background:#eef2f7;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer}.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.detail{border:1px solid #e5e7eb;border-radius:10px;padding:12px;background:#f8fafc}.detail-label{font-size:11px;text-transform:uppercase;color:#64748b;margin-bottom:5px}.detail-value{font-weight:600;word-break:break-word}.tracking-box{margin-top:18px;border:1px solid #dbeafe;border-radius:12px;padding:16px;background:#f8fbff}.tracking-title{font-weight:800;margin-bottom:12px}.shipping-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full-row{grid-column:1/-1}.form-label{display:block;font-size:12px;font-weight:700;color:#475569;margin-bottom:6px}.shipping-actions{display:flex;gap:8px;flex-wrap:wrap}.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.product-grid .full{grid-column:1/-1}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#eef4ff,#f8fafc)}.login-card{width:min(430px,100%);background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:30px;box-shadow:0 15px 45px rgba(15,23,42,.12)}.login-card h1{margin:0 0 8px}.login-card p{color:#64748b}.login-card label{display:block;font-size:13px;font-weight:700;margin:18px 0 7px}.login-card .btn{width:100%;margin-top:15px}.error{color:#dc2626;font-size:13px;margin-top:12px;min-height:18px}.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.2);opacity:0;pointer-events:none;transform:translateY(10px);transition:.2s;z-index:200}.admin-toast-visible{opacity:1;transform:translateY(0)}@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}.header-row{flex-direction:column}.product-grid,.shipping-form,.detail-grid{grid-template-columns:1fr}.full-row{grid-column:auto}.container{padding:15px}.topbar-inner{padding:13px 15px}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <div class="brand">PERFECT COMPUTER<small>Smart Technology. Perfect Choice.</small></div>
+    <h1 style="margin-top:28px">Admin Login</h1>
+    <p>Enter your Admin Token to manage orders and products.</p>
+    <label for="adminToken">Admin Token</label>
+    <input id="adminToken" class="input" type="password" autocomplete="current-password" placeholder="Enter Admin Token">
+    <button class="btn btn-primary" onclick="login()">🔐 Login</button>
+    <div id="loginError" class="error"></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">PERFECT COMPUTER<small>Admin Panel</small></div>
+      <div class="nav-actions">
+        <button id="exportOrdersBtn" class="btn btn-light" onclick="exportOrders()">📥 Export CSV</button>
+        <button id="addProductTopBtn" class="btn btn-primary hidden" onclick="openProductModal()">➕ Add Product</button>
+        <button class="btn btn-light" onclick="refreshCurrentTab()">🔄 Refresh</button>
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="header-row">
+      <div><h1 id="pageTitle">📦 Order Management</h1><p id="pageSubtitle">Manage customer orders, payments and delivery status.</p></div>
+    </div>
+
+    <div class="tabs">
+      <button id="ordersTab" class="tab active" onclick="switchTab('orders')">📦 Orders</button>
+      <button id="productsTab" class="tab" onclick="switchTab('products')">🛒 Products</button>
+    </div>
+
+    <section id="ordersSection">
+      <div class="stats">
+        <div class="stat"><div class="stat-label">TOTAL ORDERS</div><div id="totalOrders" class="stat-value">0</div></div>
+        <div class="stat"><div class="stat-label">NEW ORDERS</div><div id="newOrders" class="stat-value">0</div></div>
+        <div class="stat"><div class="stat-label">ONLINE PAID</div><div id="paidOrders" class="stat-value">0</div></div>
+        <div class="stat"><div class="stat-label">COD PENDING</div><div id="codOrders" class="stat-value">0</div></div>
+      </div>
+      <div class="panel">
+        <div class="toolbar">
+          <div class="grow"><input id="search" class="input" placeholder="Search order, customer, mobile, email..."></div>
+          <div class="small"><select id="statusFilter" class="select"><option value="">All Order Status</option><option value="new">New</option><option value="confirmed">Confirmed</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select></div>
+          <div class="small"><select id="paymentFilter" class="select"><option value="">All Payment</option><option value="paid">Paid</option><option value="cod_pending">COD Pending</option><option value="failed">Failed</option></select></div>
+        </div>
+        <div id="tableArea"></div>
+      </div>
+    </section>
+
+    <section id="productsSection" class="hidden">
+      <div class="stats">
+        <div class="stat"><div class="stat-label">TOTAL PRODUCTS</div><div id="totalProducts" class="stat-value">0</div></div>
+        <div class="stat"><div class="stat-label">ACTIVE PRODUCTS</div><div id="activeProducts" class="stat-value">0</div></div>
+        <div class="stat"><div class="stat-label">OUT OF STOCK</div><div id="outOfStockProducts" class="stat-value">0</div></div>
+        <div class="stat"><div class="stat-label">CATEGORIES</div><div id="productCategories" class="stat-value">0</div></div>
+      </div>
+      <div class="panel">
+        <div class="toolbar">
+          <div class="grow"><input id="productSearch" class="input" placeholder="Search product, brand, SKU..."></div>
+          <div class="small"><select id="productCategoryFilter" class="select"><option value="">All Categories</option></select></div>
+          <div class="small"><select id="productStatusFilter" class="select"><option value="">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+        </div>
+        <div id="productsTableArea"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="orderModal" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head"><h2>Order Details</h2><button class="close" onclick="closeModal()">×</button></div>
+    <div id="modalBody" class="modal-body"></div>
+  </div>
+</div>
+
+<div id="productModal" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="productModalTitle">➕ Add Product</h2><button class="close" onclick="closeProductModal()">×</button></div>
+    <div class="modal-body">
+      <form id="productForm">
+        <input id="productId" type="hidden">
+        <div class="product-grid">
+          <div><label class="form-label" for="productName">Product Name *</label><input id="productName" class="input" required placeholder="e.g. 500GB SATA SSD"></div>
+          <div><label class="form-label" for="productBrand">Brand</label><input id="productBrand" class="input" placeholder="e.g. EVM / Lenovo / HP"></div>
+          <div><label class="form-label" for="productCategory">Category *</label><input id="productCategory" class="input" required placeholder="e.g. SSD / Laptop / Monitor"></div>
+          <div><label class="form-label" for="productSku">SKU</label><input id="productSku" class="input" placeholder="Optional SKU"></div>
+          <div><label class="form-label" for="productPrice">Selling Price (₹) *</label><input id="productPrice" class="input" type="number" min="0" step="0.01" required placeholder="2499"></div>
+          <div><label class="form-label" for="productMrp">MRP (₹) *</label><input id="productMrp" class="input" type="number" min="0" step="0.01" required placeholder="2999"></div>
+          <div><label class="form-label" for="productStock">Stock Quantity *</label><input id="productStock" class="input" type="number" min="0" step="1" required value="0"></div>
+          <div><label class="form-label" for="productStatus">Status</label><select id="productStatus" class="select"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+          <div class="full"><label class="form-label" for="productImage">Image URL</label><input id="productImage" class="input" type="url" placeholder="https://..."></div>
+          <div class="full"><label class="form-label" for="productDescription">Description</label><textarea id="productDescription" class="input" rows="5" placeholder="Product description"></textarea></div>
+        </div>
+        <div class="modal-actions"><button type="button" class="btn btn-light" onclick="closeProductModal()">Cancel</button><button id="saveProductBtn" type="submit" class="btn btn-primary">💾 Save Product</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="adminToast" class="toast"></div>
+
 <script>
 
 console.log("PERFECT COMPUTER ADMIN V3 loaded");
@@ -3059,11 +3175,8 @@ function openProductModal(
   product = null
 ){
 
- const form = $("productForm");
-
-if (form) {
-  form.reset();
-}
+  $("productForm")
+    .reset();
 
   $("productId")
     .value = "";
