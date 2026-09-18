@@ -1,12 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PERFECT COMPUTER — Smart Technology. Perfect Choice.</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}.top{background:#071b31;color:#fff;padding:7px 4%;display:flex;justify-content:space-between;font-size:12px}header{background:#fff;padding:13px 4%;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0001}.logo{font-size:23px;font-weight:800;white-space:nowrap}.logo span{color:#1976ed}.tag{font-size:10px;color:#777}.search{flex:1;display:flex;border:1px solid #ddd;border-radius:25px;overflow:hidden;max-width:650px}.search input{flex:1;border:0;padding:12px 16px;outline:0}.search button{border:0;background:#1976ed;color:white;padding:0 18px}.cartbtn,.primary{background:#1976ed;color:#fff;border:0;border-radius:9px;padding:11px 17px;font-weight:bold}.cartbtn{border-radius:22px;white-space:nowrap}nav{background:#061a2d;color:#fff;display:flex;gap:25px;padding:10px 4%;overflow:auto;font-size:13px}nav a{white-space:nowrap}.container{max-width:1250px;margin:auto;padding:20px 3%}.hero{background:linear-gradient(120deg,#09213c,#1f59a4);color:#fff;border-radius:24px;padding:42px 5%;margin-bottom:25px}.hero h1{font-size:40px;margin:0 0 10px}.hero p{font-size:17px}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.cat{background:#fff;padding:18px;border-radius:14px;box-shadow:0 3px 14px #0001;cursor:pointer}.cat b{display:block;margin-top:7px}h2{margin:22px 0 13px}.toolbar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}.toolbar select{padding:10px;border:1px solid #ddd;border-radius:9px;background:#fff}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 15px #0002;position:relative}.pic{height:125px;background:#edf4fb;display:flex;align-items:center;justify-content:center;font-size:55px}.info{padding:13px}.brand{font-size:11px;color:#1976ed}.card h3{font-size:15px;margin:7px 0}.price{font-size:17px;font-weight:800;margin:10px 0}.actions{display:flex;gap:7px}.actions button{flex:1;border:0;border-radius:8px;padding:9px;font-weight:bold}.add{background:#071b31;color:#fff}.buy{background:#1976ed;color:#fff}.heart{position:absolute;right:9px;top:9px;border:0;background:white;border-radius:50%;font-size:18px;cursor:pointer}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.feature{background:#fff;padding:20px;border-radius:14px}.wa{position:fixed;right:15px;bottom:18px;background:#18a957;color:#fff;padding:13px 18px;border-radius:28px;z-index:20;font-weight:bold}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;padding:30px 15px;overflow:auto}.box{max-width:720px;margin:30px auto;background:#fff;border-radius:18px;padding:22px}.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:18px}.detail{display:grid;grid-template-columns:1fr 1fr;gap:25px}.detailpic{background:#edf4fb;min-height:260px;display:flex;align-items:center;justify-content:center;font-size:100px;border-radius:15px}.cartrow{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eee;padding:14px 0;align-items:center}.qty button{width:30px;height:30px;border:1px solid #ddd;background:#fff}.checkout{width:100%;padding:13px;border:0;background:#1976ed;color:#fff;border-radius:9px;font-weight:bold;margin-top:15px}@media(max-width:800px){.top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}.search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.hero{padding:28px 6%}.hero h1{font-size:30px}.detail{grid-template-columns:1fr}.detailpic{min-height:190px;font-size:70px}}@media(max-width:430px){.products{gap:9px}.card h3{font-size:13px}.price{font-size:15px}.actions button{font-size:11px;padding:8px}.cat{padding:14px}}
-</style>
-<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+.top{background:#071b31;color:#fff;padding:7px 4%;display:flex;justify-content:space-between;font-size:12px}
+header{background:#fff;padding:13px 4%;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0001}
+.logo{font-size:23px;font-weight:800;white-space:nowrap}.logo span{color:#1976ed}
+.tag{font-size:10px;color:#777}
+.search{flex:1;display:flex;border:1px solid #ddd;border-radius:25px;overflow:hidden;max-width:650px}
+.search input{flex:1;border:0;padding:12px 16px;outline:0}.search button{border:0;background:#1976ed;color:white;padding:0 18px}
+.cartbtn,.primary{background:#1976ed;color:#fff;border:0;border-radius:9px;padding:11px 17px;font-weight:bold}
+.cartbtn{border-radius:22px;white-space:nowrap}
+nav{background:#061a2d;color:#fff;display:flex;gap:25px;padding:10px 4%;overflow:auto;font-size:13px}
+nav a{white-space:nowrap;cursor:pointer}
+.container{max-width:1250px;margin:auto;padding:20px 3%}
+.hero{background:linear-gradient(120deg,#09213c,#1f59a4);color:#fff;border-radius:24px;padding:42px 5%;margin-bottom:25px}
+.hero h1{font-size:40px;margin:0 0 10px}.hero p{font-size:17px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cat{background:#fff;padding:18px;border-radius:14px;box-shadow:0 3px 14px #0001;cursor:pointer}
+.cat b{display:block;margin-top:7px}
+h2{margin:22px 0 13px}
+.toolbar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}
+.toolbar select{padding:10px;border:1px solid #ddd;border-radius:9px;background:#fff}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 15px #0002;position:relative}
+.pic{height:170px;background:#edf4fb;display:flex;align-items:center;justify-content:center;font-size:55px;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:contain}
+.info{padding:13px}.brand{font-size:11px;color:#1976ed}
+.card h3{font-size:15px;margin:7px 0}.price{font-size:17px;font-weight:800;margin:10px 0}
+.mrp{font-size:12px;color:#888;text-decoration:line-through;margin-left:7px;font-weight:normal}
+.stock{font-size:11px;margin:5px 0 9px}.stock.ok{color:#16803c}.stock.out{color:#c62828}
+.actions{display:flex;gap:7px}.actions button{flex:1;border:0;border-radius:8px;padding:9px;font-weight:bold}
+.add{background:#071b31;color:#fff}.buy{background:#1976ed;color:#fff}
+.actions button:disabled{opacity:.45;cursor:not-allowed}
+.heart{position:absolute;right:9px;top:9px;border:0;background:white;border-radius:50%;font-size:18px;cursor:pointer;z-index:2}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.feature{background:#fff;padding:20px;border-radius:14px}
+.wa{position:fixed;right:15px;bottom:18px;background:#18a957;color:#fff;padding:13px 18px;border-radius:28px;z-index:20;font-weight:bold;text-decoration:none}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;padding:30px 15px;overflow:auto}
+.box{max-width:720px;margin:30px auto;background:#fff;border-radius:18px;padding:22px}
+.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:18px}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.detailpic{background:#edf4fb;min-height:260px;display:flex;align-items:center;justify-content:center;font-size:100px;border-radius:15px;overflow:hidden}
+.detailpic img{width:100%;height:260px;object-fit:contain}
+.cartrow{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eee;padding:14px 0;align-items:center}
+.qty button{width:30px;height:30px;border:1px solid #ddd;background:#fff}
+.checkout{width:100%;padding:13px;border:0;background:#1976ed;color:#fff;border-radius:9px;font-weight:bold;margin-top:15px}
 .checkout-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
 .form-card,.summary-card{background:#f8fafc;border:1px solid #e5eaf1;border-radius:14px;padding:16px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -21,152 +64,122 @@
 .summary-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #e5eaf1}
 .summary-total{font-size:19px;font-weight:900;padding-top:12px}
 .status-box{padding:13px;border-radius:10px;margin-top:12px;background:#eef5ff;color:#17365d;font-size:13px}
-@media(max-width:800px){.checkout-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}
+.center{text-align:center;padding:35px;color:#667085}
+.error{background:#fff1f1;color:#b42318;padding:14px;border-radius:10px;margin:12px 0}
+.empty{background:#fff;padding:30px;border-radius:14px;text-align:center;color:#667085}
+@media(max-width:800px){
+.top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}
+.search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
+.products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}
+.hero{padding:28px 6%}.hero h1{font-size:30px}.detail{grid-template-columns:1fr}
+.detailpic{min-height:190px;font-size:70px}.checkout-grid{grid-template-columns:1fr}
+.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}
+}
+@media(max-width:430px){
+.products{gap:9px}.card h3{font-size:13px}.price{font-size:15px}
+.actions button{font-size:11px;padding:8px}.cat{padding:14px}
+}
 </style>
-
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
-<div class="top"><span>🇮🇳 India-wide Delivery</span><span>🔒 Secure Payments</span><span>💬 WhatsApp: 7875867861</span></div>
-<header><div><div class="logo">PERFECT <span>COMPUTER</span></div><div class="tag">Smart Technology. Perfect Choice.</div></div><div class="search"><input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()"><button>🔍</button></div><button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button></header>
-<nav><a onclick="filterCat('All')">Home</a><a onclick="filterCat('Laptops')">Laptops</a><a onclick="filterCat('Desktop')">Desktop</a><a onclick="filterCat('Gaming')">Gaming</a><a onclick="filterCat('PC Components')">PC Components</a><a onclick="filterCat('Printers')">Printers</a><a onclick="filterCat('CCTV')">CCTV</a><a onclick="filterCat('Monitors')">Monitors</a><a onclick="filterCat('Accessories')">Accessories</a></nav>
-<main class="container"><section class="hero"><h1>Upgrade Your Tech 🚀</h1><p>Computers • Laptops • Gaming • Components • Printers • CCTV • Accessories</p><button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button></section>
-<h2>Shop by Category</h2><div class="cats">
-<div class="cat" onclick="filterCat('Laptops')">💻<b>Laptops</b><small>Shop now</small></div><div class="cat" onclick="filterCat('Desktop')">🖥️<b>Desktop</b><small>Shop now</small></div><div class="cat" onclick="filterCat('Gaming')">🎮<b>Gaming</b><small>Shop now</small></div><div class="cat" onclick="filterCat('PC Components')">🔧<b>PC Components</b><small>Shop now</small></div><div class="cat" onclick="filterCat('Monitors')">🖥️<b>Monitors</b><small>Shop now</small></div><div class="cat" onclick="filterCat('Printers')">🖨️<b>Printers</b><small>Shop now</small></div><div class="cat" onclick="filterCat('CCTV')">📹<b>CCTV</b><small>Shop now</small></div><div class="cat" onclick="filterCat('Storage')">💾<b>Storage</b><small>Shop now</small></div></div>
-<section id="products"><h2>Featured Products</h2><div class="toolbar"><select id="catFilter" onchange="filterCat(this.value)"><option>All</option><option>Laptops</option><option>Desktop</option><option>Gaming</option><option>PC Components</option><option>Monitors</option><option>Printers</option><option>CCTV</option><option>Storage</option></select><select id="sort" onchange="render()"><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></div><div class="products" id="grid"></div></section>
-<h2>Why Shop With Us?</h2><div class="features"><div class="feature">🚚 <b>Fast Delivery</b><br><small>India-wide shipping</small></div><div class="feature">🔒 <b>Secure Payment</b><br><small>Safe checkout</small></div><div class="feature">✅ <b>Quality Products</b><br><small>Carefully selected tech</small></div><div class="feature">💬 <b>WhatsApp Support</b><br><small>Quick assistance</small></div></div></main>
+
+<div class="top">
+  <span>🇮🇳 India-wide Delivery</span>
+  <span>🔒 Secure Payments</span>
+  <span>💬 WhatsApp: 7875867861</span>
+</div>
+
+<header>
+  <div>
+    <div class="logo">PERFECT <span>COMPUTER</span></div>
+    <div class="tag">Smart Technology. Perfect Choice.</div>
+  </div>
+  <div class="search">
+    <input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()">
+    <button>🔍</button>
+  </div>
+  <button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+</header>
+
+<nav id="mainNav">
+  <a onclick="filterCat('All')">Home</a>
+  <a onclick="filterCat('Laptops')">Laptops</a>
+  <a onclick="filterCat('Desktop')">Desktop</a>
+  <a onclick="filterCat('Gaming')">Gaming</a>
+  <a onclick="filterCat('PC Components')">PC Components</a>
+  <a onclick="filterCat('Printers')">Printers</a>
+  <a onclick="filterCat('CCTV')">CCTV</a>
+  <a onclick="filterCat('Monitors')">Monitors</a>
+  <a onclick="filterCat('Accessories')">Accessories</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+  <h1>Upgrade Your Tech 🚀</h1>
+  <p>Computers • Laptops • Gaming • Components • Printers • CCTV • Accessories</p>
+  <button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+</section>
+
+<h2>Shop by Category</h2>
+<div class="cats" id="categoryCards">
+  <div class="cat" onclick="filterCat('Laptops')">💻<b>Laptops</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('Desktop')">🖥️<b>Desktop</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('Gaming')">🎮<b>Gaming</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('PC Components')">🔧<b>PC Components</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('Monitors')">🖥️<b>Monitors</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('Printers')">🖨️<b>Printers</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('CCTV')">📹<b>CCTV</b><small>Shop now</small></div>
+  <div class="cat" onclick="filterCat('Storage')">💾<b>Storage</b><small>Shop now</small></div>
+</div>
+
+<section id="products">
+  <h2>Featured Products</h2>
+  <div class="toolbar">
+    <select id="catFilter" onchange="filterCat(this.value)">
+      <option value="All">All Products</option>
+    </select>
+    <select id="sort" onchange="render()">
+      <option value="featured">Featured</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+  </div>
+  <div class="products" id="grid">
+    <div class="center">Loading products...</div>
+  </div>
+</section>
+
+<h2>Why Shop With Us?</h2>
+<div class="features">
+  <div class="feature">🚚 <b>Fast Delivery</b><br><small>India-wide shipping</small></div>
+  <div class="feature">🔒 <b>Secure Payment</b><br><small>Safe checkout</small></div>
+  <div class="feature">✅ <b>Quality Products</b><br><small>Carefully selected tech</small></div>
+  <div class="feature">💬 <b>WhatsApp Support</b><br><small>Quick assistance</small></div>
+</div>
+
+</main>
+
 <a class="wa" href="https://wa.me/917875867861?text=Hello%20PERFECT%20COMPUTER" target="_blank">💬 WhatsApp</a>
-<div class="modal" id="productModal"><div class="box"><button class="close" onclick="closeModal('productModal')">×</button><div id="detail"></div></div></div>
-<div class="modal" id="cartModal"><div class="box"><button class="close" onclick="closeModal('cartModal')">×</button><h2>🛒 Your Cart</h2><div id="cartItems"></div><div id="cartTotal"></div><button class="checkout" onclick="checkout()">Proceed to Checkout</button></div></div>
-<script>
-const products=[
-{id:1,brand:"HP",name:"HP Core i5 Business Laptop",cat:"Laptops",price:28999,icon:"💻",desc:"Reliable business laptop for office, study and daily work."},
-{id:2,brand:"Dell",name:"Dell Core i5 Laptop",cat:"Laptops",price:31999,icon:"💻",desc:"Powerful everyday laptop for work and productivity."},
-{id:3,brand:"Lenovo",name:"Lenovo Student Laptop",cat:"Laptops",price:24999,icon:"💻",desc:"Budget-friendly laptop for students and home users."},
-{id:4,brand:"PERFECT COMPUTER",name:"Office Desktop Core i5",cat:"Desktop",price:22999,icon:"🖥️",desc:"Complete office desktop solution."},
-{id:5,brand:"PERFECT COMPUTER",name:"Gaming PC RTX Series",cat:"Gaming",price:69999,icon:"🎮",desc:"High-performance gaming desktop configuration."},
-{id:6,brand:"Fingers",name:"24-inch IPS Monitor",cat:"Monitors",price:6999,icon:"🖥️",desc:"Sharp IPS display for office and entertainment."},
-{id:7,brand:"EVM",name:"500GB SATA SSD",cat:"Storage",price:2499,icon:"💾",desc:"Fast SATA SSD upgrade for desktop and laptop."},
-{id:8,brand:"EVM",name:"8GB DDR4 Desktop RAM",cat:"PC Components",price:1899,icon:"🧠",desc:"DDR4 desktop memory upgrade."},
-{id:9,brand:"HP",name:"All-in-One Wi-Fi Printer",cat:"Printers",price:8999,icon:"🖨️",desc:"Home and office multifunction printer."},
-{id:10,brand:"PERFECT COMPUTER",name:"4 Camera CCTV Kit",cat:"CCTV",price:11999,icon:"📹",desc:"Complete security camera kit for home or shop."},
-{id:11,brand:"ASUS",name:"Gaming Motherboard",cat:"PC Components",price:5999,icon:"🔧",desc:"Gaming-ready motherboard for custom PC builds."},
-{id:12,brand:"Logitech",name:"Wireless Keyboard Mouse Combo",cat:"Accessories",price:1499,icon:"⌨️",desc:"Comfortable wireless keyboard and mouse combo."}];
-let selectedCat="All",cart=JSON.parse(localStorage.getItem("pc_cart")||"[]"),wishlist=JSON.parse(localStorage.getItem("pc_wish")||"[]");
-const money=n=>"₹"+n.toLocaleString("en-IN");
-function filterCat(c){selectedCat=c;document.getElementById("catFilter").value=c;render();document.getElementById("products").scrollIntoView({behavior:"smooth"})}
-function render(){let q=document.getElementById("search").value.toLowerCase(),a=products.filter(p=>(selectedCat==="All"||p.cat===selectedCat)&&((p.name+" "+p.brand+" "+p.cat).toLowerCase().includes(q)));let s=document.getElementById("sort").value;if(s==="low")a.sort((x,y)=>x.price-y.price);if(s==="high")a.sort((x,y)=>y.price-x.price);document.getElementById("grid").innerHTML=a.map(p=>`<article class="card"><button class="heart" onclick="wish(${p.id})">${wishlist.includes(p.id)?"❤️":"♡"}</button><div class="pic">${p.icon}</div><div class="info"><div class="brand">${p.brand}</div><h3>${p.name}</h3><small>${p.cat}</small><div class="price">${money(p.price)}</div><div class="actions"><button class="add" onclick="add(${p.id})">Add to Cart</button><button class="buy" onclick="buy(${p.id})">Buy Now</button></div><button style="margin-top:8px;width:100%;border:0;background:#eef4ff;padding:8px;border-radius:8px" onclick="details(${p.id})">View Details</button></div></article>`).join("")||"<p>No products found. Try another search.</p>";updateCount()}
-function add(id){cart.push(id);save();alert("Product added to cart 🛒")}
-function buy(id){cart.push(id);save();openCart()}
-function wish(id){wishlist.includes(id)?wishlist=wishlist.filter(x=>x!==id):wishlist.push(id);localStorage.setItem("pc_wish",JSON.stringify(wishlist));render()}
-function save(){localStorage.setItem("pc_cart",JSON.stringify(cart));updateCount()}
-function updateCount(){document.getElementById("cartCount").textContent=cart.length}
-function details(id){let p=products.find(x=>x.id===id);document.getElementById("detail").innerHTML=`<div class="detail"><div class="detailpic">${p.icon}</div><div><div class="brand">${p.brand}</div><h2>${p.name}</h2><p>${p.desc}</p><h2>${money(p.price)}</h2><button class="primary" onclick="add(${p.id});closeModal('productModal')">Add to Cart</button></div></div>`;document.getElementById("productModal").style.display="block"}
-function openCart(){let g={};cart.forEach(id=>g[id]=(g[id]||0)+1);let total=0;document.getElementById("cartItems").innerHTML=Object.entries(g).map(([id,q])=>{let p=products.find(x=>x.id==id),sub=p.price*q;total+=sub;return `<div class="cartrow"><div><b>${p.name}</b><br><small>${money(p.price)} each</small></div><div class="qty"><button onclick="change(${id},-1)">−</button> ${q} <button onclick="change(${id},1)">+</button></div><b>${money(sub)}</b></div>`}).join("")||"<p>Your cart is empty.</p>";document.getElementById("cartTotal").innerHTML=`<h2>Total: ${money(total)}</h2>`;document.getElementById("cartModal").style.display="block"}
-function change(id,n){if(n>0)cart.push(Number(id));else{let i=cart.indexOf(Number(id));if(i>=0)cart.splice(i,1)}save();openCart()}
-function closeModal(id){document.getElementById(id).style.display="none"}
 
-let selectedPay="online";
-function selectPay(mode){
-  selectedPay=mode;
-  document.getElementById("payOnline").classList.toggle("active",mode==="online");
-  document.getElementById("payCOD").classList.toggle("active",mode==="cod");
-  document.getElementById("placeOrderBtn").textContent=mode==="online"?"Place Order & Pay":"Place COD Order";
-}
-function cartGroups(){
-  let g={}; cart.forEach(id=>g[id]=(g[id]||0)+1); return g;
-}
-function cartTotal(){
-  return Object.entries(cartGroups()).reduce((sum,[id,q])=>{
-    const p=products.find(x=>x.id==id); return sum+(p?p.price*q:0);
-  },0);
-}
-function openCheckout(){
-  if(!cart.length){alert("Cart is empty");return}
-  const g=cartGroups();
-  document.getElementById("checkoutSummary").innerHTML=Object.entries(g).map(([id,q])=>{
-    const p=products.find(x=>x.id==id);
-    return p?`<div class="summary-row"><span>${p.name} × ${q}</span><b>${money(p.price*q)}</b></div>`:"";
-  }).join("");
-  document.getElementById("checkoutGrandTotal").textContent="Total: "+money(cartTotal());
-  document.getElementById("checkoutStatus").innerHTML="";
-  document.getElementById("checkoutModal").style.display="block";
-  closeModal("cartModal");
-  selectPay(selectedPay);
-}
-function checkout(){openCheckout()}
-function getCustomer(){
-  return {
-    name:document.getElementById("coName").value.trim(),
-    mobile:document.getElementById("coMobile").value.trim(),
-    email:document.getElementById("coEmail").value.trim(),
-    address:document.getElementById("coAddress").value.trim(),
-    city:document.getElementById("coCity").value.trim(),
-    state:document.getElementById("coState").value.trim(),
-    pincode:document.getElementById("coPincode").value.trim()
-  };
-}
-function validateCustomer(c){
-  if(!c.name||!c.address||!c.city||!c.state||!/^\d{6}$/.test(c.pincode)||!/^\d{10}$/.test(c.mobile)){
-    alert("Please fill all required details correctly. Mobile must be 10 digits and pincode 6 digits.");
-    return false;
-  }
-  return true;
-}
-function setCheckoutStatus(msg){document.getElementById("checkoutStatus").innerHTML=`<div class="status-box">${msg}</div>`}
-async function placeOrder(){
-  const c=getCustomer();
-  if(!validateCustomer(c)||!cart.length)return;
-  const btn=document.getElementById("placeOrderBtn");
-  btn.disabled=true; btn.style.opacity=".6";
-  setCheckoutStatus("Creating your order…");
-  const items=Object.entries(cartGroups()).map(([id,q])=>{
-    const p=products.find(x=>x.id==id);
-    return {product_id:Number(id),name:p.name,price:p.price,quantity:q};
-  });
-  try{
-    const r=await fetch("/api/create-order",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({amount:cartTotal(),customer:c,items,payment_method:selectedPay})});
-    const data=await r.json();
-    if(!r.ok)throw new Error(data.error||"Could not create order");
-    if(selectedPay==="cod"){
-      localStorage.removeItem("pc_cart"); cart=[]; save();
-      document.getElementById("checkoutStatus").innerHTML=`<div class="status-box"><b>✅ COD Order Placed</b><br>Order ID: ${data.order_number}<br>We will contact you on ${c.mobile}.</div>`;
-      btn.textContent="Order Placed";
-      return;
-    }
-    const keyRes=await fetch("/api/config");
-    const cfg=await keyRes.json();
-    if(!cfg.key_id)throw new Error("Razorpay Key ID is not configured");
-    const options={
-      key:cfg.key_id,amount:data.amount,currency:"INR",name:"PERFECT COMPUTER",
-      description:"Retail technology order",order_id:data.razorpay_order_id,
-      prefill:{name:c.name,email:c.email,contact:c.mobile},
-      notes:{order_number:data.order_number},
-      theme:{color:"#1976ed"},
-      handler:async function(resp){
-        try{
-          setCheckoutStatus("Verifying payment…");
-          const vr=await fetch("/api/verify-payment",{method:"POST",headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({order_number:data.order_number,razorpay_order_id:resp.razorpay_order_id,
-              razorpay_payment_id:resp.razorpay_payment_id,razorpay_signature:resp.razorpay_signature})});
-          const vd=await vr.json();
-          if(!vr.ok)throw new Error(vd.error||"Payment verification failed");
-          localStorage.removeItem("pc_cart");cart=[];save();
-          setCheckoutStatus(`<b>✅ Payment Successful</b><br>Order ID: ${data.order_number}<br>Payment ID: ${resp.razorpay_payment_id}`);
-          btn.textContent="Order Placed";
-        }catch(e){setCheckoutStatus("⚠️ "+e.message)}
-      },
-      modal:{ondismiss:function(){setCheckoutStatus("Payment window closed. Your order is still pending payment.")}}
-    };
-    const rp=new Razorpay(options);
-    rp.open();
-  }catch(e){setCheckoutStatus("❌ "+e.message)}
-  finally{btn.disabled=false;btn.style.opacity="1"}
-}
+<div class="modal" id="productModal">
+  <div class="box">
+    <button class="close" onclick="closeModal('productModal')">×</button>
+    <div id="detail"></div>
+  </div>
+</div>
 
-render();
-</script>
+<div class="modal" id="cartModal">
+  <div class="box">
+    <button class="close" onclick="closeModal('cartModal')">×</button>
+    <h2>🛒 Your Cart</h2>
+    <div id="cartItems"></div>
+    <div id="cartTotal"></div>
+    <button class="checkout" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
 <div class="modal" id="checkoutModal">
   <div class="box">
     <button class="close" onclick="closeModal('checkoutModal')">×</button>
@@ -204,6 +217,7 @@ render();
             <input id="coState" autocomplete="address-level1" value="Maharashtra" placeholder="State">
           </div>
         </div>
+
         <h3>Payment Method</h3>
         <div class="pay-options">
           <button class="pay-btn active" id="payOnline" onclick="selectPay('online')">💳 Online Payment</button>
@@ -212,6 +226,7 @@ render();
         <div class="small-note">Online payment is processed through Razorpay. Your Razorpay Secret Key is never placed in this page.</div>
         <div id="checkoutStatus"></div>
       </div>
+
       <div class="summary-card">
         <h3 style="margin-top:0">Order Summary</h3>
         <div id="checkoutSummary"></div>
@@ -222,4 +237,505 @@ render();
   </div>
 </div>
 
-</body></html>
+<script>
+console.log("PERFECT COMPUTER STORE loaded");
+
+let products = [];
+let selectedCat = "All";
+let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
+let wishlist = JSON.parse(localStorage.getItem("pc_wish") || "[]");
+let selectedPay = "online";
+
+const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2
+});
+
+function escapeHtml(v){
+  return String(v ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function normalizeProduct(p, index){
+  const pricePaise = Number(p.price_paise ?? 0);
+  const mrpPaise = Number(p.mrp_paise ?? 0);
+
+  return {
+    id: Number(p.id ?? (index + 1)),
+    brand: String(p.brand || ""),
+    name: String(p.name || "Unnamed Product"),
+    cat: String(p.category || "Other"),
+    price: Number.isFinite(pricePaise) ? pricePaise / 100 : 0,
+    mrp: Number.isFinite(mrpPaise) ? mrpPaise / 100 : 0,
+    stock: Math.max(0, Number(p.stock_qty ?? 0)),
+    status: String(p.status || "active").toLowerCase(),
+    image: String(p.image_url || ""),
+    sku: String(p.sku || ""),
+    desc: String(p.description || ""),
+    icon: "💻"
+  };
+}
+
+async function loadProducts(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = '<div class="center">Loading products...</div>';
+
+  try{
+    const r = await fetch("/api/products", {cache:"no-store"});
+    const data = await r.json();
+
+    if(!r.ok){
+      throw new Error(data.error || data.message || ("Product API returned HTTP " + r.status));
+    }
+
+    const raw = Array.isArray(data) ? data : (Array.isArray(data.products) ? data.products : []);
+
+    products = raw
+      .map(normalizeProduct)
+      .filter(p => p.status === "active");
+
+    buildCategoryFilter();
+    render();
+
+    console.log("Customer products loaded:", products);
+  }catch(error){
+    console.error("Customer product loading error:", error);
+    grid.innerHTML =
+      '<div class="error"><b>⚠️ Products could not be loaded.</b><br>' +
+      escapeHtml(error.message) +
+      '<br><br>Please refresh the page.</div>';
+  }
+}
+
+function buildCategoryFilter(){
+  const select = document.getElementById("catFilter");
+  const current = selectedCat;
+
+  const categories = [...new Set(products.map(p => p.cat).filter(Boolean))]
+    .sort((a,b) => a.localeCompare(b));
+
+  select.innerHTML =
+    '<option value="All">All Products</option>' +
+    categories.map(c => '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>').join("");
+
+  if(categories.includes(current) || current === "All"){
+    select.value = current;
+  }else{
+    selectedCat = "All";
+    select.value = "All";
+  }
+}
+
+function filterCat(c){
+  selectedCat = c || "All";
+  const select = document.getElementById("catFilter");
+
+  if([...select.options].some(o => o.value === selectedCat)){
+    select.value = selectedCat;
+  }else{
+    selectedCat = "All";
+    select.value = "All";
+  }
+
+  render();
+  document.getElementById("products").scrollIntoView({behavior:"smooth"});
+}
+
+function render(){
+  const q = (document.getElementById("search").value || "").toLowerCase().trim();
+
+  let a = products.filter(p =>
+    (selectedCat === "All" || p.cat === selectedCat) &&
+    ((p.name + " " + p.brand + " " + p.cat + " " + p.sku).toLowerCase().includes(q))
+  );
+
+  const s = document.getElementById("sort").value;
+  if(s === "low") a.sort((x,y) => x.price - y.price);
+  if(s === "high") a.sort((x,y) => y.price - x.price);
+
+  const grid = document.getElementById("grid");
+
+  if(!a.length){
+    grid.innerHTML = '<div class="empty">No products found. Try another search or category.</div>';
+    updateCount();
+    return;
+  }
+
+  grid.innerHTML = a.map(p => {
+    const image = p.image
+      ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.textContent=\'💾\';">'
+      : p.icon;
+
+    const out = p.stock <= 0;
+
+    return '<article class="card">' +
+      '<button class="heart" onclick="wish(' + p.id + ')">' +
+      (wishlist.includes(p.id) ? "❤️" : "♡") +
+      '</button>' +
+      '<div class="pic">' + image + '</div>' +
+      '<div class="info">' +
+      '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
+      '<h3>' + escapeHtml(p.name) + '</h3>' +
+      '<small>' + escapeHtml(p.cat) + '</small>' +
+      '<div class="price">' + money(p.price) +
+      (p.mrp > p.price ? '<span class="mrp">' + money(p.mrp) + '</span>' : '') +
+      '</div>' +
+      '<div class="stock ' + (out ? "out" : "ok") + '">' +
+      (out ? "❌ Out of Stock" : "✓ In Stock • " + p.stock + " available") +
+      '</div>' +
+      '<div class="actions">' +
+      '<button class="add" ' + (out ? "disabled" : "") + ' onclick="add(' + p.id + ')">Add to Cart</button>' +
+      '<button class="buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ')">Buy Now</button>' +
+      '</div>' +
+      '<button style="margin-top:8px;width:100%;border:0;background:#eef4ff;padding:8px;border-radius:8px" onclick="details(' + p.id + ')">View Details</button>' +
+      '</div></article>';
+  }).join("");
+
+  updateCount();
+}
+
+function findProduct(id){
+  return products.find(p => Number(p.id) === Number(id));
+}
+
+function add(id){
+  const p = findProduct(id);
+  if(!p) return;
+  if(p.stock <= 0){ alert("Product is out of stock."); return; }
+
+  const currentQty = cart.filter(x => Number(x) === Number(id)).length;
+  if(currentQty >= p.stock){
+    alert("Only " + p.stock + " item(s) available.");
+    return;
+  }
+
+  cart.push(Number(id));
+  save();
+  alert("Product added to cart 🛒");
+}
+
+function buy(id){
+  const p = findProduct(id);
+  if(!p || p.stock <= 0) return;
+  cart.push(Number(id));
+  save();
+  openCart();
+}
+
+function wish(id){
+  wishlist.includes(Number(id))
+    ? wishlist = wishlist.filter(x => Number(x) !== Number(id))
+    : wishlist.push(Number(id));
+
+  localStorage.setItem("pc_wish", JSON.stringify(wishlist));
+  render();
+}
+
+function save(){
+  localStorage.setItem("pc_cart", JSON.stringify(cart));
+  updateCount();
+}
+
+function updateCount(){
+  document.getElementById("cartCount").textContent = cart.length;
+}
+
+function details(id){
+  const p = findProduct(id);
+  if(!p) return;
+
+  const image = p.image
+    ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.display=\'none\';">'
+    : p.icon;
+
+  document.getElementById("detail").innerHTML =
+    '<div class="detail">' +
+      '<div class="detailpic">' + image + '</div>' +
+      '<div>' +
+        '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
+        '<h2>' + escapeHtml(p.name) + '</h2>' +
+        '<p>' + escapeHtml(p.desc || "Quality technology product from PERFECT COMPUTER.") + '</p>' +
+        '<p><b>Category:</b> ' + escapeHtml(p.cat) + '</p>' +
+        (p.sku ? '<p><b>SKU:</b> ' + escapeHtml(p.sku) + '</p>' : '') +
+        '<h2>' + money(p.price) +
+          (p.mrp > p.price ? ' <span class="mrp">' + money(p.mrp) + '</span>' : '') +
+        '</h2>' +
+        '<p class="' + (p.stock > 0 ? "stock ok" : "stock out") + '">' +
+          (p.stock > 0 ? "✓ In Stock • " + p.stock + " available" : "❌ Out of Stock") +
+        '</p>' +
+        '<button class="primary" ' + (p.stock <= 0 ? "disabled" : "") +
+          ' onclick="add(' + p.id + ');closeModal(\'productModal\')">Add to Cart</button>' +
+      '</div>' +
+    '</div>';
+
+  document.getElementById("productModal").style.display = "block";
+}
+
+function cartGroups(){
+  const g = {};
+  cart.forEach(id => g[id] = (g[id] || 0) + 1);
+  return g;
+}
+
+function openCart(){
+  const g = cartGroups();
+  let total = 0;
+
+  const rows = Object.entries(g).map(([id,q]) => {
+    const p = findProduct(id);
+    if(!p) return "";
+
+    const safeQty = Math.min(q, p.stock);
+    const sub = p.price * safeQty;
+    total += sub;
+
+    return '<div class="cartrow">' +
+      '<div><b>' + escapeHtml(p.name) + '</b><br><small>' + money(p.price) + ' each</small></div>' +
+      '<div class="qty"><button onclick="change(' + p.id + ',-1)">−</button> ' + safeQty + ' <button onclick="change(' + p.id + ',1)">+</button></div>' +
+      '<b>' + money(sub) + '</b>' +
+    '</div>';
+  }).join("");
+
+  document.getElementById("cartItems").innerHTML = rows || "<p>Your cart is empty.</p>";
+  document.getElementById("cartTotal").innerHTML = "<h2>Total: " + money(total) + "</h2>";
+  document.getElementById("cartModal").style.display = "block";
+}
+
+function change(id,n){
+  const p = findProduct(id);
+  if(!p) return;
+
+  if(n > 0){
+    const currentQty = cart.filter(x => Number(x) === Number(id)).length;
+    if(currentQty >= p.stock){
+      alert("Only " + p.stock + " item(s) available.");
+      return;
+    }
+    cart.push(Number(id));
+  }else{
+    const i = cart.indexOf(Number(id));
+    if(i >= 0) cart.splice(i,1);
+  }
+
+  save();
+  openCart();
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display = "none";
+}
+
+function selectPay(mode){
+  selectedPay = mode;
+  document.getElementById("payOnline").classList.toggle("active", mode === "online");
+  document.getElementById("payCOD").classList.toggle("active", mode === "cod");
+  document.getElementById("placeOrderBtn").textContent =
+    mode === "online" ? "Place Order & Pay" : "Place COD Order";
+}
+
+function cartTotal(){
+  return Object.entries(cartGroups()).reduce((sum,[id,q]) => {
+    const p = findProduct(id);
+    return sum + (p ? p.price * q : 0);
+  },0);
+}
+
+function openCheckout(){
+  if(!cart.length){
+    alert("Cart is empty");
+    return;
+  }
+
+  const g = cartGroups();
+
+  document.getElementById("checkoutSummary").innerHTML =
+    Object.entries(g).map(([id,q]) => {
+      const p = findProduct(id);
+      return p
+        ? '<div class="summary-row"><span>' + escapeHtml(p.name) + ' × ' + q + '</span><b>' + money(p.price*q) + '</b></div>'
+        : "";
+    }).join("");
+
+  document.getElementById("checkoutGrandTotal").textContent = "Total: " + money(cartTotal());
+  document.getElementById("checkoutStatus").innerHTML = "";
+  document.getElementById("checkoutModal").style.display = "block";
+  closeModal("cartModal");
+  selectPay(selectedPay);
+}
+
+function checkout(){
+  openCheckout();
+}
+
+function getCustomer(){
+  return {
+    name:document.getElementById("coName").value.trim(),
+    mobile:document.getElementById("coMobile").value.trim(),
+    email:document.getElementById("coEmail").value.trim(),
+    address:document.getElementById("coAddress").value.trim(),
+    city:document.getElementById("coCity").value.trim(),
+    state:document.getElementById("coState").value.trim(),
+    pincode:document.getElementById("coPincode").value.trim()
+  };
+}
+
+function validateCustomer(c){
+  if(!c.name || !c.address || !c.city || !c.state ||
+     !/^\d{6}$/.test(c.pincode) ||
+     !/^\d{10}$/.test(c.mobile)){
+    alert("Please fill all required details correctly. Mobile must be 10 digits and pincode 6 digits.");
+    return false;
+  }
+  return true;
+}
+
+function setCheckoutStatus(msg){
+  document.getElementById("checkoutStatus").innerHTML =
+    '<div class="status-box">' + msg + '</div>';
+}
+
+async function placeOrder(){
+  const c = getCustomer();
+  if(!validateCustomer(c) || !cart.length) return;
+
+  const btn = document.getElementById("placeOrderBtn");
+  btn.disabled = true;
+  btn.style.opacity = ".6";
+  setCheckoutStatus("Creating your order…");
+
+  const items = Object.entries(cartGroups()).map(([id,q]) => {
+    const p = findProduct(id);
+    return p ? {
+      product_id:Number(p.id),
+      name:p.name,
+      price:p.price,
+      quantity:q
+    } : null;
+  }).filter(Boolean);
+
+  if(!items.length){
+    setCheckoutStatus("❌ Your cart contains unavailable products.");
+    btn.disabled = false;
+    btn.style.opacity = "1";
+    return;
+  }
+
+  try{
+    const r = await fetch("/api/create-order", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        amount:cartTotal(),
+        customer:c,
+        items,
+        payment_method:selectedPay
+      })
+    });
+
+    const data = await r.json();
+
+    if(!r.ok) throw new Error(data.error || "Could not create order");
+
+    if(selectedPay === "cod"){
+      localStorage.removeItem("pc_cart");
+      cart = [];
+      save();
+
+      document.getElementById("checkoutStatus").innerHTML =
+        '<div class="status-box"><b>✅ COD Order Placed</b><br>' +
+        'Order ID: ' + escapeHtml(data.order_number) +
+        '<br>We will contact you on ' + escapeHtml(c.mobile) + '.</div>';
+
+      btn.textContent = "Order Placed";
+      return;
+    }
+
+    const keyRes = await fetch("/api/config", {cache:"no-store"});
+    const cfg = await keyRes.json();
+
+    if(!cfg.key_id) throw new Error("Razorpay Key ID is not configured");
+
+    const options = {
+      key:cfg.key_id,
+      amount:data.amount,
+      currency:"INR",
+      name:"PERFECT COMPUTER",
+      description:"Retail technology order",
+      order_id:data.razorpay_order_id,
+      prefill:{name:c.name,email:c.email,contact:c.mobile},
+      notes:{order_number:data.order_number},
+      theme:{color:"#1976ed"},
+      handler:async function(resp){
+        try{
+          setCheckoutStatus("Verifying payment…");
+
+          const vr = await fetch("/api/verify-payment", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+              order_number:data.order_number,
+              razorpay_order_id:resp.razorpay_order_id,
+              razorpay_payment_id:resp.razorpay_payment_id,
+              razorpay_signature:resp.razorpay_signature
+            })
+          });
+
+          const vd = await vr.json();
+          if(!vr.ok) throw new Error(vd.error || "Payment verification failed");
+
+          localStorage.removeItem("pc_cart");
+          cart = [];
+          save();
+
+          setCheckoutStatus(
+            '<b>✅ Payment Successful</b><br>' +
+            'Order ID: ' + escapeHtml(data.order_number) +
+            '<br>Payment ID: ' + escapeHtml(resp.razorpay_payment_id)
+          );
+
+          btn.textContent = "Order Placed";
+        }catch(e){
+          setCheckoutStatus("⚠️ " + escapeHtml(e.message));
+        }
+      },
+      modal:{
+        ondismiss:function(){
+          setCheckoutStatus("Payment window closed. Your order is still pending payment.");
+        }
+      }
+    };
+
+    const rp = new Razorpay(options);
+    rp.open();
+
+  }catch(e){
+    setCheckoutStatus("❌ " + escapeHtml(e.message));
+  }finally{
+    btn.disabled = false;
+    btn.style.opacity = "1";
+  }
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeModal("productModal");
+    closeModal("cartModal");
+    closeModal("checkoutModal");
+  }
+});
+
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", function(e){
+    if(e.target === modal) modal.style.display = "none";
+  });
+});
+
+loadProducts();
+updateCount();
+</script>
+</body>
+</html>
