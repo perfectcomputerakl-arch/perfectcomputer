@@ -3742,23 +3742,15 @@ if (productForm) {
     }
   );
 }
-========================================================= */
+
 
 document.addEventListener(
   "keydown",
-  function(e){
-
-    if(
-      e.key ===
-      "Escape"
-    ){
-
+  function(e) {
+    if (e.key === "Escape") {
       closeModal();
-
       closeProductModal();
-
     }
-
   }
 );
 
@@ -3803,20 +3795,27 @@ if (adminToken) {
     }
   );
 }
-    function(e){
 
-      if(
-        e.key ===
-        "Enter"
-      ){
 
-        login();
+/* =========================================================
+   START
+========================================================= */
 
-      }
+(function() {
 
-    }
-  );
+  if (
+    sessionStorage.getItem(
+      tokenKey
+    )
+  ) {
 
+    showApp();
+
+    loadOrders();
+
+  }
+
+})();
 
 /* =========================================================
    START
