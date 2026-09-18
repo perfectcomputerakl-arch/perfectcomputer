@@ -3059,8 +3059,11 @@ function openProductModal(
   product = null
 ){
 
-  $("productForm")
-    .reset();
+ const form = $("productForm");
+
+if (form) {
+  form.reset();
+}
 
   $("productId")
     .value = "";
