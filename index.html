@@ -515,7 +515,7 @@ console.log("PERFECT COMPUTER STORE loaded");
 let products = [];
 let selectedCat = "All";
 let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
-let wishlist = JSON.parse(localStorage.getItem("pc_wish") || "[]");
+let wishlist = JSON.parse(localStorage.getItem("pc_wish") || localStorage.getItem("pc_wishlist") || "[]");
 let selectedPay = "online";
 
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {
@@ -756,6 +756,9 @@ function wish(id){
     : wishlist.push(Number(id));
 
   localStorage.setItem("pc_wish", JSON.stringify(wishlist));
+  localStorage.setItem("pc_wishlist", JSON.stringify(wishlist));
+  localStorage.setItem("pc_wish", JSON.stringify(wishlist));
+  updateWishCount();
   render();
 }
 
@@ -1072,7 +1075,6 @@ loadProducts();
 updateCount();
 
 /* ===== NEXT UPGRADE FEATURES ===== */
-let wishlist = JSON.parse(localStorage.getItem("pc_wishlist") || "[]");
 let compareIds = JSON.parse(localStorage.getItem("pc_compare") || "[]");
 
 function saveWishlist(){
@@ -1098,6 +1100,8 @@ function toggleWishlist(id, ev){
   saveWishlist();
   render();
 }
+
+function addToCart(id){ add(id); }
 
 function openWishlist(){
   const list=document.getElementById("wishlistList");
