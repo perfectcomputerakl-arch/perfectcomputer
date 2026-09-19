@@ -79,7 +79,7 @@ h2{margin:22px 0 13px}
 .track-btn{background:#1976ed;color:#fff}.wa-btn{background:#18a957;color:#fff}.invoice-btn{background:#071b31;color:#fff}
 @media(max-width:800px){
 .top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}
-.search-wrap{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
+.search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
 .products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}
 .hero{padding:28px 6%}.hero h1{font-size:30px}.detail{grid-template-columns:1fr}
 .detailpic{min-height:190px;font-size:70px}.checkout-grid{grid-template-columns:1fr}
@@ -104,18 +104,6 @@ header{backdrop-filter:blur(10px);background:rgba(255,255,255,.96)}
 .logo{letter-spacing:-.5px}
 .search{box-shadow:0 3px 14px #0000000a}
 .search input{font-size:13px}
-.search{position:relative}
-.search-wrap{flex:1;display:flex;min-width:0;max-width:650px}
-.search-wrap .search{width:100%;max-width:none}
-.search-tools{position:relative;display:flex;align-items:center}
-.search-clear{display:none;position:absolute;right:58px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#667085;font-size:18px;cursor:pointer;padding:4px;z-index:2}
-.search-suggestions{display:none;position:absolute;left:0;right:0;top:calc(100% + 7px);background:#fff;border:1px solid #e1e7ef;border-radius:12px;box-shadow:0 12px 30px #0002;z-index:60;overflow:hidden}
-.search-suggestions.show{display:block}
-.search-suggestion{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-bottom:1px solid #f0f2f5;cursor:pointer}
-.search-suggestion:last-child{border-bottom:0}
-.search-suggestion:hover{background:#f5f8ff}
-.search-suggestion small{color:#667085}
-.search-empty{padding:13px;color:#667085;font-size:12px}
 nav{background:#061a2d;box-shadow:0 3px 12px #0002;position:sticky;top:72px;z-index:9}
 nav a{padding:3px 0;opacity:.92}
 nav a:hover{opacity:1;color:#7db7ff}
@@ -171,10 +159,6 @@ nav a:hover{opacity:1;color:#7db7ff}
 .price{color:#071b31}
 .buy{box-shadow:0 4px 12px #1976ed25;cursor:pointer}
 .add{cursor:pointer}
-.secondary{background:#eef4ff;color:#071b31;border:1px solid #d8e5f7!important;cursor:pointer}
-.secondary:hover{background:#dceaff}
-.wishlist-actions{display:flex;gap:7px;margin-top:9px}
-.wishlist-actions button{flex:1;font-size:11px;padding:8px 7px}
 .features{gap:15px}
 .feature{border:1px solid var(--pc-border);box-shadow:0 4px 15px #00000008;transition:.2s}
 .feature:hover{transform:translateY(-2px)}
@@ -254,152 +238,8 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
  .compare-bar{left:10px;right:10px;transform:none;justify-content:center}
 }
 
-
-/* ===== PREMIUM PRODUCT DETAILS ===== */
-.product-detail-premium{
-  display:grid;grid-template-columns:1fr 1.08fr;gap:28px;
-  background:#fff;border:1px solid #e5eaf1;border-radius:18px;padding:20px;
-  box-shadow:0 10px 35px #071b3112
-}
-.pdp-gallery{min-width:0}
-.pdp-main-image{
-  height:390px;border:1px solid #e5eaf1;border-radius:14px;background:#f7f9fc;
-  display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative
-}
-.pdp-main-image img{width:100%;height:100%;object-fit:contain}
-.pdp-main-image .pdp-fallback{font-size:100px}
-.pdp-wish{
-  position:absolute;right:14px;top:14px;width:42px;height:42px;border-radius:50%;
-  border:1px solid #dfe5ed;background:#fff;font-size:21px;cursor:pointer;z-index:2
-}
-.pdp-thumbs{display:flex;gap:9px;margin-top:12px;overflow:auto}
-.pdp-thumb{
-  width:68px;height:68px;flex:0 0 68px;border:1px solid #dfe5ed;border-radius:9px;
-  background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden
-}
-.pdp-thumb.active{border:2px solid #1976ed}
-.pdp-thumb img{width:100%;height:100%;object-fit:contain}
-.pdp-info{min-width:0}
-.pdp-brand{font-size:12px;color:#1976ed;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
-.pdp-title{font-size:25px;line-height:1.3;margin:7px 0 8px;color:#172033}
-.pdp-rating{display:flex;align-items:center;gap:8px;font-size:12px;margin:8px 0;color:#475467}
-.pdp-rating span:first-child{background:#16803c;color:#fff;padding:5px 8px;border-radius:6px;font-weight:800}
-.pdp-divider{height:1px;background:#edf0f4;margin:14px 0}
-.pdp-price{font-size:30px;font-weight:900;color:#071b31}
-.pdp-mrp{text-decoration:line-through;color:#888;font-size:13px;margin-left:8px;font-weight:normal}
-.pdp-discount{display:inline-block;margin-left:8px;background:#e9f8ef;color:#16803c;padding:5px 8px;border-radius:6px;font-size:11px;font-weight:800}
-.pdp-tax{font-size:11px;color:#667085;margin-top:4px}
-.pdp-stock{font-size:12px;font-weight:800;margin:13px 0}
-.pdp-stock.ok{color:#16803c}.pdp-stock.out{color:#c62828}
-.pdp-highlights{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:13px 0}
-.pdp-highlight{background:#f8fafc;border:1px solid #e8edf3;border-radius:9px;padding:10px;font-size:11px}
-.pdp-highlight b{display:block;font-size:10px;color:#667085;margin-bottom:3px}
-.pdp-buyrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.pdp-buyrow button{border:0;border-radius:10px;padding:13px;font-weight:900;cursor:pointer}
-.pdp-cart{background:#ffb800;color:#172033}.pdp-buy{background:#1976ed;color:#fff}
-.pdp-wa{width:100%;margin-top:9px;border:1px solid #18a957!important;background:#effbf4;color:#087a3d!important}
-.pdp-specs{margin-top:20px;background:#fff;border:1px solid #e5eaf1;border-radius:16px;overflow:hidden}
-.pdp-specs h3{margin:0;padding:15px 17px;background:#f8fafc;border-bottom:1px solid #e5eaf1}
-.pdp-spec-row{display:grid;grid-template-columns:35% 65%;border-bottom:1px solid #edf0f4}
-.pdp-spec-row:last-child{border-bottom:0}
-.pdp-spec-row div{padding:11px 15px;font-size:12px}.pdp-spec-row div:first-child{background:#fbfcfe;color:#667085}
-.pdp-description{margin-top:16px;padding:16px;border:1px solid #e5eaf1;border-radius:14px;background:#fff;line-height:1.65;font-size:12px}
-@media(max-width:800px){
-  .product-detail-premium{grid-template-columns:1fr;padding:13px;gap:17px}
-  .pdp-main-image{height:280px}.pdp-title{font-size:20px}.pdp-price{font-size:25px}
-}
-@media(max-width:430px){
-  .pdp-highlights{grid-template-columns:1fr}.pdp-buyrow{grid-template-columns:1fr}
-}
-
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<style id="pc-full-premium-upgrade">
-/* ===== PERFECT COMPUTER — FULL PREMIUM SHOPPING UPGRADE ===== */
-:root{
-  --pc-radius:18px;
-  --pc-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-.pc-promo-strip{
-  display:flex;gap:10px;overflow:auto;padding:10px 0 2px;margin:0 0 14px;
-  scrollbar-width:none
-}
-.pc-promo-strip::-webkit-scrollbar{display:none}
-.pc-promo{
-  min-width:210px;border:1px solid rgba(127,127,127,.18);border-radius:14px;
-  padding:12px 14px;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(127,127,127,.04));
-  box-shadow:var(--pc-shadow)
-}
-.pc-promo b{display:block;font-size:14px}.pc-promo span{font-size:12px;opacity:.72}
-.pc-trust-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0
-}
-.pc-trust-card{
-  border:1px solid rgba(127,127,127,.16);border-radius:14px;padding:13px;
-  background:rgba(127,127,127,.035)
-}
-.pc-trust-card b{display:block;font-size:13px}.pc-trust-card span{font-size:11px;opacity:.7}
-.pc-delivery-box,.pc-coupon-box,.pc-review-box,.pc-related-box,.pc-recent-box{
-  margin-top:18px;padding:18px;border:1px solid rgba(127,127,127,.16);
-  border-radius:18px;background:rgba(127,127,127,.025)
-}
-.pc-section-title{font-size:20px;font-weight:800;margin:0 0 13px}
-.pc-pincode-row{display:flex;gap:8px;max-width:470px}
-.pc-pincode-row input{
-  flex:1;min-width:0;border:1px solid rgba(127,127,127,.25);border-radius:10px;
-  padding:12px;background:transparent;color:inherit
-}
-.pc-pincode-row button{
-  border:0;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer
-}
-.pc-delivery-result{margin-top:10px;font-size:13px;line-height:1.5}
-.pc-coupon-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.pc-coupon{
-  border:1px dashed rgba(127,127,127,.35);border-radius:14px;padding:14px
-}
-.pc-coupon code{font-weight:900;letter-spacing:1px}.pc-coupon small{display:block;opacity:.7;margin-top:5px}
-.pc-coupon button{margin-top:9px;border:0;border-radius:8px;padding:7px 11px;cursor:pointer;font-weight:700}
-.pc-sticky-buy{
-  position:fixed;left:0;right:0;bottom:0;z-index:9998;padding:10px 14px;
-  background:rgba(20,20,20,.94);backdrop-filter:blur(14px);display:none;
-  align-items:center;justify-content:center;gap:10px;box-shadow:0 -8px 28px rgba(0,0,0,.22)
-}
-.pc-sticky-buy .pc-sticky-name{display:none}
-.pc-sticky-buy button{border:0;border-radius:11px;padding:12px 17px;font-weight:900;cursor:pointer}
-.pc-sticky-buy .pc-sticky-cart{background:#fff;color:#111}.pc-sticky-buy .pc-sticky-now{background:#ffb000;color:#111}
-.pc-review-summary{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.pc-rating-big{font-size:38px;font-weight:900}.pc-stars{letter-spacing:2px}
-.pc-review-form{display:grid;gap:9px;margin-top:15px}
-.pc-review-form input,.pc-review-form textarea,.pc-review-form select{
-  width:100%;box-sizing:border-box;padding:11px;border-radius:10px;border:1px solid rgba(127,127,127,.22);
-  background:transparent;color:inherit
-}
-.pc-review-form button{width:max-content;border:0;border-radius:9px;padding:10px 15px;font-weight:800;cursor:pointer}
-.pc-review-note{font-size:12px;opacity:.65}
-.pc-related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.pc-mini-card{border:1px solid rgba(127,127,127,.15);border-radius:15px;overflow:hidden;cursor:pointer;background:rgba(127,127,127,.025)}
-.pc-mini-card img{width:100%;aspect-ratio:1/1;object-fit:contain;display:block;background:#fff}
-.pc-mini-card-body{padding:10px}.pc-mini-card-body b{font-size:13px;display:block;line-height:1.3}
-.pc-mini-price{font-weight:900;margin-top:5px}.pc-mini-old{text-decoration:line-through;opacity:.5;font-size:11px;margin-left:5px}
-.pc-recent-row{display:flex;gap:12px;overflow:auto}.pc-recent-card{min-width:145px;max-width:145px}
-.pc-recent-card img{width:145px;height:120px;object-fit:contain;border-radius:12px;background:#fff}
-.pc-recent-card b{font-size:12px;display:block;margin-top:6px;line-height:1.3}
-.pc-recent-card span{font-size:12px;font-weight:800}
-.pc-offer-pill{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin:4px 5px 0 0}
-.pc-green{background:rgba(34,197,94,.13)}.pc-blue{background:rgba(59,130,246,.13)}.pc-orange{background:rgba(245,158,11,.15)}
-@media(max-width:800px){
-  .pc-trust-grid{grid-template-columns:repeat(2,1fr)}
-  .pc-coupon-list{grid-template-columns:1fr}
-  .pc-related-grid{grid-template-columns:repeat(2,1fr)}
-  .pc-sticky-buy{display:flex}
-  body{padding-bottom:70px}
-}
-@media(min-width:801px){
-  .pc-sticky-buy{display:none!important}
-}
-</style>
-
 </head>
 <body>
 
@@ -414,13 +254,9 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
     <div class="logo">PERFECT <span>COMPUTER</span></div>
     <div class="tag">Smart Technology. Perfect Choice.</div>
   </div>
-  <div class="search-wrap">
-    <div class="search">
-      <input id="search" autocomplete="off" placeholder="Search laptops, SSD, printer, CCTV..." oninput="handleSearchInput()" onfocus="handleSearchInput()">
-      <button type="button" onclick="focusSearch()">🔍</button>
-      <button type="button" id="searchClear" class="search-clear" onclick="clearSearch()" aria-label="Clear search">×</button>
-      <div id="searchSuggestions" class="search-suggestions"></div>
-    </div>
+  <div class="search">
+    <input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()">
+    <button>🔍</button>
   </div>
   <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
   <button class="cartbtn" onclick="openWishlist()">♡ Wishlist (<span id="wishCount">0</span>)</button>
@@ -489,14 +325,14 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
     <div><h2>🏷️ Popular Brands</h2><p>Search products by brand.</p></div>
   </div>
   <div class="brands">
-    <button class="brand-chip" onclick="document.getElementById('search').value='HP';handleSearchInput();render()">HP</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Dell';handleSearchInput();render()">Dell</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Lenovo';handleSearchInput();render()">Lenovo</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='ASUS';handleSearchInput();render()">ASUS</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Acer';handleSearchInput();render()">Acer</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='EVM';handleSearchInput();render()">EVM</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Zebronics';handleSearchInput();render()">Zebronics</button>
-    <button class="brand-chip" onclick="clearSearch()">All Brands</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='HP';render()">HP</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Dell';render()">Dell</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Lenovo';render()">Lenovo</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='ASUS';render()">ASUS</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Acer';render()">Acer</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='EVM';render()">EVM</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Zebronics';render()">Zebronics</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='';render()">All Brands</button>
   </div>
 </section>
 
@@ -711,205 +547,6 @@ function invoiceHtml(order){
   const w=window.open("","_blank","width=800,height=900");
   if(!w){ alert("Please allow pop-ups to print the invoice."); return; }
   w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><script>window.onload=()=>window.print()<\/script><button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-<script id="pc-full-premium-js">
-(function(){
-  "use strict";
-
-  const PC_RECENT_KEY = "pc_recent_products";
-  const PC_REV_KEY = "pc_product_reviews";
-  const PC_COUPONS = [
-    {code:"WELCOME100", text:"₹100 OFF on eligible orders", min:2999},
-    {code:"PC5OFF", text:"Extra 5% OFF on selected products", min:4999}
-  ];
-
-  function pcFind(id){
-    try { return typeof findProduct === "function" ? findProduct(id) : null; } catch(e){ return null; }
-  }
-  function pcMoney(v){
-    try { return typeof money === "function" ? money(v) : "₹" + Number(v||0).toLocaleString("en-IN"); }
-    catch(e){ return "₹" + Number(v||0).toLocaleString("en-IN"); }
-  }
-  function pcEsc(v){
-    try { return typeof escapeHtml === "function" ? escapeHtml(String(v??"")) : String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])); }
-    catch(e){ return String(v??""); }
-  }
-
-  function pcGetRecent(){
-    try { return JSON.parse(localStorage.getItem(PC_RECENT_KEY)||"[]"); } catch(e){ return []; }
-  }
-  function pcSetRecent(a){
-    try { localStorage.setItem(PC_RECENT_KEY, JSON.stringify(a.slice(0,8))); } catch(e){}
-  }
-  function pcRemember(id){
-    const a=pcGetRecent().filter(x=>String(x)!==String(id));
-    a.unshift(id); pcSetRecent(a);
-  }
-
-  function pcGetReviews(){
-    try { return JSON.parse(localStorage.getItem(PC_REV_KEY)||"{}"); } catch(e){ return {}; }
-  }
-  function pcSaveReview(id, review){
-    const all=pcGetReviews(); all[id]=all[id]||[]; all[id].unshift(review);
-    try{localStorage.setItem(PC_REV_KEY,JSON.stringify(all));}catch(e){}
-  }
-
-  window.pcCheckDelivery=function(){
-    const el=document.getElementById("pcPincode");
-    const out=document.getElementById("pcDeliveryResult");
-    const pin=(el?.value||"").trim();
-    if(!/^[1-9][0-9]{5}$/.test(pin)){
-      out.textContent="Please enter a valid 6-digit pincode.";
-      return;
-    }
-    const first=pin[0];
-    const eta = ["1","2","3","4","5","6","7"].includes(first) ? "2–5 business days" : "3–7 business days";
-    out.innerHTML="✓ Delivery available to <b>"+pcEsc(pin)+"</b><br>Estimated delivery: <b>"+eta+"</b> · COD availability may vary by location.";
-  };
-
-  window.pcCopyCoupon=function(code){
-    try{
-      navigator.clipboard?.writeText(code);
-      const el=document.getElementById("pcCouponMsg"); if(el) el.textContent=code+" copied. Apply it at checkout if eligible.";
-    }catch(e){
-      const el=document.getElementById("pcCouponMsg"); if(el) el.textContent="Coupon: "+code;
-    }
-  };
-
-  window.pcSubmitReview=function(id){
-    const name=document.getElementById("pcReviewName")?.value.trim();
-    const rating=Number(document.getElementById("pcReviewRating")?.value||5);
-    const text=document.getElementById("pcReviewText")?.value.trim();
-    const msg=document.getElementById("pcReviewMsg");
-    if(!name || !text){ if(msg) msg.textContent="Please enter your name and review."; return; }
-    pcSaveReview(id,{name,rating,text,date:new Date().toLocaleDateString("en-IN")});
-    if(msg) msg.textContent="Review saved on this device. It is not submitted to the store server.";
-    const box=document.getElementById("pcReviewList");
-    if(box) box.innerHTML=pcRenderReviews(id);
-  };
-
-  function pcRenderReviews(id){
-    const arr=pcGetReviews()[id]||[];
-    if(!arr.length) return '<div class="pc-review-note">No customer reviews have been saved on this device yet.</div>';
-    return arr.slice(0,5).map(r=>
-      '<div style="padding:12px 0;border-top:1px solid rgba(127,127,127,.14)">'+
-      '<b>'+pcEsc(r.name)+'</b> <span class="pc-stars">'+("★".repeat(Math.max(1,Math.min(5,r.rating))))+'</span>'+
-      '<div style="font-size:13px;margin-top:4px">'+pcEsc(r.text)+'</div>'+
-      '<small style="opacity:.55">'+pcEsc(r.date)+'</small></div>'
-    ).join("");
-  }
-
-  function pcProductCard(p, mode){
-    if(!p) return "";
-    const img=pcEsc(p.image||"");
-    const name=pcEsc(p.name||"Product");
-    const price=pcMoney(p.price);
-    const mrp=p.mrp && Number(p.mrp)>Number(p.price) ? '<span class="pc-mini-old">'+pcMoney(p.mrp)+'</span>' : "";
-    return '<div class="'+(mode==="recent"?"pc-recent-card":"pc-mini-card")+'" onclick="details('+JSON.stringify(String(p.id))+')">'+
-      '<img src="'+img+'" alt="'+name+'" loading="lazy">'+
-      '<b>'+name+'</b><span>'+price+'</span>'+mrp+'</div>';
-  }
-
-  function pcRenderExtras(id){
-    const p=pcFind(id); if(!p) return;
-    pcRemember(id);
-
-    const host=document.querySelector(".product-detail-premium");
-    if(!host || document.getElementById("pcPremiumExtras")) return;
-
-    const reviews=pcGetReviews()[id]||[];
-    const related=[];
-    try{
-      const all=(typeof products!=="undefined" && Array.isArray(products)) ? products : [];
-      all.forEach(x=>{
-        if(String(x.id)!==String(p.id) && (x.cat===p.cat || x.brand===p.brand) && related.length<8) related.push(x);
-      });
-    }catch(e){}
-
-    const recent=pcGetRecent().map(pcFind).filter(Boolean).filter(x=>String(x.id)!==String(p.id)).slice(0,6);
-
-    const extras=document.createElement("div");
-    extras.id="pcPremiumExtras";
-    extras.innerHTML=
-      '<div class="pc-promo-strip">'+
-        '<div class="pc-promo"><b>🚚 Fast Delivery</b><span>Delivery options checked by pincode</span></div>'+
-        '<div class="pc-promo"><b>🔐 Secure Payment</b><span>Online payment & COD where available</span></div>'+
-        '<div class="pc-promo"><b>🛠️ PERFECT COMPUTER Support</b><span>Local computer assistance in Akola</span></div>'+
-        '<div class="pc-promo"><b>💬 WhatsApp Support</b><span>Quick help before purchase</span></div>'+
-      '</div>'+
-      '<div class="pc-trust-grid">'+
-        '<div class="pc-trust-card">✓ <b>Genuine Products</b><span>Product details shown before purchase</span></div>'+
-        '<div class="pc-trust-card">✓ <b>Secure Checkout</b><span>Online payment & COD options</span></div>'+
-        '<div class="pc-trust-card">✓ <b>Order Tracking</b><span>Track your order after confirmation</span></div>'+
-        '<div class="pc-trust-card">✓ <b>Local Support</b><span>PERFECT COMPUTER, Akola</span></div>'+
-      '</div>'+
-      '<div class="pc-delivery-box">'+
-        '<div class="pc-section-title">📍 Check Delivery</div>'+
-        '<div class="pc-pincode-row"><input id="pcPincode" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit pincode"><button onclick="pcCheckDelivery()">Check</button></div>'+
-        '<div id="pcDeliveryResult" class="pc-delivery-result">Enter your pincode to see an estimated delivery window.</div>'+
-      '</div>'+
-      '<div class="pc-coupon-box">'+
-        '<div class="pc-section-title">🎁 Available Offers</div>'+
-        '<div class="pc-coupon-list">'+
-          PC_COUPONS.map(c=>'<div class="pc-coupon"><code>'+c.code+'</code><small>'+c.text+' · Minimum order '+pcMoney(c.min)+'</small><button onclick="pcCopyCoupon(\''+c.code+'\')">Copy Code</button></div>').join("")+
-        '</div><div id="pcCouponMsg" class="pc-review-note" style="margin-top:9px"></div>'+
-      '</div>'+
-      '<div class="pc-review-box">'+
-        '<div class="pc-section-title">⭐ Ratings & Reviews</div>'+
-        '<div class="pc-review-summary"><div><div class="pc-rating-big">4.8 ★</div><div class="pc-review-note">Product quality · PERFECT COMPUTER</div></div><div class="pc-review-note">Ratings shown here are a storefront display; customer reviews saved below are local to this browser.</div></div>'+
-        '<div class="pc-review-form">'+
-          '<input id="pcReviewName" placeholder="Your name">'+
-          '<select id="pcReviewRating"><option value="5">★★★★★ 5</option><option value="4">★★★★☆ 4</option><option value="3">★★★☆☆ 3</option><option value="2">★★☆☆☆ 2</option><option value="1">★☆☆☆☆ 1</option></select>'+
-          '<textarea id="pcReviewText" rows="3" placeholder="Write your review"></textarea>'+
-          '<button onclick="pcSubmitReview('+JSON.stringify(String(p.id))+')">Save Review</button>'+
-          '<div id="pcReviewMsg" class="pc-review-note"></div>'+
-        '</div>'+
-        '<div id="pcReviewList" style="margin-top:12px">'+pcRenderReviews(p.id)+'</div>'+
-      '</div>'+
-      (related.length?'<div class="pc-related-box"><div class="pc-section-title">🛒 You May Also Like</div><div class="pc-related-grid">'+related.map(x=>pcProductCard(x)).join("")+'</div></div>':"")+
-      (recent.length?'<div class="pc-recent-box"><div class="pc-section-title">👀 Recently Viewed</div><div class="pc-recent-row">'+recent.map(x=>pcProductCard(x,"recent")).join("")+'</div></div>':"");
-
-    host.parentNode.insertBefore(extras,host.nextSibling);
-  }
-
-  function pcSticky(id){
-    if(document.getElementById("pcStickyBuy")) return;
-    const p=pcFind(id); if(!p) return;
-    const bar=document.createElement("div");
-    bar.id="pcStickyBuy"; bar.className="pc-sticky-buy";
-    bar.innerHTML='<div class="pc-sticky-name"><b>'+pcEsc(p.name)+'</b></div>'+
-      '<button class="pc-sticky-cart" onclick="add('+JSON.stringify(String(id))+');">🛒 Add to Cart</button>'+
-      '<button class="pc-sticky-now" onclick="buy('+JSON.stringify(String(id))+');">⚡ Buy Now</button>';
-    document.body.appendChild(bar);
-  }
-
-  // Wrap details() once so every product opened gets the premium extras and recent history.
-  function enhance(){
-    if(typeof window.details!=="function" || window.details.__pcPremiumWrapped) return false;
-    const original=window.details;
-    function wrapped(id){
-      document.getElementById("pcPremiumExtras")?.remove();
-      original(id);
-      setTimeout(function(){
-        pcRenderExtras(id);
-        pcSticky(id);
-      },80);
-    }
-    wrapped.__pcPremiumWrapped=true;
-    window.details=wrapped;
-    return true;
-  }
-
-  let tries=0;
-  const timer=setInterval(function(){
-    tries++;
-    if(enhance() || tries>60) clearInterval(timer);
-  },250);
-
-  window.addEventListener("load",function(){ enhance(); });
-})();
-</script>
-
 </body></html>`);
   w.document.close();
 }
@@ -1032,58 +669,6 @@ function filterCat(c){
   document.getElementById("products").scrollIntoView({behavior:"smooth"});
 }
 
-function focusSearch(){
-  const input=document.getElementById("search");
-  if(input){ input.focus(); handleSearchInput(); }
-}
-function clearSearch(){
-  const input=document.getElementById("search");
-  if(!input)return;
-  input.value="";
-  handleSearchInput();
-  render();
-  input.focus();
-}
-function handleSearchInput(){
-  const input=document.getElementById("search");
-  const clear=document.getElementById("searchClear");
-  const box=document.getElementById("searchSuggestions");
-  const q=(input?.value||"").trim().toLowerCase();
-  if(clear) clear.style.display=q?"block":"none";
-  if(!box)return;
-  if(!q){ box.classList.remove("show"); box.innerHTML=""; return; }
-  const matches=products.filter(p =>
-    (p.name+" "+p.brand+" "+p.cat+" "+p.sku).toLowerCase().includes(q)
-  ).slice(0,6);
-  if(!matches.length){
-    box.innerHTML='<div class="search-empty">No matching products found.</div>';
-  }else{
-    box.innerHTML=matches.map(p =>
-      '<div class="search-suggestion" onclick="selectSearchSuggestion('+Number(p.id)+')">' +
-      '<span><b>'+escapeHtml(p.name)+'</b><br><small>'+escapeHtml(p.brand||p.cat||"Product")+'</small></span>' +
-      '<strong>'+money(p.price)+'</strong></div>'
-    ).join("");
-  }
-  box.classList.add("show");
-}
-function selectSearchSuggestion(id){
-  const p=findProduct(id);
-  if(!p)return;
-  const input=document.getElementById("search");
-  if(input)input.value=p.name;
-  const box=document.getElementById("searchSuggestions");
-  if(box)box.classList.remove("show");
-  render();
-  details(id);
-}
-document.addEventListener("click",function(e){
-  const wrap=document.querySelector(".search-wrap");
-  if(wrap && !wrap.contains(e.target)){
-    const box=document.getElementById("searchSuggestions");
-    if(box)box.classList.remove("show");
-  }
-});
-
 function render(){
   const q = (document.getElementById("search").value || "").toLowerCase().trim();
 
@@ -1157,7 +742,7 @@ function add(id){
 
   cart.push(Number(id));
   save();
-  showUpgradeToast("🛒 Added to Cart");
+  alert("Product added to cart 🛒");
 }
 
 function buy(id){
@@ -1182,7 +767,6 @@ function wish(id){
 function save(){
   localStorage.setItem("pc_cart", JSON.stringify(cart));
   updateCount();
-  updateWishCount();
 }
 
 function updateCount(){
@@ -1193,86 +777,40 @@ function details(id){
   const p = findProduct(id);
   if(!p) return;
 
-  const out = p.stock <= 0;
-  const discount = p.mrp > p.price ? Math.round(((p.mrp-p.price)/p.mrp)*100) : 0;
-  const waText = encodeURIComponent("Hello PERFECT COMPUTER, I am interested in " + p.name + ". Please share availability and details.");
   const image = p.image
-    ? '<img id="pdpMainImg" src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.display=\'none\';this.parentElement.querySelector(\'.pdp-fallback\').style.display=\'block\'">'
-    : "";
-  const imageBox = image + '<div class="pdp-fallback" style="display:' + (p.image ? 'none' : 'block') + '">💻</div>';
+    ? '<img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.display=\'none\';this.parentElement.textContent=\'💻\';">'
+    : p.icon;
 
-  const specs = [
-    ["Brand", p.brand || "—"],
-    ["Category", p.cat || "—"],
-    ["SKU", p.sku || "—"],
-    ["Availability", out ? "Out of Stock" : "In Stock"],
-    ["Description", p.desc || "Quality technology product from PERFECT COMPUTER."]
-  ];
+  const out = p.stock <= 0;
 
   document.getElementById("detail").innerHTML =
-    '<div class="product-detail-premium">' +
-      '<div class="pdp-gallery">' +
-        '<div class="pdp-main-image">' +
-          '<button class="pdp-wish" onclick="wish(' + p.id + ')" aria-label="Wishlist">' +
-            (isWishlisted(p.id) ? "❤️" : "♡") +
-          '</button>' +
-          imageBox +
+    '<div class="detail">' +
+      '<div class="detailpic">' + image + '</div>' +
+      '<div>' +
+        '<div class="brand">' + escapeHtml(p.brand || "PERFECT COMPUTER") + '</div>' +
+        '<h2 style="margin-top:6px">' + escapeHtml(p.name) + '</h2>' +
+        '<div class="detail-meta">' +
+          '<span class="meta-pill">📂 ' + escapeHtml(p.cat) + '</span>' +
+          (p.sku ? '<span class="meta-pill">🏷️ SKU: ' + escapeHtml(p.sku) + '</span>' : '') +
         '</div>' +
-        '<div class="pdp-thumbs">' +
-          '<button class="pdp-thumb active" onclick="pdpSetImage(this,\'' + escapeHtml(p.image || "") + '\')">' +
-            (p.image ? '<img src="' + escapeHtml(p.image) + '" alt="Product thumbnail">' : '💻') +
-          '</button>' +
-        '</div>' +
-      '</div>' +
-
-      '<div class="pdp-info">' +
-        '<div class="pdp-brand">' + escapeHtml(p.brand || "PERFECT COMPUTER") + '</div>' +
-        '<h1 class="pdp-title">' + escapeHtml(p.name) + '</h1>' +
-        '<div class="pdp-rating"><span>★ 4.8</span><span>Product quality • PERFECT COMPUTER</span></div>' +
-        '<div class="pdp-divider"></div>' +
-        '<div><span class="pdp-price">' + money(p.price) + '</span>' +
-          (p.mrp > p.price ? '<span class="pdp-mrp">' + money(p.mrp) + '</span><span class="pdp-discount">' + discount + '% OFF</span>' : '') +
-        '</div>' +
-        '<div class="pdp-tax">Inclusive of applicable taxes • Secure checkout available</div>' +
-        '<div class="pdp-stock ' + (out ? "out" : "ok") + '">' +
+        '<p style="line-height:1.6">' + escapeHtml(p.desc || "Quality technology product from PERFECT COMPUTER.") + '</p>' +
+        '<h2 style="margin-bottom:5px">' + money(p.price) +
+          (p.mrp > p.price ? ' <span class="mrp">' + money(p.mrp) + '</span>' : '') +
+        '</h2>' +
+        (p.mrp > p.price ? '<div class="small-note">You save ' + money(p.mrp-p.price) + '</div>' : '') +
+        '<p class="' + (out ? "stock out" : "stock ok") + '">' +
           (out ? "❌ Currently Out of Stock" : "✓ In Stock • " + p.stock + " available") +
+        '</p>' +
+        '<div class="detail-actions">' +
+          '<button class="detail-add" ' + (out ? "disabled" : "") +
+            ' onclick="add(' + p.id + ');closeModal(\'productModal\');openCart()">🛒 Add to Cart</button>' +
+          '<button class="detail-buy" ' + (out ? "disabled" : "") +
+            ' onclick="buy(' + p.id + ');closeModal(\'productModal\')">⚡ Buy Now</button>' +
         '</div>' +
-
-        '<div class="pdp-highlights">' +
-          '<div class="pdp-highlight"><b>🚚 DELIVERY</b>India-wide delivery</div>' +
-          '<div class="pdp-highlight"><b>🔒 PAYMENT</b>Online + COD</div>' +
-          '<div class="pdp-highlight"><b>💬 SUPPORT</b>WhatsApp assistance</div>' +
-          '<div class="pdp-highlight"><b>🛡️ SHOP WITH CONFIDENCE</b>Perfect Computer support</div>' +
-        '</div>' +
-
-        '<div class="pdp-buyrow">' +
-          '<button class="pdp-cart" ' + (out ? "disabled" : "") + ' onclick="add(' + p.id + ');closeModal(&quot;productModal&quot;)">🛒 Add to Cart</button>' +
-          '<button class="pdp-buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ');closeModal(&quot;productModal&quot;)">⚡ Buy Now</button>' +
-        '</div>' +
-        '<a class="pdp-wa" href="https://wa.me/917875867861?text=' + waText + '" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;padding:12px;border-radius:10px;font-weight:800">💬 Ask on WhatsApp</a>' +
       '</div>' +
-    '</div>' +
-
-    '<div class="pdp-specs">' +
-      '<h3>📋 Product Specifications</h3>' +
-      specs.map(function(s){
-        return '<div class="pdp-spec-row"><div><b>' + escapeHtml(s[0]) + '</b></div><div>' + escapeHtml(s[1]) + '</div></div>';
-      }).join("") +
-    '</div>' +
-
-    '<div class="pdp-description"><b>About this product</b><br>' +
-      escapeHtml(p.desc || "Quality technology product from PERFECT COMPUTER. Contact us on WhatsApp for product availability, compatibility and assistance.") +
     '</div>';
 
   document.getElementById("productModal").style.display = "block";
-}
-
-function pdpSetImage(btn, src){
-  const img=document.getElementById("pdpMainImg");
-  if(!img || !src) return;
-  img.src=src;
-  document.querySelectorAll(".pdp-thumb").forEach(function(x){x.classList.remove("active")});
-  btn.classList.add("active");
 }
 
 function cartGroups(){
@@ -1575,10 +1113,10 @@ function openWishlist(){
   }else{
     list.innerHTML='<div class="wishlist-grid">'+wanted.map(p=>`
       <div class="mini-product">
-        <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22240%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f5f8fb%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2240%22%3E%F0%9F%92%BB%3C/text%3E%3C/svg%3E'">
+        <img src="${escapeHtml(p.image || '')}" onerror="this.style.display='none'">
         <h4>${escapeHtml(p.name)}</h4>
-        <p>${money(p.price)}</p>
-        <div class="wishlist-actions">
+        <p>₹${money(p.price)}</p>
+        <div style="display:flex;gap:7px;margin-top:9px">
           <button class="primary" onclick="addToCart(${Number(p.id)});closeModal('wishlistModal')">🛒 Add to Cart</button>
           <button class="secondary" onclick="toggleWishlist(${Number(p.id)})">Remove</button>
         </div>
