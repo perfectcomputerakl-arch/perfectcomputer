@@ -79,7 +79,7 @@ h2{margin:22px 0 13px}
 .track-btn{background:#1976ed;color:#fff}.wa-btn{background:#18a957;color:#fff}.invoice-btn{background:#071b31;color:#fff}
 @media(max-width:800px){
 .top{font-size:10px}header{flex-wrap:wrap;gap:8px}.logo{font-size:19px}
-.search{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
+.search-wrap{order:3;flex-basis:100%;max-width:none}.cats{grid-template-columns:repeat(2,1fr)}
 .products{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}
 .hero{padding:28px 6%}.hero h1{font-size:30px}.detail{grid-template-columns:1fr}
 .detailpic{min-height:190px;font-size:70px}.checkout-grid{grid-template-columns:1fr}
@@ -104,6 +104,18 @@ header{backdrop-filter:blur(10px);background:rgba(255,255,255,.96)}
 .logo{letter-spacing:-.5px}
 .search{box-shadow:0 3px 14px #0000000a}
 .search input{font-size:13px}
+.search{position:relative}
+.search-wrap{flex:1;display:flex;min-width:0;max-width:650px}
+.search-wrap .search{width:100%;max-width:none}
+.search-tools{position:relative;display:flex;align-items:center}
+.search-clear{display:none;position:absolute;right:58px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#667085;font-size:18px;cursor:pointer;padding:4px;z-index:2}
+.search-suggestions{display:none;position:absolute;left:0;right:0;top:calc(100% + 7px);background:#fff;border:1px solid #e1e7ef;border-radius:12px;box-shadow:0 12px 30px #0002;z-index:60;overflow:hidden}
+.search-suggestions.show{display:block}
+.search-suggestion{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-bottom:1px solid #f0f2f5;cursor:pointer}
+.search-suggestion:last-child{border-bottom:0}
+.search-suggestion:hover{background:#f5f8ff}
+.search-suggestion small{color:#667085}
+.search-empty{padding:13px;color:#667085;font-size:12px}
 nav{background:#061a2d;box-shadow:0 3px 12px #0002;position:sticky;top:72px;z-index:9}
 nav a{padding:3px 0;opacity:.92}
 nav a:hover{opacity:1;color:#7db7ff}
@@ -258,9 +270,13 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
     <div class="logo">PERFECT <span>COMPUTER</span></div>
     <div class="tag">Smart Technology. Perfect Choice.</div>
   </div>
-  <div class="search">
-    <input id="search" placeholder="Search laptops, SSD, printer, CCTV..." oninput="render()">
-    <button>🔍</button>
+  <div class="search-wrap">
+    <div class="search">
+      <input id="search" autocomplete="off" placeholder="Search laptops, SSD, printer, CCTV..." oninput="handleSearchInput()" onfocus="handleSearchInput()">
+      <button type="button" onclick="focusSearch()">🔍</button>
+      <button type="button" id="searchClear" class="search-clear" onclick="clearSearch()" aria-label="Clear search">×</button>
+      <div id="searchSuggestions" class="search-suggestions"></div>
+    </div>
   </div>
   <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
   <button class="cartbtn" onclick="openWishlist()">♡ Wishlist (<span id="wishCount">0</span>)</button>
@@ -329,14 +345,14 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
     <div><h2>🏷️ Popular Brands</h2><p>Search products by brand.</p></div>
   </div>
   <div class="brands">
-    <button class="brand-chip" onclick="document.getElementById('search').value='HP';render()">HP</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Dell';render()">Dell</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Lenovo';render()">Lenovo</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='ASUS';render()">ASUS</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Acer';render()">Acer</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='EVM';render()">EVM</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='Zebronics';render()">Zebronics</button>
-    <button class="brand-chip" onclick="document.getElementById('search').value='';render()">All Brands</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='HP';handleSearchInput();render()">HP</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Dell';handleSearchInput();render()">Dell</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Lenovo';handleSearchInput();render()">Lenovo</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='ASUS';handleSearchInput();render()">ASUS</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Acer';handleSearchInput();render()">Acer</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='EVM';handleSearchInput();render()">EVM</button>
+    <button class="brand-chip" onclick="document.getElementById('search').value='Zebronics';handleSearchInput();render()">Zebronics</button>
+    <button class="brand-chip" onclick="clearSearch()">All Brands</button>
   </div>
 </section>
 
@@ -672,6 +688,58 @@ function filterCat(c){
   render();
   document.getElementById("products").scrollIntoView({behavior:"smooth"});
 }
+
+function focusSearch(){
+  const input=document.getElementById("search");
+  if(input){ input.focus(); handleSearchInput(); }
+}
+function clearSearch(){
+  const input=document.getElementById("search");
+  if(!input)return;
+  input.value="";
+  handleSearchInput();
+  render();
+  input.focus();
+}
+function handleSearchInput(){
+  const input=document.getElementById("search");
+  const clear=document.getElementById("searchClear");
+  const box=document.getElementById("searchSuggestions");
+  const q=(input?.value||"").trim().toLowerCase();
+  if(clear) clear.style.display=q?"block":"none";
+  if(!box)return;
+  if(!q){ box.classList.remove("show"); box.innerHTML=""; return; }
+  const matches=products.filter(p =>
+    (p.name+" "+p.brand+" "+p.cat+" "+p.sku).toLowerCase().includes(q)
+  ).slice(0,6);
+  if(!matches.length){
+    box.innerHTML='<div class="search-empty">No matching products found.</div>';
+  }else{
+    box.innerHTML=matches.map(p =>
+      '<div class="search-suggestion" onclick="selectSearchSuggestion('+Number(p.id)+')">' +
+      '<span><b>'+escapeHtml(p.name)+'</b><br><small>'+escapeHtml(p.brand||p.cat||"Product")+'</small></span>' +
+      '<strong>'+money(p.price)+'</strong></div>'
+    ).join("");
+  }
+  box.classList.add("show");
+}
+function selectSearchSuggestion(id){
+  const p=findProduct(id);
+  if(!p)return;
+  const input=document.getElementById("search");
+  if(input)input.value=p.name;
+  const box=document.getElementById("searchSuggestions");
+  if(box)box.classList.remove("show");
+  render();
+  details(id);
+}
+document.addEventListener("click",function(e){
+  const wrap=document.querySelector(".search-wrap");
+  if(wrap && !wrap.contains(e.target)){
+    const box=document.getElementById("searchSuggestions");
+    if(box)box.classList.remove("show");
+  }
+});
 
 function render(){
   const q = (document.getElementById("search").value || "").toLowerCase().trim();
