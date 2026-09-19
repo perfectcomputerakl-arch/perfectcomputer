@@ -314,6 +314,92 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
 
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style id="pc-full-premium-upgrade">
+/* ===== PERFECT COMPUTER — FULL PREMIUM SHOPPING UPGRADE ===== */
+:root{
+  --pc-radius:18px;
+  --pc-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+.pc-promo-strip{
+  display:flex;gap:10px;overflow:auto;padding:10px 0 2px;margin:0 0 14px;
+  scrollbar-width:none
+}
+.pc-promo-strip::-webkit-scrollbar{display:none}
+.pc-promo{
+  min-width:210px;border:1px solid rgba(127,127,127,.18);border-radius:14px;
+  padding:12px 14px;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(127,127,127,.04));
+  box-shadow:var(--pc-shadow)
+}
+.pc-promo b{display:block;font-size:14px}.pc-promo span{font-size:12px;opacity:.72}
+.pc-trust-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0
+}
+.pc-trust-card{
+  border:1px solid rgba(127,127,127,.16);border-radius:14px;padding:13px;
+  background:rgba(127,127,127,.035)
+}
+.pc-trust-card b{display:block;font-size:13px}.pc-trust-card span{font-size:11px;opacity:.7}
+.pc-delivery-box,.pc-coupon-box,.pc-review-box,.pc-related-box,.pc-recent-box{
+  margin-top:18px;padding:18px;border:1px solid rgba(127,127,127,.16);
+  border-radius:18px;background:rgba(127,127,127,.025)
+}
+.pc-section-title{font-size:20px;font-weight:800;margin:0 0 13px}
+.pc-pincode-row{display:flex;gap:8px;max-width:470px}
+.pc-pincode-row input{
+  flex:1;min-width:0;border:1px solid rgba(127,127,127,.25);border-radius:10px;
+  padding:12px;background:transparent;color:inherit
+}
+.pc-pincode-row button{
+  border:0;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer
+}
+.pc-delivery-result{margin-top:10px;font-size:13px;line-height:1.5}
+.pc-coupon-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pc-coupon{
+  border:1px dashed rgba(127,127,127,.35);border-radius:14px;padding:14px
+}
+.pc-coupon code{font-weight:900;letter-spacing:1px}.pc-coupon small{display:block;opacity:.7;margin-top:5px}
+.pc-coupon button{margin-top:9px;border:0;border-radius:8px;padding:7px 11px;cursor:pointer;font-weight:700}
+.pc-sticky-buy{
+  position:fixed;left:0;right:0;bottom:0;z-index:9998;padding:10px 14px;
+  background:rgba(20,20,20,.94);backdrop-filter:blur(14px);display:none;
+  align-items:center;justify-content:center;gap:10px;box-shadow:0 -8px 28px rgba(0,0,0,.22)
+}
+.pc-sticky-buy .pc-sticky-name{display:none}
+.pc-sticky-buy button{border:0;border-radius:11px;padding:12px 17px;font-weight:900;cursor:pointer}
+.pc-sticky-buy .pc-sticky-cart{background:#fff;color:#111}.pc-sticky-buy .pc-sticky-now{background:#ffb000;color:#111}
+.pc-review-summary{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.pc-rating-big{font-size:38px;font-weight:900}.pc-stars{letter-spacing:2px}
+.pc-review-form{display:grid;gap:9px;margin-top:15px}
+.pc-review-form input,.pc-review-form textarea,.pc-review-form select{
+  width:100%;box-sizing:border-box;padding:11px;border-radius:10px;border:1px solid rgba(127,127,127,.22);
+  background:transparent;color:inherit
+}
+.pc-review-form button{width:max-content;border:0;border-radius:9px;padding:10px 15px;font-weight:800;cursor:pointer}
+.pc-review-note{font-size:12px;opacity:.65}
+.pc-related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pc-mini-card{border:1px solid rgba(127,127,127,.15);border-radius:15px;overflow:hidden;cursor:pointer;background:rgba(127,127,127,.025)}
+.pc-mini-card img{width:100%;aspect-ratio:1/1;object-fit:contain;display:block;background:#fff}
+.pc-mini-card-body{padding:10px}.pc-mini-card-body b{font-size:13px;display:block;line-height:1.3}
+.pc-mini-price{font-weight:900;margin-top:5px}.pc-mini-old{text-decoration:line-through;opacity:.5;font-size:11px;margin-left:5px}
+.pc-recent-row{display:flex;gap:12px;overflow:auto}.pc-recent-card{min-width:145px;max-width:145px}
+.pc-recent-card img{width:145px;height:120px;object-fit:contain;border-radius:12px;background:#fff}
+.pc-recent-card b{font-size:12px;display:block;margin-top:6px;line-height:1.3}
+.pc-recent-card span{font-size:12px;font-weight:800}
+.pc-offer-pill{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin:4px 5px 0 0}
+.pc-green{background:rgba(34,197,94,.13)}.pc-blue{background:rgba(59,130,246,.13)}.pc-orange{background:rgba(245,158,11,.15)}
+@media(max-width:800px){
+  .pc-trust-grid{grid-template-columns:repeat(2,1fr)}
+  .pc-coupon-list{grid-template-columns:1fr}
+  .pc-related-grid{grid-template-columns:repeat(2,1fr)}
+  .pc-sticky-buy{display:flex}
+  body{padding-bottom:70px}
+}
+@media(min-width:801px){
+  .pc-sticky-buy{display:none!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -625,6 +711,205 @@ function invoiceHtml(order){
   const w=window.open("","_blank","width=800,height=900");
   if(!w){ alert("Please allow pop-ups to print the invoice."); return; }
   w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><script>window.onload=()=>window.print()<\/script><button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script id="pc-full-premium-js">
+(function(){
+  "use strict";
+
+  const PC_RECENT_KEY = "pc_recent_products";
+  const PC_REV_KEY = "pc_product_reviews";
+  const PC_COUPONS = [
+    {code:"WELCOME100", text:"₹100 OFF on eligible orders", min:2999},
+    {code:"PC5OFF", text:"Extra 5% OFF on selected products", min:4999}
+  ];
+
+  function pcFind(id){
+    try { return typeof findProduct === "function" ? findProduct(id) : null; } catch(e){ return null; }
+  }
+  function pcMoney(v){
+    try { return typeof money === "function" ? money(v) : "₹" + Number(v||0).toLocaleString("en-IN"); }
+    catch(e){ return "₹" + Number(v||0).toLocaleString("en-IN"); }
+  }
+  function pcEsc(v){
+    try { return typeof escapeHtml === "function" ? escapeHtml(String(v??"")) : String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])); }
+    catch(e){ return String(v??""); }
+  }
+
+  function pcGetRecent(){
+    try { return JSON.parse(localStorage.getItem(PC_RECENT_KEY)||"[]"); } catch(e){ return []; }
+  }
+  function pcSetRecent(a){
+    try { localStorage.setItem(PC_RECENT_KEY, JSON.stringify(a.slice(0,8))); } catch(e){}
+  }
+  function pcRemember(id){
+    const a=pcGetRecent().filter(x=>String(x)!==String(id));
+    a.unshift(id); pcSetRecent(a);
+  }
+
+  function pcGetReviews(){
+    try { return JSON.parse(localStorage.getItem(PC_REV_KEY)||"{}"); } catch(e){ return {}; }
+  }
+  function pcSaveReview(id, review){
+    const all=pcGetReviews(); all[id]=all[id]||[]; all[id].unshift(review);
+    try{localStorage.setItem(PC_REV_KEY,JSON.stringify(all));}catch(e){}
+  }
+
+  window.pcCheckDelivery=function(){
+    const el=document.getElementById("pcPincode");
+    const out=document.getElementById("pcDeliveryResult");
+    const pin=(el?.value||"").trim();
+    if(!/^[1-9][0-9]{5}$/.test(pin)){
+      out.textContent="Please enter a valid 6-digit pincode.";
+      return;
+    }
+    const first=pin[0];
+    const eta = ["1","2","3","4","5","6","7"].includes(first) ? "2–5 business days" : "3–7 business days";
+    out.innerHTML="✓ Delivery available to <b>"+pcEsc(pin)+"</b><br>Estimated delivery: <b>"+eta+"</b> · COD availability may vary by location.";
+  };
+
+  window.pcCopyCoupon=function(code){
+    try{
+      navigator.clipboard?.writeText(code);
+      const el=document.getElementById("pcCouponMsg"); if(el) el.textContent=code+" copied. Apply it at checkout if eligible.";
+    }catch(e){
+      const el=document.getElementById("pcCouponMsg"); if(el) el.textContent="Coupon: "+code;
+    }
+  };
+
+  window.pcSubmitReview=function(id){
+    const name=document.getElementById("pcReviewName")?.value.trim();
+    const rating=Number(document.getElementById("pcReviewRating")?.value||5);
+    const text=document.getElementById("pcReviewText")?.value.trim();
+    const msg=document.getElementById("pcReviewMsg");
+    if(!name || !text){ if(msg) msg.textContent="Please enter your name and review."; return; }
+    pcSaveReview(id,{name,rating,text,date:new Date().toLocaleDateString("en-IN")});
+    if(msg) msg.textContent="Review saved on this device. It is not submitted to the store server.";
+    const box=document.getElementById("pcReviewList");
+    if(box) box.innerHTML=pcRenderReviews(id);
+  };
+
+  function pcRenderReviews(id){
+    const arr=pcGetReviews()[id]||[];
+    if(!arr.length) return '<div class="pc-review-note">No customer reviews have been saved on this device yet.</div>';
+    return arr.slice(0,5).map(r=>
+      '<div style="padding:12px 0;border-top:1px solid rgba(127,127,127,.14)">'+
+      '<b>'+pcEsc(r.name)+'</b> <span class="pc-stars">'+("★".repeat(Math.max(1,Math.min(5,r.rating))))+'</span>'+
+      '<div style="font-size:13px;margin-top:4px">'+pcEsc(r.text)+'</div>'+
+      '<small style="opacity:.55">'+pcEsc(r.date)+'</small></div>'
+    ).join("");
+  }
+
+  function pcProductCard(p, mode){
+    if(!p) return "";
+    const img=pcEsc(p.image||"");
+    const name=pcEsc(p.name||"Product");
+    const price=pcMoney(p.price);
+    const mrp=p.mrp && Number(p.mrp)>Number(p.price) ? '<span class="pc-mini-old">'+pcMoney(p.mrp)+'</span>' : "";
+    return '<div class="'+(mode==="recent"?"pc-recent-card":"pc-mini-card")+'" onclick="details('+JSON.stringify(String(p.id))+')">'+
+      '<img src="'+img+'" alt="'+name+'" loading="lazy">'+
+      '<b>'+name+'</b><span>'+price+'</span>'+mrp+'</div>';
+  }
+
+  function pcRenderExtras(id){
+    const p=pcFind(id); if(!p) return;
+    pcRemember(id);
+
+    const host=document.querySelector(".product-detail-premium");
+    if(!host || document.getElementById("pcPremiumExtras")) return;
+
+    const reviews=pcGetReviews()[id]||[];
+    const related=[];
+    try{
+      const all=(typeof products!=="undefined" && Array.isArray(products)) ? products : [];
+      all.forEach(x=>{
+        if(String(x.id)!==String(p.id) && (x.cat===p.cat || x.brand===p.brand) && related.length<8) related.push(x);
+      });
+    }catch(e){}
+
+    const recent=pcGetRecent().map(pcFind).filter(Boolean).filter(x=>String(x.id)!==String(p.id)).slice(0,6);
+
+    const extras=document.createElement("div");
+    extras.id="pcPremiumExtras";
+    extras.innerHTML=
+      '<div class="pc-promo-strip">'+
+        '<div class="pc-promo"><b>🚚 Fast Delivery</b><span>Delivery options checked by pincode</span></div>'+
+        '<div class="pc-promo"><b>🔐 Secure Payment</b><span>Online payment & COD where available</span></div>'+
+        '<div class="pc-promo"><b>🛠️ PERFECT COMPUTER Support</b><span>Local computer assistance in Akola</span></div>'+
+        '<div class="pc-promo"><b>💬 WhatsApp Support</b><span>Quick help before purchase</span></div>'+
+      '</div>'+
+      '<div class="pc-trust-grid">'+
+        '<div class="pc-trust-card">✓ <b>Genuine Products</b><span>Product details shown before purchase</span></div>'+
+        '<div class="pc-trust-card">✓ <b>Secure Checkout</b><span>Online payment & COD options</span></div>'+
+        '<div class="pc-trust-card">✓ <b>Order Tracking</b><span>Track your order after confirmation</span></div>'+
+        '<div class="pc-trust-card">✓ <b>Local Support</b><span>PERFECT COMPUTER, Akola</span></div>'+
+      '</div>'+
+      '<div class="pc-delivery-box">'+
+        '<div class="pc-section-title">📍 Check Delivery</div>'+
+        '<div class="pc-pincode-row"><input id="pcPincode" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit pincode"><button onclick="pcCheckDelivery()">Check</button></div>'+
+        '<div id="pcDeliveryResult" class="pc-delivery-result">Enter your pincode to see an estimated delivery window.</div>'+
+      '</div>'+
+      '<div class="pc-coupon-box">'+
+        '<div class="pc-section-title">🎁 Available Offers</div>'+
+        '<div class="pc-coupon-list">'+
+          PC_COUPONS.map(c=>'<div class="pc-coupon"><code>'+c.code+'</code><small>'+c.text+' · Minimum order '+pcMoney(c.min)+'</small><button onclick="pcCopyCoupon(\''+c.code+'\')">Copy Code</button></div>').join("")+
+        '</div><div id="pcCouponMsg" class="pc-review-note" style="margin-top:9px"></div>'+
+      '</div>'+
+      '<div class="pc-review-box">'+
+        '<div class="pc-section-title">⭐ Ratings & Reviews</div>'+
+        '<div class="pc-review-summary"><div><div class="pc-rating-big">4.8 ★</div><div class="pc-review-note">Product quality · PERFECT COMPUTER</div></div><div class="pc-review-note">Ratings shown here are a storefront display; customer reviews saved below are local to this browser.</div></div>'+
+        '<div class="pc-review-form">'+
+          '<input id="pcReviewName" placeholder="Your name">'+
+          '<select id="pcReviewRating"><option value="5">★★★★★ 5</option><option value="4">★★★★☆ 4</option><option value="3">★★★☆☆ 3</option><option value="2">★★☆☆☆ 2</option><option value="1">★☆☆☆☆ 1</option></select>'+
+          '<textarea id="pcReviewText" rows="3" placeholder="Write your review"></textarea>'+
+          '<button onclick="pcSubmitReview('+JSON.stringify(String(p.id))+')">Save Review</button>'+
+          '<div id="pcReviewMsg" class="pc-review-note"></div>'+
+        '</div>'+
+        '<div id="pcReviewList" style="margin-top:12px">'+pcRenderReviews(p.id)+'</div>'+
+      '</div>'+
+      (related.length?'<div class="pc-related-box"><div class="pc-section-title">🛒 You May Also Like</div><div class="pc-related-grid">'+related.map(x=>pcProductCard(x)).join("")+'</div></div>':"")+
+      (recent.length?'<div class="pc-recent-box"><div class="pc-section-title">👀 Recently Viewed</div><div class="pc-recent-row">'+recent.map(x=>pcProductCard(x,"recent")).join("")+'</div></div>':"");
+
+    host.parentNode.insertBefore(extras,host.nextSibling);
+  }
+
+  function pcSticky(id){
+    if(document.getElementById("pcStickyBuy")) return;
+    const p=pcFind(id); if(!p) return;
+    const bar=document.createElement("div");
+    bar.id="pcStickyBuy"; bar.className="pc-sticky-buy";
+    bar.innerHTML='<div class="pc-sticky-name"><b>'+pcEsc(p.name)+'</b></div>'+
+      '<button class="pc-sticky-cart" onclick="add('+JSON.stringify(String(id))+');">🛒 Add to Cart</button>'+
+      '<button class="pc-sticky-now" onclick="buy('+JSON.stringify(String(id))+');">⚡ Buy Now</button>';
+    document.body.appendChild(bar);
+  }
+
+  // Wrap details() once so every product opened gets the premium extras and recent history.
+  function enhance(){
+    if(typeof window.details!=="function" || window.details.__pcPremiumWrapped) return false;
+    const original=window.details;
+    function wrapped(id){
+      document.getElementById("pcPremiumExtras")?.remove();
+      original(id);
+      setTimeout(function(){
+        pcRenderExtras(id);
+        pcSticky(id);
+      },80);
+    }
+    wrapped.__pcPremiumWrapped=true;
+    window.details=wrapped;
+    return true;
+  }
+
+  let tries=0;
+  const timer=setInterval(function(){
+    tries++;
+    if(enhance() || tries>60) clearInterval(timer);
+  },250);
+
+  window.addEventListener("load",function(){ enhance(); });
+})();
+</script>
+
 </body></html>`);
   w.document.close();
 }
