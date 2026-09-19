@@ -700,7 +700,7 @@ function render(){
       '<button class="heart" onclick="wish(' + p.id + ')">' +
       (wishlist.includes(p.id) ? "❤️" : "♡") +
       '</button>' +
-      '<div class="pic"><span class="wishlist-btn" onclick="toggleWishlist(${p.id},event)">${isWishlisted(p.id) ? "♥" : "♡"}</span>' + image + '</div>' +
+      '<div class="pic"><span class="wishlist-btn" onclick="toggleWishlist(' + p.id + ',event)">' + (isWishlisted(p.id) ? "♥" : "♡") + '</span>' + image + '</div>' +
       '<div class="info">' +
       '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
       '<h3>' + escapeHtml(p.name) + '</h3>' +
@@ -713,7 +713,10 @@ function render(){
       '</div>' +
       '<div class="actions">' +
       '<button class="add" ' + (out ? "disabled" : "") + ' onclick="add(' + p.id + ')">Add to Cart</button>' +
-      '<button class="buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ')">Buy Now</button><button class="secondary" onclick="toggleCompare(${p.id},event)">${compareIds.includes(Number(p.id)) ? "✓ Comparing" : "⚖️ Compare"}</button>' +
+      '<button class="buy" ' + (out ? "disabled" : "") + ' onclick="buy(' + p.id + ')">Buy Now</button>' +
+      '<button class="secondary" onclick="toggleCompare(' + p.id + ',event)">' +
+      (compareIds.includes(Number(p.id)) ? "✓ Comparing" : "⚖️ Compare") +
+      '</button>' +
       '</div>' +
       '<button style="margin-top:8px;width:100%;border:0;background:#eef4ff;padding:8px;border-radius:8px" onclick="details(' + p.id + ')">View Details</button>' +
       '</div></article>';
@@ -757,7 +760,6 @@ function wish(id){
 
   localStorage.setItem("pc_wish", JSON.stringify(wishlist));
   localStorage.setItem("pc_wishlist", JSON.stringify(wishlist));
-  localStorage.setItem("pc_wish", JSON.stringify(wishlist));
   updateWishCount();
   render();
 }
