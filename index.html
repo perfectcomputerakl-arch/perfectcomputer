@@ -159,6 +159,10 @@ nav a:hover{opacity:1;color:#7db7ff}
 .price{color:#071b31}
 .buy{box-shadow:0 4px 12px #1976ed25;cursor:pointer}
 .add{cursor:pointer}
+.secondary{background:#eef4ff;color:#071b31;border:1px solid #d8e5f7!important;cursor:pointer}
+.secondary:hover{background:#dceaff}
+.wishlist-actions{display:flex;gap:7px;margin-top:9px}
+.wishlist-actions button{flex:1;font-size:11px;padding:8px 7px}
 .features{gap:15px}
 .feature{border:1px solid var(--pc-border);box-shadow:0 4px 15px #00000008;transition:.2s}
 .feature:hover{transform:translateY(-2px)}
@@ -742,7 +746,7 @@ function add(id){
 
   cart.push(Number(id));
   save();
-  alert("Product added to cart 🛒");
+  showUpgradeToast("🛒 Added to Cart");
 }
 
 function buy(id){
@@ -767,6 +771,7 @@ function wish(id){
 function save(){
   localStorage.setItem("pc_cart", JSON.stringify(cart));
   updateCount();
+  updateWishCount();
 }
 
 function updateCount(){
@@ -1113,10 +1118,10 @@ function openWishlist(){
   }else{
     list.innerHTML='<div class="wishlist-grid">'+wanted.map(p=>`
       <div class="mini-product">
-        <img src="${escapeHtml(p.image || '')}" onerror="this.style.display='none'">
+        <img src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22240%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f5f8fb%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2240%22%3E%F0%9F%92%BB%3C/text%3E%3C/svg%3E'">
         <h4>${escapeHtml(p.name)}</h4>
-        <p>₹${money(p.price)}</p>
-        <div style="display:flex;gap:7px;margin-top:9px">
+        <p>${money(p.price)}</p>
+        <div class="wishlist-actions">
           <button class="primary" onclick="addToCart(${Number(p.id)});closeModal('wishlistModal')">🛒 Add to Cart</button>
           <button class="secondary" onclick="toggleWishlist(${Number(p.id)})">Remove</button>
         </div>
