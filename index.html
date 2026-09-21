@@ -1095,7 +1095,7 @@ function checkout(){
 function getCustomer(){
   return {
     name:document.getElementById("coName").value.trim(),
-    mobile:document.getElementById("coMobile").value.trim(),
+    mobile:document.getElementById("coMobile").value.replace(/\D/g, "").trim(),
     email:document.getElementById("coEmail").value.trim(),
     address:document.getElementById("coAddress").value.trim(),
     city:document.getElementById("coCity").value.trim(),
@@ -1151,7 +1151,15 @@ async function placeOrder(){
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
         amount:cartTotal(),
+        // Send customer details in both formats for backend compatibility.
         customer:c,
+        customer_name:c.name,
+        mobile:c.mobile,
+        email:c.email,
+        address:c.address,
+        city:c.city,
+        state:c.state,
+        pincode:c.pincode,
         items,
         payment_method:selectedPay
       })
