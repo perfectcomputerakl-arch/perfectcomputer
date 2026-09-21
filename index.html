@@ -476,6 +476,7 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
   <div class="footer-bottom">© 2026 PERFECT COMPUTER • Smart Technology. Perfect Choice.</div>
 </footer>
 
+<button class="back-top" id="backTop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <div class="modal" id="wishlistModal">
   <div class="box">
@@ -598,8 +599,22 @@ console.log("PERFECT COMPUTER STORE loaded");
 
 let products = [];
 let selectedCat = "All";
-let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
-let wishlist = JSON.parse(localStorage.getItem("pc_wish") || localStorage.getItem("pc_wishlist") || "[]");
+function readStorageArray(key){
+  try{
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  }catch(error){
+    console.warn("Could not read saved data:", key, error);
+    return [];
+  }
+}
+
+let cart = readStorageArray("pc_cart")
+  .map(Number)
+  .filter(Number.isFinite);
+let wishlist = readStorageArray("pc_wish").length
+  ? readStorageArray("pc_wish")
+  : readStorageArray("pc_wishlist");
 let selectedPay = "online";
 
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN", {
@@ -621,7 +636,11 @@ function orderStatusLabel(status){
 
 function formatOrderDate(v){
   if(!v) return "";
-  const d=new Date(String(v).replace(" ","T")+"Z");
+  const raw=String(v).trim();
+  const normalized=/^\d{4}-\d{2}-\d{2} \d/.test(raw)
+    ? raw.replace(" ","T")+"Z"
+    : raw;
+  const d=new Date(normalized);
   return Number.isNaN(d.getTime()) ? String(v) : d.toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
 }
 
@@ -806,7 +825,8 @@ document.addEventListener("click",function(e){
 });
 
 function render(){
-  const q = (document.getElementById("search").value || "").toLowerCase().trim();
+  const searchInput = document.getElementById("search");
+  const q = (searchInput?.value || "").toLowerCase().trim();
 
   let a = products.filter(p =>
     (selectedCat === "All" || p.cat === selectedCat) &&
@@ -833,10 +853,7 @@ function render(){
     const out = p.stock <= 0;
 
     return '<article class="card">' +
-      '<button class="heart" onclick="wish(' + p.id + ')">' +
-      (wishlist.includes(p.id) ? "❤️" : "♡") +
-      '</button>' +
-      '<div class="pic"><span class="wishlist-btn" onclick="toggleWishlist(' + p.id + ',event)">' + (isWishlisted(p.id) ? "♥" : "♡") + '</span>' + image + '</div>' +
+      '<div class="pic"><button type="button" class="wishlist-btn" aria-label="Add to wishlist" onclick="toggleWishlist(' + p.id + ',event)">' + (isWishlisted(p.id) ? "♥" : "♡") + '</button>' + image + '</div>' +
       '<div class="info">' +
       '<div class="brand">' + escapeHtml(p.brand) + '</div>' +
       '<h3>' + escapeHtml(p.name) + '</h3>' +
@@ -884,6 +901,11 @@ function add(id){
 function buy(id){
   const p = findProduct(id);
   if(!p || p.stock <= 0) return;
+  const currentQty = cart.filter(x => Number(x) === Number(id)).length;
+  if(currentQty >= p.stock){
+    alert("Only " + p.stock + " item(s) available.");
+    return;
+  }
   cart.push(Number(id));
   save();
   openCart();
@@ -907,7 +929,8 @@ function save(){
 }
 
 function updateCount(){
-  document.getElementById("cartCount").textContent = cart.length;
+  const el = document.getElementById("cartCount");
+  if(el) el.textContent = cart.length;
 }
 
 function details(id){
@@ -1061,7 +1084,8 @@ function selectPay(mode){
 function cartTotal(){
   return Object.entries(cartGroups()).reduce((sum,[id,q]) => {
     const p = findProduct(id);
-    return sum + (p ? p.price * q : 0);
+    const safeQty = p ? Math.min(Number(q) || 0, p.stock) : 0;
+    return sum + (p ? p.price * safeQty : 0);
   },0);
 }
 
@@ -1076,8 +1100,9 @@ function openCheckout(){
   document.getElementById("checkoutSummary").innerHTML =
     Object.entries(g).map(([id,q]) => {
       const p = findProduct(id);
-      return p
-        ? '<div class="summary-row"><span>' + escapeHtml(p.name) + ' × ' + q + '</span><b>' + money(p.price*q) + '</b></div>'
+      const safeQty = Math.min(Number(q) || 0, p ? p.stock : 0);
+      return p && safeQty > 0
+        ? '<div class="summary-row"><span>' + escapeHtml(p.name) + ' × ' + safeQty + '</span><b>' + money(p.price*safeQty) + '</b></div>'
         : "";
     }).join("");
 
@@ -1130,11 +1155,12 @@ async function placeOrder(){
 
   const items = Object.entries(cartGroups()).map(([id,q]) => {
     const p = findProduct(id);
-    return p ? {
+    const quantity = p ? Math.min(Number(q) || 0, p.stock) : 0;
+    return p && quantity > 0 ? {
       product_id:Number(p.id),
       name:p.name,
       price:p.price,
-      quantity:q
+      quantity
     } : null;
   }).filter(Boolean);
 
@@ -1260,7 +1286,9 @@ loadProducts();
 updateCount();
 
 /* ===== NEXT UPGRADE FEATURES ===== */
-let compareIds = JSON.parse(localStorage.getItem("pc_compare") || "[]");
+let compareIds = readStorageArray("pc_compare")
+  .map(Number)
+  .filter(Number.isFinite);
 
 function saveWishlist(){
   localStorage.setItem("pc_wishlist", JSON.stringify(wishlist));
@@ -1344,8 +1372,8 @@ function openCompare(){
       ["Product", ...wanted.map(p=>escapeHtml(p.name))],
       ["Brand", ...wanted.map(p=>escapeHtml(p.brand||"-"))],
       ["Category", ...wanted.map(p=>escapeHtml(p.cat||"-"))],
-      ["Price", ...wanted.map(p=>"₹"+money(p.price))],
-      ["MRP", ...wanted.map(p=>"₹"+money(p.mrp))],
+      ["Price", ...wanted.map(p=>money(p.price))],
+      ["MRP", ...wanted.map(p=>money(p.mrp))],
       ["Stock", ...wanted.map(p=>String(p.stock))],
       ["SKU", ...wanted.map(p=>escapeHtml(p.sku||"-"))]
     ];
