@@ -850,6 +850,134 @@ async function publicProducts(request, env) {
   });
 }
 
+
+/* =========================================================
+   CUSTOMER ACCOUNTS — additive upgrade
+   ========================================================= */
+
+async function ensureAccountTables(env) {
+  await env.DB.prepare(`
+    CREATE TABLE IF NOT EXISTS customer_accounts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      mobile TEXT NOT NULL UNIQUE,
+      email TEXT DEFAULT '',
+      address TEXT DEFAULT '',
+      city TEXT DEFAULT '',
+      state TEXT DEFAULT '',
+      pincode TEXT DEFAULT '',
+      password_hash TEXT NOT NULL,
+      password_salt TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+  `).run();
+  await env.DB.prepare(`
+    CREATE TABLE IF NOT EXISTS customer_sessions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      account_id INTEGER NOT NULL,
+      token_hash TEXT NOT NULL UNIQUE,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      expires_at TEXT NOT NULL
+    )
+  `).run();
+}
+
+function bytesToHex(bytes) {
+  return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function hexToBytes(hex) {
+  const out=new Uint8Array(hex.length/2);
+  for(let i=0;i<out.length;i++) out[i]=parseInt(hex.slice(i*2,i*2+2),16);
+  return out;
+}
+function randomHex(bytes=16) {
+  const a=new Uint8Array(bytes); crypto.getRandomValues(a); return bytesToHex(a);
+}
+async function sha256Hex(text) {
+  return bytesToHex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)));
+}
+async function hashPassword(password,saltHex) {
+  const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']);
+  const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:hexToBytes(saltHex),iterations:120000,hash:'SHA-256'},key,256);
+  return bytesToHex(bits);
+}
+function accountMobile(v){ return String(v||'').replace(/\D/g,''); }
+function validEmail(v){ return !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v)); }
+async function accountFromRequest(request,env){
+  const raw=request.headers.get('Authorization')||'';
+  const token=raw.startsWith('Bearer ')?raw.slice(7).trim():'';
+  if(!token)return null;
+  const th=await sha256Hex(token);
+  const row=await env.DB.prepare(`SELECT a.* FROM customer_sessions s JOIN customer_accounts a ON a.id=s.account_id WHERE s.token_hash=? AND s.expires_at > datetime('now')`).bind(th).first();
+  return row||null;
+}
+function publicAccount(a){
+  if(!a)return null;
+  return {id:a.id,name:a.name,mobile:a.mobile,email:a.email||'',address:a.address||'',city:a.city||'',state:a.state||'',pincode:a.pincode||''};
+}
+async function createSession(accountId,env){
+  const token=randomHex(32), hash=await sha256Hex(token);
+  await env.DB.prepare(`INSERT INTO customer_sessions(account_id,token_hash,expires_at) VALUES(?,?,datetime('now','+30 days'))`).bind(accountId,hash).run();
+  return token;
+}
+async function accountRegister(request,env){
+  await ensureAccountTables(env);
+  let b; try{b=await request.json()}catch{return json({error:'Invalid JSON'},400)}
+  const name=String(b.name||'').trim(), mobile=accountMobile(b.mobile), email=String(b.email||'').trim();
+  const address=String(b.address||'').trim(), city=String(b.city||'').trim(), state=String(b.state||'').trim(), pincode=String(b.pincode||'').trim();
+  const password=String(b.password||'');
+  if(!name || !/^\d{10}$/.test(mobile)) return json({error:'Valid name and 10-digit mobile are required'},400);
+  if(password.length<8) return json({error:'Password must be at least 8 characters'},400);
+  if(!validEmail(email)) return json({error:'Please enter a valid email'},400);
+  const exists=await env.DB.prepare(`SELECT id FROM customer_accounts WHERE mobile=?`).bind(mobile).first();
+  if(exists)return json({error:'An account already exists with this mobile number'},409);
+  const salt=randomHex(16), ph=await hashPassword(password,salt);
+  const r=await env.DB.prepare(`INSERT INTO customer_accounts(name,mobile,email,address,city,state,pincode,password_hash,password_salt,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,datetime('now'),datetime('now'))`).bind(name,mobile,email,address,city,state,pincode,ph,salt).run();
+  const id=r.meta?.last_row_id; const token=await createSession(id,env);
+  return json({ok:true,token,account:publicAccount({id,name,mobile,email,address,city,state,pincode})},201);
+}
+async function accountLogin(request,env){
+  await ensureAccountTables(env);
+  let b; try{b=await request.json()}catch{return json({error:'Invalid JSON'},400)}
+  const mobile=accountMobile(b.mobile), password=String(b.password||'');
+  if(!/^\d{10}$/.test(mobile)||!password)return json({error:'Mobile and password are required'},400);
+  const a=await env.DB.prepare(`SELECT * FROM customer_accounts WHERE mobile=?`).bind(mobile).first();
+  if(!a)return json({error:'Account not found. Please sign up first.'},401);
+  const ph=await hashPassword(password,a.password_salt);
+  if(ph!==a.password_hash)return json({error:'Incorrect mobile or password'},401);
+  const token=await createSession(a.id,env);
+  return json({ok:true,token,account:publicAccount(a)});
+}
+async function accountMe(request,env){
+  await ensureAccountTables(env); const a=await accountFromRequest(request,env);
+  if(!a)return json({error:'Not logged in'},401); return json({ok:true,account:publicAccount(a)});
+}
+async function accountUpdate(request,env){
+  await ensureAccountTables(env); const a=await accountFromRequest(request,env);
+  if(!a)return json({error:'Not logged in'},401);
+  let b; try{b=await request.json()}catch{return json({error:'Invalid JSON'},400)}
+  const name=String(b.name||'').trim(), email=String(b.email||'').trim(), address=String(b.address||'').trim(), city=String(b.city||'').trim(), state=String(b.state||'').trim(), pincode=String(b.pincode||'').trim();
+  if(!name)return json({error:'Name is required'},400); if(!validEmail(email))return json({error:'Invalid email'},400);
+  await env.DB.prepare(`UPDATE customer_accounts SET name=?,email=?,address=?,city=?,state=?,pincode=?,updated_at=datetime('now') WHERE id=?`).bind(name,email,address,city,state,pincode,a.id).run();
+  const fresh=await env.DB.prepare(`SELECT * FROM customer_accounts WHERE id=?`).bind(a.id).first(); return json({ok:true,account:publicAccount(fresh)});
+}
+async function accountLogout(request,env){
+  await ensureAccountTables(env); const raw=request.headers.get('Authorization')||''; const token=raw.startsWith('Bearer ')?raw.slice(7).trim():'';
+  if(token)await env.DB.prepare(`DELETE FROM customer_sessions WHERE token_hash=?`).bind(await sha256Hex(token)).run();
+  return json({ok:true});
+}
+async function accountOrders(request,env){
+  await ensureAccountTables(env); const a=await accountFromRequest(request,env);
+  if(!a)return json({error:'Not logged in'},401);
+  const r=await env.DB.prepare(`SELECT id,order_number,razorpay_order_id,razorpay_payment_id,customer_name,mobile,email,address,city,state,pincode,amount_paise,payment_method,payment_status,order_status,items_json,courier_name,tracking_number,tracking_url,shipped_at,delivered_at,created_at,updated_at FROM orders WHERE mobile=? ORDER BY id DESC LIMIT 500`).bind(a.mobile).all();
+  return json({ok:true,orders:r.results||[]});
+}
+async function accountLinkInfo(request,env){
+  await ensureAccountTables(env); const a=await accountFromRequest(request,env); if(!a)return json({error:'Not logged in'},401);
+  const r=await env.DB.prepare(`SELECT COUNT(*) AS count FROM orders WHERE mobile=?`).bind(a.mobile).first(); return json({ok:true,linked_orders:Number(r?.count||0)});
+}
+
 /* =========================================================
    MAIN API HANDLER
    ========================================================= */
@@ -862,6 +990,16 @@ async function handleApi(
   const url =
     new URL(request.url);
 
+
+
+  /* ================= CUSTOMER ACCOUNTS ================= */
+  if(url.pathname === "/api/account/register" && request.method === "POST") return accountRegister(request,env);
+  if(url.pathname === "/api/account/login" && request.method === "POST") return accountLogin(request,env);
+  if(url.pathname === "/api/account/me" && request.method === "GET") return accountMe(request,env);
+  if(url.pathname === "/api/account/update" && request.method === "POST") return accountUpdate(request,env);
+  if(url.pathname === "/api/account/logout" && request.method === "POST") return accountLogout(request,env);
+  if(url.pathname === "/api/account/orders" && request.method === "GET") return accountOrders(request,env);
+  if(url.pathname === "/api/account/link-info" && request.method === "GET") return accountLinkInfo(request,env);
 
   /* ================= OPTIONS ================= */
 
