@@ -1,5 +1,9 @@
 name = "perfectcomputer"
+main = "src/index.js"
 compatibility_date = "2026-09-16"
 
-[assets]
-directory = "."
+[[d1_databases]]
+binding = "DB"
+database_name = "perfectcomputer-db"
+# Keep your existing database_id from your current wrangler.toml here.
+# Do not deploy this file unless you restore the existing database_id.
