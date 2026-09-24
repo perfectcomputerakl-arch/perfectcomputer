@@ -339,7 +339,7 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
       <div id="searchSuggestions" class="search-suggestions"></div>
     </div>
   </div>
-  <button class="cartbtn" onclick="openOrders()">👤 My Orders</button>
+  <button class="cartbtn legacy-my-orders" onclick="openOrders()">👤 My Orders</button>
   <button class="cartbtn" onclick="openWishlist()">♡ Wishlist (<span id="wishCount">0</span>)</button>
   <button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </header>
@@ -467,7 +467,7 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
     <div>
       <h3>Customer Care</h3>
       <ul>
-        <li onclick="openOrders()">👤 My Orders</li>
+        <li class="legacy-my-orders" onclick="openOrders()">👤 My Orders</li>
         <li onclick="openCart()">🛒 Cart</li>
         <li><a href="https://wa.me/917875867861?text=Hello%20PERFECT%20COMPUTER" target="_blank" style="color:#cbd7e6;text-decoration:none">💬 WhatsApp Support</a></li>
       </ul>
@@ -1507,6 +1507,7 @@ updateCompareBar();
 </html>
 
 <style id="pc-account-category-upgrade">
+.legacy-my-orders{display:none!important}
 .pc-account-btn{background:#eef5ff;color:#1557a6;border:1px solid #cfe1fb;border-radius:22px;padding:10px 13px;font-weight:800;cursor:pointer;white-space:nowrap}
 .pc-account-modal .box{max-width:820px}
 .pc-account-grid{display:grid;grid-template-columns:240px 1fr;gap:16px}
