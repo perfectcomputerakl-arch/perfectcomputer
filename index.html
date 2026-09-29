@@ -346,14 +346,54 @@ footer ul{list-style:none;padding:0;margin:0}footer li{margin:4px 0}
 
 <nav id="mainNav">
   <a onclick="filterCat('All')">Home</a>
-  <a onclick="filterCat('Laptops')">Laptops</a>
-  <a onclick="filterCat('Desktop')">Desktop</a>
-  <a onclick="filterCat('Gaming')">Gaming</a>
-  <a onclick="filterCat('PC Components')">PC Components</a>
-  <a onclick="filterCat('Printers')">Printers</a>
-  <a onclick="filterCat('CCTV')">CCTV</a>
-  <a onclick="filterCat('Monitors')">Monitors</a>
-  <a onclick="filterCat('Accessories')">Accessories</a>
+
+  <!-- Products Dropdown -->
+  <div class="nav-dropdown">
+    <a href="javascript:void(0)" class="dropdown-btn">
+      Products ▾
+    </a>
+
+    <div class="dropdown-menu">
+
+      <a onclick="filterCat('Laptops')">
+        💻 Laptops
+      </a>
+
+      <a onclick="filterCat('Desktop')">
+        🖥️ Desktop Computers
+      </a>
+
+      <a onclick="filterCat('Gaming')">
+        🎮 Gaming PC
+      </a>
+
+      <a onclick="filterCat('PC Components')">
+        🔧 PC Components
+      </a>
+
+      <a onclick="filterCat('Printers')">
+        🖨️ Printers
+      </a>
+
+      <a onclick="filterCat('CCTV')">
+        📹 CCTV
+      </a>
+
+      <a onclick="filterCat('Monitors')">
+        🖥️ Monitors
+      </a>
+
+      <a onclick="filterCat('Accessories')">
+        🎧 Accessories
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Other Pages -->
+  <a href="/about">About Us</a>
+
+  <a href="/contact">Contact Us</a>
 </nav>
 
 <main class="container">
