@@ -4,6 +4,10 @@ compatibility_date = "2026-09-16"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "perfectcomputer-db"
-# Keep your existing database_id from your current wrangler.toml here.
-# Do not deploy this file unless you restore the existing database_id.
+database_name = "perfect-computer-db"
+database_id = "PASTE_YOUR_EXISTING_D1_DATABASE_ID_HERE"
+
+[assets]
+directory = "."
+binding = "ASSETS"
+run_worker_first = true
