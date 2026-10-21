@@ -17,16 +17,15 @@ CREATE TABLE IF NOT EXISTS orders (
   order_status TEXT NOT NULL,
   items_json TEXT NOT NULL,
   created_at TEXT NOT NULL,
-  updated_at TEXT
+  updated_at TEXT,
+  courier_name TEXT,
+  tracking_number TEXT,
+  tracking_url TEXT,
+  shipped_at TEXT,
+  delivered_at TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_orders_order_number ON orders(order_number);
 CREATE INDEX IF NOT EXISTS idx_orders_mobile ON orders(mobile);
 CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
 
-
-ALTER TABLE orders ADD COLUMN courier_name TEXT;
-ALTER TABLE orders ADD COLUMN tracking_number TEXT;
-ALTER TABLE orders ADD COLUMN tracking_url TEXT;
-ALTER TABLE orders ADD COLUMN shipped_at TEXT;
-ALTER TABLE orders ADD COLUMN delivered_at TEXT;
