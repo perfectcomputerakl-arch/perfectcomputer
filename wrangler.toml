@@ -5,7 +5,7 @@ compatibility_date = "2026-09-16"
 [[d1_databases]]
 binding = "DB"
 database_name = "perfect-computer-db"
-database_id = "PASTE_YOUR_EXISTING_D1_DATABASE_ID_HERE"
+database_id = "043612f2-3afc-49b7-a68a-e4301abf739a"
 
 [assets]
 directory = "."
