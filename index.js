@@ -1617,6 +1617,41 @@ async function handleApi(
 
 
   /* =========================================================
+     CUSTOMER ORDER LOOKUP — limited fields only
+     ========================================================= */
+
+  if (
+    url.pathname === "/api/my-orders" &&
+    request.method === "GET"
+  ) {
+    const mobile = String(url.searchParams.get("mobile") || "").trim();
+    if (!/^\d{10}$/.test(mobile)) {
+      return json({ error: "Please provide a valid 10-digit mobile number" }, 400);
+    }
+
+    const result = await env.DB.prepare(`
+      SELECT
+        order_number, customer_name, mobile, amount_paise,
+        payment_method, payment_status, order_status, items_json,
+        courier_name, tracking_number, tracking_url, shipped_at,
+        delivered_at, created_at
+      FROM orders
+      WHERE mobile = ?
+      ORDER BY id DESC
+      LIMIT 100
+    `).bind(mobile).all();
+
+    const orders = (result.results || []).map(row => {
+      let items = [];
+      try { items = JSON.parse(row.items_json || "[]"); } catch { items = []; }
+      return { ...row, items };
+    });
+
+    return json({ ok: true, orders });
+  }
+
+
+  /* =========================================================
      PRODUCTS — PUBLIC LIST
      ========================================================= */
 
@@ -1772,6 +1807,12 @@ export default {
 
     }
 
+
+    // The assets directory is the existing project root. Never expose
+    // Worker source, SQL schemas, Wrangler configuration, or project notes.
+    if (/\.(?:js|mjs|cjs|sql|toml|md|txt)$/i.test(url.pathname)) {
+      return new Response("Not found", { status: 404 });
+    }
 
     return env.ASSETS.fetch(
       request
