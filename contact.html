@@ -84,7 +84,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e){
   const topic = document.getElementById('topic').value;
   const message = document.getElementById('message').value.trim();
   const subject = encodeURIComponent('Perfect Computer enquiry: ' + topic);
-  const body = encodeURIComponent('Name: ' + name + '\\Customer email: ' + email + '\\Topic: ' + topic + '\\n\\Message:\\n+message);
+  const body = encodeURIComponent('Name: ' + name + '\\Customer email: ' + email + '\\Topic: ' + topic + '\\n\\n + Message:\\n+message);
   window.location.href = 'mailto:' + businessEmail + '?subject=' + subject + '&body=' + body;
 });
 </script>
