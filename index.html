@@ -920,38 +920,6 @@ function invoiceHtml(order){
   const w=window.open("","_blank","width=800,height=900");
   if(!w){ alert("Please allow pop-ups to print the invoice."); return; }
   w.document.write(`<!doctype html><html><head><title>Invoice ${escapeHtml(order.order_number)}</title><style>body{font-family:Arial;padding:30px;color:#172033}h1{margin:0}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}</style></head><body><h1>PERFECT COMPUTER</h1><p>Smart Technology. Perfect Choice.</p><hr><p><b>Order:</b> ${escapeHtml(order.order_number)}<br><b>Date:</b> ${escapeHtml(formatOrderDate(order.created_at))}<br><b>Customer:</b> ${escapeHtml(order.customer_name)}<br><b>Mobile:</b> ${escapeHtml(order.mobile)}</p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table><div class="total">Total: ${money(Number(order.amount_paise||0)/100)}</div><p>Thank you for shopping with PERFECT COMPUTER.</p><scr`+`ipt>window.onload=()=>window.print()<\/scr`+`ipt><button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<script>
-document.addEventListener('click', function (event) {
-  const nav = document.querySelector('#mainNav');
-  if (!nav) return;
-
-  const clickedDetails = event.target.closest(
-    '#mainNav .pc-menu details'
-  );
-
-  nav.querySelectorAll('.pc-menu details[open]').forEach(function (menu) {
-    if (menu !== clickedDetails) {
-      menu.removeAttribute('open');
-    }
-  });
-});
-
-document.addEventListener('click', function (event) {
-  const link = event.target.closest(
-    '#mainNav .pc-submenu a'
-  );
-
-  if (!link) return;
-
-  const nav = document.querySelector('#mainNav');
-
-  if (nav) {
-    nav.querySelectorAll('.pc-menu details[open]').forEach(function (menu) {
-      menu.removeAttribute('open');
-    });
-  }
-});
-</script>
 </body></html>`);
   w.document.close();
 }
