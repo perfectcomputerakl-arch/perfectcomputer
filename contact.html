@@ -73,19 +73,36 @@ color: #ffffff !important;}
 document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('contactForm').addEventListener('submit', function(e){
   e.preventDefault();
-  // Replace this placeholder with your real business email address before publishing.
-  const businessEmail = 'perfectcomputerakl@gmail.com';
-  if (businessEmail === 'ADD YOUR BUSINESS EMAIL') {
-    alert('Please add your real business email address in contact.html before using this form.');
-    return;
-  }
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const topic = document.getElementById('topic').value;
-  const message = document.getElementById('message').value.trim();
-  const subject = encodeURIComponent('Perfect Computer enquiry: ' + topic);
-  const body = encodeURIComponent('Name: ' + name + '\\Customer email: ' + email + '\\Topic: ' + topic + '\\n\\n + Message:\\n+message);
-  window.location.href = 'mailto:' + businessEmail + '?subject=' + subject + '&body=' + body;
+
+const businessEmail = 'perfectcomputerakl@gmail.com';
+
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const topic = document.getElementById('topic').value;
+const message = document.getElementById('message').value.trim();
+
+const subject = encodeURIComponent(
+'New Customer Inquiry | Perfect Computer - ' + topic
+);
+
+const body = encodeURIComponent(
+'PERFECT COMPUTER\n' +
+'Smart Technology. Perfect Choice.\n' +
+'====================================\n\n' +
+'NEW CUSTOMER INQUIRY\n\n' +
+'Customer Name: ' + name + '\n' +
+'Customer Email: ' + email + '\n' +
+'Inquiry Type: ' + topic + '\n\n' +
+'CUSTOMER MESSAGE\n' +
+'------------------------------------\n' +
+message + '\n\n' +
+'Thank you for contacting Perfect Computer.'
+);
+
+window.location.href =
+'mailto:' + businessEmail +
+'?subject=' + subject +
+'&body=' + body;
 });
 </script>
 </body>
