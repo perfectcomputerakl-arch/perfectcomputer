@@ -70,9 +70,9 @@ color: #ffffff !important;}
 </main>
 <footer>© <span id="year"></span> Perfect Computer · Smart Technology. Perfect Choice.</footer>
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('contactForm').addEventListener('submit', function(e){
-  const businessEmail = 'perfectcomputerakl@gmail.com';
+e.preventDefault();
+const businessEmail = 'perfectcomputerakl@gmail.com';
 
 const name = document.getElementById('name').value.trim();
 const email = document.getElementById('email').value.trim();
