@@ -460,16 +460,127 @@ footer ul{list-e:none;padding:0;margin:0}footer li{margin:4px 0}
   <button class="cartbtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </header>
 <nav id="mainNav">
-  <a onclick="filterCat('All')">Home</a>
-  <a onclick="filterCat('Laptops')">Laptops</a>
-  <a onclick="filterCat('Desktop')">Desktop</a>
-  <a onclick="filterCat('Gaming')">Gaming</a>
-  <a onclick="filterCat('PC Components')">PC Components</a>
-  <a onclick="filterCat('Printers')">Printers</a>
-  <a onclick="filterCat('CCTV')">CCTV</a>
-  <a onclick="filterCat('Monitors')">Monitors</a>
-  <a onclick="filterCat('Accessories')">Accessories</a>
-  <a href="contact.html" style="color:#fff !important; text-decoration:none;">Contact Us</a>
+  <ul class="pc-menu">
+
+    <li>
+      <details>
+        <summary>Laptops</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Dell');return false;">Dell</a></li>
+          <li><a href="#" onclick="filterCat('HP');return false;">HP</a></li>
+          <li><a href="#" onclick="filterCat('ASUS');return false;">ASUS</a></li>
+          <li><a href="#" onclick="filterCat('Lenovo');return false;">Lenovo</a></li>
+          <li><a href="#" onclick="filterCat('Acer');return false;">Acer</a></li>
+          <li><a href="#" onclick="filterCat('MSI');return false;">MSI</a></li>
+          <li><a href="#" onclick="filterCat('Apple MacBook');return false;">Apple MacBook</a></li>
+          <li><a href="#" onclick="filterCat('Refurbished');return false;">Refurbished Laptops</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>Desktop</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Branded Desktop');return false;">Branded Desktop</a></li>
+          <li><a href="#" onclick="filterCat('Custom PC');return false;">Custom PC</a></li>
+          <li><a href="#" onclick="filterCat('Office PC');return false;">Office PC</a></li>
+          <li><a href="#" onclick="filterCat('Workstation');return false;">Workstation</a></li>
+          <li><a href="#" onclick="filterCat('Refurbished Desktop');return false;">Refurbished Desktop</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>Gaming</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Gaming Laptop');return false;">Gaming Laptops</a></li>
+          <li><a href="#" onclick="filterCat('Gaming Desktop');return false;">Gaming Desktops</a></li>
+          <li><a href="#" onclick="filterCat('Gaming PC');return false;">Gaming PC Builds</a></li>
+          <li><a href="#" onclick="filterCat('Gaming Accessories');return false;">Gaming Accessories</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>PC Components</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Processor');return false;">Processors</a></li>
+          <li><a href="#" onclick="filterCat('Motherboard');return false;">Motherboards</a></li>
+          <li><a href="#" onclick="filterCat('RAM');return false;">RAM</a></li>
+          <li><a href="#" onclick="filterCat('SSD');return false;">SSD</a></li>
+          <li><a href="#" onclick="filterCat('HDD');return false;">Hard Drives</a></li>
+          <li><a href="#" onclick="filterCat('Graphics Card');return false;">Graphics Cards</a></li>
+          <li><a href="#" onclick="filterCat('SMPS');return false;">Power Supplies</a></li>
+          <li><a href="#" onclick="filterCat('Cabinet');return false;">Cabinets</a></li>
+          <li><a href="#" onclick="filterCat('CPU Cooler');return false;">CPU Coolers</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>Printers</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('HP Printer');return false;">HP</a></li>
+          <li><a href="#" onclick="filterCat('Canon Printer');return false;">Canon</a></li>
+          <li><a href="#" onclick="filterCat('Epson Printer');return false;">Epson</a></li>
+          <li><a href="#" onclick="filterCat('Brother Printer');return false;">Brother</a></li>
+          <li><a href="#" onclick="filterCat('Ink and Toner');return false;">Ink &amp; Toner</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>CCTV</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Hikvision');return false;">Hikvision</a></li>
+          <li><a href="#" onclick="filterCat('CP Plus');return false;">CP Plus</a></li>
+          <li><a href="#" onclick="filterCat('Dahua');return false;">Dahua</a></li>
+          <li><a href="#" onclick="filterCat('CCTV Camera');return false;">Cameras</a></li>
+          <li><a href="#" onclick="filterCat('DVR');return false;">DVR</a></li>
+          <li><a href="#" onclick="filterCat('NVR');return false;">NVR</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>Monitors</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Dell Monitor');return false;">Dell</a></li>
+          <li><a href="#" onclick="filterCat('HP Monitor');return false;">HP</a></li>
+          <li><a href="#" onclick="filterCat('Samsung Monitor');return false;">Samsung</a></li>
+          <li><a href="#" onclick="filterCat('LG Monitor');return false;">LG</a></li>
+          <li><a href="#" onclick="filterCat('ASUS Monitor');return false;">ASUS</a></li>
+          <li><a href="#" onclick="filterCat('Gaming Monitor');return false;">Gaming Monitors</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <details>
+        <summary>Accessories</summary>
+        <ul class="pc-submenu">
+          <li><a href="#" onclick="filterCat('Keyboard');return false;">Keyboard</a></li>
+          <li><a href="#" onclick="filterCat('Mouse');return false;">Mouse</a></li>
+          <li><a href="#" onclick="filterCat('Headphones');return false;">Headphones</a></li>
+          <li><a href="#" onclick="filterCat('Speakers');return false;">Speakers</a></li>
+          <li><a href="#" onclick="filterCat('Webcam');return false;">Webcam</a></li>
+          <li><a href="#" onclick="filterCat('Laptop Charger');return false;">Laptop Chargers</a></li>
+          <li><a href="#" onclick="filterCat('Laptop Bag');return false;">Laptop Bags</a></li>
+        </ul>
+      </details>
+    </li>
+
+    <li>
+      <a href="#contact">Contact Us</a>
+    </li>
+
+  </ul>
 </nav>
 
 <main class="container">
